@@ -223,12 +223,12 @@
       gap: 6px;
       background: rgba(6, 10, 15, 0.88);
       border: 1px solid #1e2e3d;
-      padding: 5px 10px;
+      padding: 4px 10px;
       border-radius: 4px;
       backdrop-filter: blur(10px);
       z-index: 15;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-      max-width: calc(100% - 460px);
+      max-width: calc(100% - 320px);
       flex-wrap: wrap;
     }
     .insp-ribbon-lbl {
@@ -245,7 +245,7 @@
       font-family: 'Chakra Petch', sans-serif;
       font-size: 0.68rem;
       font-weight: 600;
-      padding: 3px 8px;
+      padding: 2px 7px;
       border-radius: 2px;
       cursor: pointer;
       transition: all 0.15s;
@@ -279,25 +279,25 @@
     /* DRDO Interactive Component Inspector Drawer (Real-Life Photos & Technical Specs) */
     .cad-inspector-drawer {
       position: absolute;
-      bottom: 16px;
-      right: 16px;
-      width: 380px;
-      max-width: 90vw;
-      background: rgba(6, 10, 15, 0.96);
+      bottom: 20px;
+      right: 20px;
+      width: 360px;
+      max-width: 88vw;
+      background: rgba(6, 10, 16, 0.95);
       border: 1px solid #1e3a5f;
       border-top: 3px solid #38bdf8;
       border-radius: 4px;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.95);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.95);
       z-index: 30;
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
       padding: 12px 14px;
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: 8px;
       animation: fadeInSlide 0.2s ease-out;
     }
     .cad-inspector-drawer.hidden {
-      display: none;
+      display: none !important;
     }
     .insp-header {
       display: flex;
@@ -305,7 +305,7 @@
       align-items: flex-start;
       gap: 10px;
       border-bottom: 1px solid #1c2e3d;
-      padding-bottom: 6px;
+      padding-bottom: 5px;
     }
     .insp-badge {
       display: inline-block;
@@ -313,34 +313,42 @@
       border: 1px solid #1e3a5f;
       color: #38bdf8;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem;
+      font-size: 0.60rem;
       font-weight: 700;
       padding: 2px 6px;
       border-radius: 2px;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
     .insp-title {
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       font-weight: 700;
       color: #f8fafc;
       letter-spacing: 0.04em;
     }
     .insp-close-btn {
-      background: transparent;
-      border: none;
+      background: #111b27;
+      border: 1px solid #233547;
       color: #94a3b8;
-      font-size: 1.2rem;
+      font-size: 1.0rem;
+      width: 24px;
+      height: 24px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
       line-height: 1;
-      transition: color 0.15s;
+      transition: all 0.15s;
     }
     .insp-close-btn:hover {
-      color: #ef4444;
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #ef4444;
     }
     .insp-img-container {
       position: relative;
       width: 100%;
-      height: 160px;
+      height: 155px;
       border-radius: 3px;
       overflow: hidden;
       border: 1px solid #1c2b20;
@@ -359,21 +367,21 @@
       background: rgba(0, 0, 0, 0.85);
       border: 1px solid #38bdf8;
       color: #38bdf8;
-      font-size: 0.60rem;
+      font-size: 0.58rem;
       font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
       padding: 2px 6px;
       border-radius: 2px;
     }
     .insp-desc {
-      font-size: 0.72rem;
+      font-size: 0.70rem;
       color: #cbd5e1;
-      line-height: 1.38;
+      line-height: 1.35;
     }
     .insp-specs-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       font-family: 'JetBrains Mono', monospace;
     }
     .insp-specs-table td {
@@ -395,9 +403,9 @@
       border: 1px solid #38bdf8;
       color: #38bdf8;
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.72rem;
+      font-size: 0.70rem;
       font-weight: 700;
-      padding: 6px 12px;
+      padding: 5px 10px;
       border-radius: 2px;
       cursor: pointer;
       width: 100%;
@@ -412,41 +420,74 @@
       color: #04070a;
     }
 
-    /* Compass & Solar HUD */
+    /* Minimal Bottom-Left Compass & Orientation Status Bar */
     .hud-compass {
       position: absolute;
       bottom: 16px;
       left: 16px;
-      background: rgba(6, 10, 15, 0.94);
+      background: rgba(6, 10, 15, 0.90);
       border: 1px solid #1c2b20;
       border-radius: 3px;
-      padding: 10px 14px;
+      padding: 6px 12px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       color: #cbd5e1;
       pointer-events: none;
       backdrop-filter: blur(8px);
       z-index: 10;
-      line-height: 1.4;
-      max-width: 460px;
+      line-height: 1.35;
+      max-width: 440px;
     }
     .hud-compass strong {
       color: #84cc16;
     }
 
+    /* Floating Expand Sidebar Button (when sidebar is collapsed) */
+    .sidebar-expand-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: #0b141f;
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 3px;
+      cursor: pointer;
+      z-index: 25;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+      transition: all 0.15s;
+    }
+    .sidebar-expand-btn:hover {
+      background: #38bdf8;
+      color: #04070a;
+    }
+    .sidebar-expand-btn.hidden {
+      display: none !important;
+    }
+
     /* Engineering Sidebar */
     #ui-panel {
-      width: 470px;
+      width: 440px;
       height: 100%;
       background: #06090d;
       border-left: 2px solid #1c2b20;
-      padding: 16px 14px;
+      padding: 12px 14px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 11px;
+      gap: 10px;
       box-shadow: -10px 0 30px rgba(0, 0, 0, 0.95);
       z-index: 20;
+      transition: all 0.2s ease-in-out;
+    }
+    #ui-panel.collapsed {
+      display: none !important;
     }
     #ui-panel::-webkit-scrollbar {
       width: 4px;
@@ -454,6 +495,70 @@
     #ui-panel::-webkit-scrollbar-thumb {
       background: #27382b;
       border-radius: 2px;
+    }
+
+    .sidebar-collapse-btn {
+      background: #0e1722;
+      border: 1px solid #1e3a5f;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .sidebar-collapse-btn:hover {
+      background: #1e3a5f;
+      color: #f8fafc;
+    }
+
+    /* Clean 4-Tab Console Navigation */
+    .sidebar-tabs-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      background: #03060a;
+      padding: 3px;
+      border-radius: 3px;
+      border: 1px solid #14202c;
+    }
+    .s-tab-btn {
+      background: #080d14;
+      border: 1px solid transparent;
+      color: #94a3b8;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.66rem;
+      font-weight: 700;
+      padding: 6px 3px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .s-tab-btn:hover {
+      color: #38bdf8;
+      background: #0e1724;
+    }
+    .s-tab-btn.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
+      color: #38bdf8;
+      font-weight: 800;
+    }
+
+    /* Tab Panes */
+    .s-tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .s-tab-pane.active {
+      display: flex;
     }
 
     .eng-section {
@@ -1033,7 +1138,13 @@
         <div id="cam-button-container" style="display: flex; gap: 6px;">
           <!-- Dynamically populated per terrain -->
         </div>
+        <button id="btn-toggle-inspect" class="cam-btn" title="Toggle Click-to-Inspect Parts">🔍 INSPECT: ON</button>
       </div>
+
+      <!-- Floating Expand Sidebar Button (when sidebar is collapsed) -->
+      <button id="btn-expand-sidebar" class="sidebar-expand-btn hidden" title="Show Engineering Console">
+        ▶ CONSOLE
+      </button>
 
       <!-- 3D Raycasting Hover Label -->
       <div id="cad-hover-label">COMPONENT</div>
@@ -1063,207 +1174,258 @@
       <!-- Minimal Bottom-Left Compass & Orientation HUD -->
       <div class="hud-compass">
         <div>ORIENTATION: <strong id="hud-azimuth">180° [SOUTH]</strong> &bull; SOLAR FACADE FACING SUN</div>
-        <div id="hud-feature-desc" style="font-size: 0.70rem; color: #38bdf8; margin-top: 2px;">
+        <div id="hud-feature-desc" style="font-size: 0.68rem; color: #38bdf8; margin-top: 2px;">
           ❄️ SIACHEN: DUAL-SLOPE 55° SOLAR ROOF + INWARD-OPENING DRIFT-SAFE DOOR + ICE-AUGERS
-        </div>
-        <div style="font-size: 0.68rem; color: #64748b; margin-top: 2px;">
-          &bull; CLICK ANY PART TO INSPECT &bull; RED ARROW = TRUE NORTH &bull; DRAG TO ORBIT &bull; SCROLL TO ZOOM
         </div>
       </div>
     </div>
 
     <!-- Engineering Sidebar -->
     <div id="ui-panel">
-    <div style="border-bottom: 1px solid #1c2b20; padding-bottom: 5px;">
-      <h2 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; letter-spacing: 0.05em;">DRDO PASSIVE SHELTER CAD</h2>
-      <p style="font-size: 0.68rem; color: #84cc16; font-family: 'JetBrains Mono', monospace;">SIH 26051 // TERRAIN-SPECIFIC PASSIVE HABITATS</p>
-    </div>
-
-    <!-- 1. Deployment Theatre Selection (Architectural Modes) -->
-    <div class="eng-section">
-      <div class="eng-section-header">
-        <span>1. Area-Specific Architectural Prototype</span>
-        <span class="sec-tag">TERRAIN</span>
+      <!-- Top Title & Collapse Button -->
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1c2b20; padding-bottom: 6px;">
+        <div>
+          <h2 style="font-size: 1.0rem; font-weight: 700; color: #f8fafc; letter-spacing: 0.05em;">DRDO PASSIVE SHELTER CAD</h2>
+          <p style="font-size: 0.65rem; color: #84cc16; font-family: 'JetBrains Mono', monospace;">SIH 26051 // TERRAIN-SPECIFIC PASSIVE HABITATS</p>
+        </div>
+        <button id="btn-collapse-sidebar" class="sidebar-collapse-btn" title="Minimize / Hide Sidebar">◀ HIDE</button>
       </div>
-      <div class="theatre-grid">
-        <!-- Siachen -->
-        <div class="theatre-card active" id="card-siachen">
-          <div class="theatre-badge">❄️</div>
-          <div class="theatre-info">
-            <div class="theatre-name">Siachen Arctic Glacier</div>
-            <div class="theatre-specs">Dual-Slope Solar &bull; Inward Anti-Drift Door &bull; Ice Augers</div>
-            <div class="theatre-desc">Bifacial solar on both roof pitches &bull; Inward door prevents snow-entombment &bull; Screwed ice augers (zero concrete) &bull; Lightweight Aerogel/VIP</div>
+
+      <!-- 4 Clean Navigation Tabs -->
+      <div class="sidebar-tabs-nav">
+        <button class="s-tab-btn active" data-tab="tab-design">🎛️ DESIGN</button>
+        <button class="s-tab-btn" data-tab="tab-energy">⚡ ENERGY</button>
+        <button class="s-tab-btn" data-tab="tab-logistics">📦 LOGISTICS</button>
+        <button class="s-tab-btn" data-tab="tab-photos">📸 PHOTOS</button>
+      </div>
+
+      <!-- Tab 1: Architectural Design & Sizing -->
+      <div class="s-tab-pane active" id="tab-design">
+        <!-- 1. Deployment Theatre Selection -->
+        <div class="eng-section">
+          <div class="eng-section-header">
+            <span>1. Area-Specific Architectural Prototype</span>
+            <span class="sec-tag">TERRAIN</span>
+          </div>
+          <div class="theatre-grid">
+            <div class="theatre-card active" id="card-siachen">
+              <div class="theatre-badge">❄️</div>
+              <div class="theatre-info">
+                <div class="theatre-name">Siachen Arctic Glacier</div>
+                <div class="theatre-specs">Dual-Slope Solar &bull; Inward Anti-Drift Door &bull; Ice Augers</div>
+                <div class="theatre-desc">Bifacial solar on both roof pitches &bull; Inward door prevents snow-entombment &bull; Screwed ice augers (zero concrete) &bull; Lightweight Aerogel/VIP</div>
+              </div>
+            </div>
+
+            <div class="theatre-card" id="card-ladakh">
+              <div class="theatre-badge">🏔️</div>
+              <div class="theatre-info">
+                <div class="theatre-name">Ladakh High-Altitude Mountain</div>
+                <div class="theatre-specs">Basalt Thermal Mass &bull; South Trombe Wall &bull; Recessed Entry</div>
+                <div class="theatre-desc">Direct-gain Trombe solar heating &bull; Dense local basalt stone bed &bull; 45° unistrut roof PV rack &bull; Recessed thermal stone portal</div>
+              </div>
+            </div>
+
+            <div class="theatre-card" id="card-thar">
+              <div class="theatre-badge">🏜️</div>
+              <div class="theatre-info">
+                <div class="theatre-name">BSF Thar Desert Border Outpost</div>
+                <div class="theatre-specs">Dual Badgir Wind-Towers &bull; Deep Chhajja &bull; Shaded Deorhi</div>
+                <div class="theatre-desc">Passive breeze-catching Badgir wind scoops &bull; Deep 1.2m solar shade overhangs &bull; High-albedo cool roof &bull; Shaded veranda porch</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Ladakh -->
-        <div class="theatre-card" id="card-ladakh">
-          <div class="theatre-badge">🏔️</div>
-          <div class="theatre-info">
-            <div class="theatre-name">Ladakh High-Altitude Mountain</div>
-            <div class="theatre-specs">Basalt Thermal Mass &bull; South Trombe Wall &bull; Recessed Entry</div>
-            <div class="theatre-desc">Direct-gain Trombe solar heating &bull; Dense local basalt stone bed &bull; 45° unistrut roof PV rack &bull; Recessed thermal stone portal</div>
+        <!-- 1B. Best Shelter Design Options for Terrain (Click to Load in 3D) -->
+        <div class="eng-section">
+          <div class="eng-section-header">
+            <span>1B. Top Shelter Designs (Click to Load in 3D)</span>
+            <span class="sec-tag" id="sidebar-variant-badge">OPTION A</span>
+          </div>
+          <div id="variant-cards-sidebar" style="display: flex; flex-direction: column; gap: 7px;">
+            <!-- Dynamically populated -->
           </div>
         </div>
 
-        <!-- Thar Desert -->
-        <div class="theatre-card" id="card-thar">
-          <div class="theatre-badge">🏜️</div>
-          <div class="theatre-info">
-            <div class="theatre-name">BSF Thar Desert Border Outpost</div>
-            <div class="theatre-specs">Dual Badgir Wind-Towers &bull; Deep Chhajja &bull; Shaded Deorhi</div>
-            <div class="theatre-desc">Passive breeze-catching Badgir wind scoops &bull; Deep 1.2m solar shade overhangs &bull; High-albedo cool roof &bull; Shaded veranda porch</div>
+        <!-- Troop Sizing Buttons -->
+        <div class="eng-section">
+          <div class="eng-section-header">
+            <span>Troop Capacity Sizing</span>
+            <span class="sec-tag">PERSONNEL</span>
+          </div>
+          <div class="role-grid">
+            <button class="role-btn" id="role-patrol">Patrol (4)</button>
+            <button class="role-btn active" id="role-section">Section (8)</button>
+            <button class="role-btn" id="role-platoon">Platoon (16)</button>
+          </div>
+        </div>
+
+        <!-- 3. Geometric Parameters (Sliders) -->
+        <div class="eng-section">
+          <div class="eng-section-header">
+            <span>Geometric Parameters</span>
+            <span class="sec-tag">BLUEPRINT</span>
+          </div>
+          <div class="slider-row">
+            <div class="slider-labels">
+              <span>Length (Frontage)</span>
+              <span class="slider-val" id="val-length">10.0 m</span>
+            </div>
+            <input type="range" id="input-length" min="5" max="20" step="0.5" value="10" />
+          </div>
+
+          <div class="slider-row">
+            <div class="slider-labels">
+              <span>Width (Depth)</span>
+              <span class="slider-val" id="val-width">8.0 m</span>
+            </div>
+            <input type="range" id="input-width" min="4" max="14" step="0.5" value="8" />
+          </div>
+
+          <div class="slider-row">
+            <div class="slider-labels">
+              <span>Clearance Height</span>
+              <span class="slider-val" id="val-height">3.0 m</span>
+            </div>
+            <input type="range" id="input-height" min="2.4" max="4.2" step="0.1" value="3.0" />
+          </div>
+
+          <div class="slider-row">
+            <div class="slider-labels">
+              <span>Orientation Azimuth</span>
+              <span class="slider-val" id="val-orientation">180° [SOUTH]</span>
+            </div>
+            <input type="range" id="input-orientation" min="0" max="360" step="5" value="180" />
+          </div>
+
+          <div class="slider-row">
+            <div class="slider-labels">
+              <span>Solar Window Area</span>
+              <span class="slider-val" id="val-window">5.0 m²</span>
+            </div>
+            <input type="range" id="input-window" min="1" max="15" step="0.5" value="5" />
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- 1B. Best Shelter Design Options for Terrain (Click to Load in 3D) -->
-    <div class="eng-section">
-      <div class="eng-section-header">
-        <span>1B. Top Shelter Designs (Click to Load in 3D)</span>
-        <span class="sec-tag" id="sidebar-variant-badge">OPTION A</span>
-      </div>
-      <div id="variant-cards-sidebar" style="display: flex; flex-direction: column; gap: 7px;">
-        <!-- Injected dynamically with 3 options, reasons why choose them, and 3D preview trigger -->
-      </div>
-    </div>
+      <!-- Tab 2: Thermodynamics & Physics -->
+      <div class="s-tab-pane" id="tab-energy">
+        <div class="eng-section">
+          <div class="eng-section-header">
+            <span>Thermodynamic Balances</span>
+            <span class="sec-tag">SIMULATION</span>
+          </div>
+          <div class="kpi-grid" style="margin-bottom: 7px;">
+            <div class="kpi-card">
+              <div class="kpi-label">Solar Heat Gain</div>
+              <div class="kpi-value" id="kpi-solar">+3,820 W</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Conduction Heat Loss</div>
+              <div class="kpi-value" id="kpi-loss" style="color: #f87171;">-1,380 W</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Inside Temp Delta</div>
+              <div class="kpi-value" id="kpi-delta">+26.4°C</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Diesel Saved / Day</div>
+              <div class="kpi-value" id="kpi-fuel">31.2 L</div>
+            </div>
+          </div>
 
-    <!-- 2. Logistics & Erection Telemetry (Real Figures - Dynamic Per Terrain) -->
-    <div class="eng-section">
-      <div class="eng-section-header">
-        <span>2. Logistics & Erection Telemetry (Real Figures)</span>
-        <span class="sec-tag">LOGISTICS</span>
-      </div>
-      <div class="role-grid" style="margin-bottom: 7px;">
-        <button class="role-btn" id="role-patrol">Patrol (4)</button>
-        <button class="role-btn active" id="role-section">Section (8)</button>
-        <button class="role-btn" id="role-platoon">Platoon (16)</button>
-      </div>
-
-      <div class="logistics-grid">
-        <div class="log-card">
-          <div class="log-label">Total Habitat Weight</div>
-          <div class="log-val" id="log-mass">4,400 kg</div>
-          <div class="log-desc" id="log-mass-desc">Full shelter structure including panels, frame, foundation, and solar array.</div>
-        </div>
-        <div class="log-card">
-          <div class="log-label" id="log-transport-label">Transport Logistics</div>
-          <div class="log-val" id="log-sorties">3 to 4 Flights</div>
-          <div class="log-desc" id="log-transport-desc">Mi-17 helicopter payload derated to 1,200 kg/sortie at 16,000 ft altitude.</div>
-        </div>
-        <div class="log-card">
-          <div class="log-label">Field Assembly Time</div>
-          <div class="log-val" id="log-erection">7.0 Hours</div>
-          <div class="log-desc" id="log-erection-desc">4-man combat engineer crew using only an 8mm hex key and hand wrench.</div>
-        </div>
-        <div class="log-card">
-          <div class="log-label">Foundation & Door Safety</div>
-          <div class="log-val" id="log-door">Ice Augers • Inward</div>
-          <div class="log-desc" id="log-door-desc">Inward door prevents snow-entombment; augers anchor directly to glacial ice.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. Geometric Parameters -->
-    <div class="eng-section">
-      <div class="eng-section-header">
-        <span>3. Geometric Parameters</span>
-        <span class="sec-tag">BLUEPRINT</span>
-      </div>
-
-      <div class="slider-row">
-        <div class="slider-labels">
-          <span>Length (Frontage)</span>
-          <span class="slider-val" id="val-length">10.0 m</span>
-        </div>
-        <input type="range" id="input-length" min="5" max="20" step="0.5" value="10" />
-      </div>
-
-      <div class="slider-row">
-        <div class="slider-labels">
-          <span>Width (Depth)</span>
-          <span class="slider-val" id="val-width">8.0 m</span>
-        </div>
-        <input type="range" id="input-width" min="4" max="14" step="0.5" value="8" />
-      </div>
-
-      <div class="slider-row">
-        <div class="slider-labels">
-          <span>Clearance Height</span>
-          <span class="slider-val" id="val-height">3.0 m</span>
-        </div>
-        <input type="range" id="input-height" min="2.4" max="4.2" step="0.1" value="3.0" />
-      </div>
-
-      <div class="slider-row">
-        <div class="slider-labels">
-          <span>Orientation Azimuth</span>
-          <span class="slider-val" id="val-orientation">180° [SOUTH]</span>
-        </div>
-        <input type="range" id="input-orientation" min="0" max="360" step="5" value="180" />
-      </div>
-
-      <div class="slider-row">
-        <div class="slider-labels">
-          <span>Solar Window Area</span>
-          <span class="slider-val" id="val-window">5.0 m²</span>
-        </div>
-        <input type="range" id="input-window" min="1" max="15" step="0.5" value="5" />
-      </div>
-    </div>
-
-    <!-- 4. Materials Breakdown -->
-    <div class="eng-section">
-      <div class="eng-section-header">
-        <span>4. Engineering Material Layers</span>
-        <span class="sec-tag">THERMAL SPECS</span>
-      </div>
-      <table class="mat-table">
-        <thead>
-          <tr>
-            <th>LAYER</th>
-            <th>SPECIFIED MATERIAL</th>
-            <th style="text-align: right;">THICKNESS</th>
-            <th style="text-align: right;">CONDUCTIVITY</th>
-          </tr>
-        </thead>
-        <tbody id="mat-table-body">
-          <!-- Populated dynamically -->
-        </tbody>
-      </table>
-    </div>
-
-    <!-- 5. Physics Energy Balances & Formulas (Dynamic Per Terrain) -->
-    <div class="eng-section">
-      <div class="eng-section-header">
-        <span>5. SIH 26051 Thermodynamic Balance</span>
-        <span class="sec-tag">SIMULATION</span>
-      </div>
-      <div class="kpi-grid" style="margin-bottom: 7px;">
-        <div class="kpi-card">
-          <div class="kpi-label">Solar Heat Gain</div>
-          <div class="kpi-value" id="kpi-solar">+3,820 W</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Conduction Heat Loss</div>
-          <div class="kpi-value" id="kpi-loss" style="color: #f87171;">-1,380 W</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Inside Temp Delta</div>
-          <div class="kpi-value" id="kpi-delta">+26.4°C</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Diesel Saved / Day</div>
-          <div class="kpi-value" id="kpi-fuel">31.2 L</div>
+          <div class="formula-box" id="formula-box-content">
+            <!-- Dynamically injected per terrain -->
+          </div>
         </div>
       </div>
 
-      <div class="formula-box" id="formula-box-content">
-        <!-- Dynamically injected per terrain -->
+      <!-- Tab 3: Logistics & Materials -->
+      <div class="s-tab-pane" id="tab-logistics">
+        <div class="eng-section">
+          <div class="eng-section-header">
+            <span>Logistics & Erection Telemetry</span>
+            <span class="sec-tag">LOGISTICS</span>
+          </div>
+          <div class="logistics-grid">
+            <div class="log-card">
+              <div class="log-label">Total Habitat Weight</div>
+              <div class="log-val" id="log-mass">4,400 kg</div>
+              <div class="log-desc" id="log-mass-desc">Full shelter structure including panels, frame, foundation, and solar array.</div>
+            </div>
+            <div class="log-card">
+              <div class="log-label" id="log-transport-label">Transport Logistics</div>
+              <div class="log-val" id="log-sorties">3 to 4 Flights</div>
+              <div class="log-desc" id="log-transport-desc">Mi-17 helicopter payload derated to 1,200 kg/sortie at 16,000 ft altitude.</div>
+            </div>
+            <div class="log-card">
+              <div class="log-label">Field Assembly Time</div>
+              <div class="log-val" id="log-erection">7.0 Hours</div>
+              <div class="log-desc" id="log-erection-desc">4-man combat engineer crew using only an 8mm hex key and hand wrench.</div>
+            </div>
+            <div class="log-card">
+              <div class="log-label">Foundation & Door Safety</div>
+              <div class="log-val" id="log-door">Ice Augers • Inward</div>
+              <div class="log-desc" id="log-door-desc">Inward door prevents snow-entombment; augers anchor directly to glacial ice.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="eng-section">
+          <div class="eng-section-header">
+            <span>Engineering Material Layers</span>
+            <span class="sec-tag">THERMAL SPECS</span>
+          </div>
+          <table class="mat-table">
+            <thead>
+              <tr>
+                <th>LAYER</th>
+                <th>SPECIFIED MATERIAL</th>
+                <th style="text-align: right;">THICKNESS</th>
+                <th style="text-align: right;">CONDUCTIVITY</th>
+              </tr>
+            </thead>
+            <tbody id="mat-table-body">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 4: Field Photos & Telemetry Inspector -->
+      <div class="s-tab-pane" id="tab-photos">
+        <div class="eng-section">
+          <div class="eng-section-header">
+            <span>Real-Life Field Reference Photo</span>
+            <span class="sec-tag">DRDO ARCHIVE</span>
+          </div>
+          <div class="insp-img-container" style="height: 180px; margin-bottom: 8px;">
+            <img id="sidebar-insp-img" src="assets/siachen_aeroridge_real.jpg" alt="DRDO Field Reference Photo" />
+            <div class="insp-img-tag" id="sidebar-insp-tag">📸 AUTHENTIC FIELD REFERENCE</div>
+          </div>
+          <div style="font-size: 0.88rem; font-weight: 700; color: #f8fafc; margin-bottom: 3px;" id="sidebar-insp-title">
+            55° Dual-Slope Bifacial Solar Roof
+          </div>
+          <div class="insp-desc" id="sidebar-insp-desc" style="margin-bottom: 10px;"></div>
+
+          <div style="font-size: 0.68rem; font-weight: 700; color: #38bdf8; margin-bottom: 4px; letter-spacing: 0.05em;">
+            SELECT PART TO INSPECT:
+          </div>
+          <div id="sidebar-insp-chips" style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px;">
+            <!-- Dynamically populated -->
+          </div>
+
+          <table class="insp-specs-table" style="margin-bottom: 10px;">
+            <tbody id="sidebar-insp-specs-tbody"></tbody>
+          </table>
+
+          <button id="btn-sidebar-zoom" class="insp-zoom-btn">
+            ⭐ ZOOM CAMERA TO COMPONENT
+          </button>
+        </div>
       </div>
     </div>
-  </div>
   </main>
 
   <!-- =====================================================================
@@ -3416,7 +3578,7 @@
         title: 'Monolithic Parabolic Blizzard Vault Shell & Arch Ribs',
         category: 'Super-Streamlined Aerodynamics',
         badge: 'DRDO COMPONENT SPEC // SPSD-SIA-BETA',
-        image: 'assets/siachen_aeroridge_real.jpg',
+        image: 'assets/siachen_quonset_real.jpg',
         desc: 'Continuous aerodynamic parabolic Quonset arch designed to shed catastrophic katabatic glacier winds up to 225 km/h. Monolithic curved insulated composite eliminates roof-to-wall joints where cold air normally leaks. Curved thin-film solar PV contours seamlessly along both slopes.',
         specs: [
           { key: 'Aerodynamic Drag', val: 'Cd = 0.38 (Super-Streamlined)' },
@@ -3600,30 +3762,53 @@
 
     function renderInspectorChips(theatreKey, variantKey) {
       const container = document.getElementById('inspector-chips-container');
-      if (!container) return;
-      container.innerHTML = '';
+      const sideContainer = document.getElementById('sidebar-insp-chips');
+      if (container) container.innerHTML = '';
+      if (sideContainer) sideContainer.innerHTML = '';
 
       const compKeys = (VARIANT_COMPONENTS[theatreKey] && VARIANT_COMPONENTS[theatreKey][variantKey]) || [];
       compKeys.forEach((k, idx) => {
         const item = COMPONENT_CATALOG[k];
         if (!item) return;
-        const btn = document.createElement('button');
-        btn.className = `insp-chip-btn ${idx === 0 ? 'active' : ''}`;
-        btn.id = `chip-${k}`;
-        btn.innerHTML = `🔍 ${item.title.split(' ')[0]} ${item.title.split(' ')[1] || ''}`;
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          openComponentInspector(k);
-        });
-        container.appendChild(btn);
+
+        // Top Canvas Ribbon Chip
+        if (container) {
+          const btn = document.createElement('button');
+          btn.className = `insp-chip-btn ${idx === 0 ? 'active' : ''}`;
+          btn.id = `chip-${k}`;
+          btn.innerHTML = `🔍 ${item.title.split(' ')[0]} ${item.title.split(' ')[1] || ''}`;
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openComponentInspector(k);
+          });
+          container.appendChild(btn);
+        }
+
+        // Sidebar Photos Tab Chip
+        if (sideContainer) {
+          const sBtn = document.createElement('button');
+          sBtn.className = `insp-chip-btn ${idx === 0 ? 'active' : ''}`;
+          sBtn.id = `side-chip-${k}`;
+          sBtn.innerHTML = `🔍 ${item.title.split(' ')[0]} ${item.title.split(' ')[1] || ''}`;
+          sBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openComponentInspector(k);
+          });
+          sideContainer.appendChild(sBtn);
+        }
       });
+
+      if (compKeys.length > 0) {
+        openComponentInspector(compKeys[0], false);
+      }
     }
 
-    function openComponentInspector(compKey) {
+    function openComponentInspector(compKey, showFloatingDrawer = true) {
       const comp = COMPONENT_CATALOG[compKey];
       if (!comp) return;
       activeComponentId = compKey;
 
+      // 1. Update Floating Canvas Drawer
       const drawer = document.getElementById('cad-inspector-drawer');
       const badge = document.getElementById('insp-badge');
       const title = document.getElementById('insp-title');
@@ -3648,11 +3833,36 @@
         });
       }
 
+      // 2. Update Sidebar Tab 4 (Photos & Telemetry)
+      const sImg = document.getElementById('sidebar-insp-img');
+      const sTitle = document.getElementById('sidebar-insp-title');
+      const sDesc = document.getElementById('sidebar-insp-desc');
+      const sTbody = document.getElementById('sidebar-insp-specs-tbody');
+      if (sImg) sImg.src = comp.image;
+      if (sTitle) sTitle.textContent = comp.title;
+      if (sDesc) sDesc.textContent = comp.desc;
+      if (sTbody) {
+        sTbody.innerHTML = '';
+        comp.specs.forEach(s => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="insp-spec-key">${s.key}</td>
+            <td class="insp-spec-val">${s.val}</td>
+          `;
+          sTbody.appendChild(tr);
+        });
+      }
+
+      // Update active state on chips
       document.querySelectorAll('.insp-chip-btn').forEach(c => c.classList.remove('active'));
       const activeChip = document.getElementById(`chip-${compKey}`);
       if (activeChip) activeChip.classList.add('active');
+      const sideActiveChip = document.getElementById(`side-chip-${compKey}`);
+      if (sideActiveChip) sideActiveChip.classList.add('active');
 
-      if (drawer) drawer.classList.remove('hidden');
+      if (showFloatingDrawer && drawer) {
+        drawer.classList.remove('hidden');
+      }
     }
 
     // =====================================================================
@@ -3893,7 +4103,31 @@
     const mouse = new THREE.Vector2();
     const hoverLabel = document.getElementById('cad-hover-label');
 
+    let isInspectMode = true;
+    let pointerDownEvent = null;
+
+    const btnToggleInspect = document.getElementById('btn-toggle-inspect');
+    if (btnToggleInspect) {
+      btnToggleInspect.addEventListener('click', () => {
+        isInspectMode = !isInspectMode;
+        if (isInspectMode) {
+          btnToggleInspect.textContent = '🔍 INSPECT: ON';
+          btnToggleInspect.style.borderColor = '#38bdf8';
+          btnToggleInspect.style.color = '#38bdf8';
+        } else {
+          btnToggleInspect.textContent = '👁️ ORBIT ONLY';
+          btnToggleInspect.style.borderColor = '#475569';
+          btnToggleInspect.style.color = '#94a3b8';
+          if (hoverLabel) hoverLabel.style.display = 'none';
+        }
+      });
+    }
+
     renderer.domElement.addEventListener('pointermove', (e) => {
+      if (!isInspectMode) {
+        if (hoverLabel) hoverLabel.style.display = 'none';
+        return;
+      }
       const rect = renderer.domElement.getBoundingClientRect();
       mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
@@ -3921,7 +4155,7 @@
           hoverLabel.style.display = 'block';
           hoverLabel.style.left = `${e.clientX - rect.left}px`;
           hoverLabel.style.top = `${e.clientY - rect.top}px`;
-          hoverLabel.innerHTML = `🔍 <strong>${c.title.split(' ')[0]} ${c.title.split(' ')[1] || ''}</strong> &bull; CLICK TO INSPECT REAL-LIFE PHOTO`;
+          hoverLabel.innerHTML = `🔍 <strong>${c.title.split(' ')[0]} ${c.title.split(' ')[1] || ''}</strong> &bull; CLICK TO INSPECT`;
         }
       } else {
         renderer.domElement.style.cursor = 'default';
@@ -3929,7 +4163,31 @@
       }
     });
 
+    // Track starting point on pointerdown to differentiate click from drag/orbit
     renderer.domElement.addEventListener('pointerdown', (e) => {
+      pointerDownEvent = {
+        x: e.clientX,
+        y: e.clientY,
+        time: performance.now()
+      };
+    });
+
+    // Trigger raycasting ONLY on clean, deliberate short clicks
+    renderer.domElement.addEventListener('pointerup', (e) => {
+      if (!pointerDownEvent) return;
+      const dx = e.clientX - pointerDownEvent.x;
+      const dy = e.clientY - pointerDownEvent.y;
+      const dist = Math.hypot(dx, dy);
+      const elapsed = performance.now() - pointerDownEvent.time;
+      pointerDownEvent = null;
+
+      // CRITICAL FIX: If user dragged cursor > 5px or held down > 300ms,
+      // it was an OrbitControls camera rotation or pan gesture!
+      // Absolutely DO NOT trigger raycast or open drawer!
+      if (dist > 5 || elapsed > 300) return;
+
+      if (!isInspectMode) return;
+
       const rect = renderer.domElement.getBoundingClientRect();
       mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
@@ -3951,7 +4209,11 @@
       }
 
       if (hitComponent && COMPONENT_CATALOG[hitComponent]) {
-        openComponentInspector(hitComponent);
+        openComponentInspector(hitComponent, true);
+      } else {
+        // Clicking empty ground / sky closes floating drawer
+        const drawer = document.getElementById('cad-inspector-drawer');
+        if (drawer) drawer.classList.add('hidden');
       }
     });
 
@@ -3970,6 +4232,13 @@
       });
     }
 
+    const btnSidebarZoom = document.getElementById('btn-sidebar-zoom');
+    if (btnSidebarZoom) {
+      btnSidebarZoom.addEventListener('click', () => {
+        if (btnZoom) btnZoom.click();
+      });
+    }
+
     const btnCloseInsp = document.getElementById('btn-close-inspector');
     if (btnCloseInsp) {
       btnCloseInsp.addEventListener('click', () => {
@@ -3977,6 +4246,42 @@
         if (drawer) drawer.classList.add('hidden');
       });
     }
+
+    // Connect Sidebar Tab Buttons
+    document.querySelectorAll('.s-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabId = btn.getAttribute('data-tab');
+        document.querySelectorAll('.s-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.s-tab-pane').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        const pane = document.getElementById(tabId);
+        if (pane) pane.classList.add('active');
+      });
+    });
+
+    // Connect Sidebar Collapse / Expand Toggle
+    const uiPanel = document.getElementById('ui-panel');
+    const btnCollapse = document.getElementById('btn-collapse-sidebar');
+    const btnExpand = document.getElementById('btn-expand-sidebar');
+
+    function toggleSidebar(collapse) {
+      if (!uiPanel) return;
+      if (collapse) {
+        uiPanel.classList.add('collapsed');
+        if (btnExpand) btnExpand.classList.remove('hidden');
+      } else {
+        uiPanel.classList.remove('collapsed');
+        if (btnExpand) btnExpand.classList.add('hidden');
+      }
+      setTimeout(() => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      }, 220);
+    }
+
+    if (btnCollapse) btnCollapse.addEventListener('click', () => toggleSidebar(true));
+    if (btnExpand) btnExpand.addEventListener('click', () => toggleSidebar(false));
 
     function animate() {
       requestAnimationFrame(animate);
