@@ -157,6 +157,14 @@ export default function Shelter3DViewer({
           shoe.position.set(px, 0.07, pz);
           shoe.receiveShadow = true;
           shelterGroup.add(shoe);
+
+          // Helical Ice-Auger Screw Pin anchored into permafrost/glacier
+          const auger = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.04, 0.01, 0.6, 6),
+            new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 })
+          );
+          auger.position.set(px, -0.25, pz);
+          shelterGroup.add(auger);
         }
       }
 
@@ -193,6 +201,21 @@ export default function Shelter3DViewer({
       walls.castShadow = true;
       walls.receiveShadow = true;
       shelterGroup.add(walls);
+
+      // Cam-Lock Joint Indicators on 1.2m modular boundaries
+      const nPanelsX = Math.round(length / 1.2);
+      for (let p = 1; p < nPanelsX; p++) {
+        const px = -length / 2 + (p * length) / nPanelsX;
+        for (let py of [0.6, 1.5, 2.4]) {
+          const port = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.025, 0.025, 0.04, 6),
+            new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 })
+          );
+          port.rotation.x = Math.PI / 2;
+          port.position.set(px, pylonH + 0.35 + py, width / 2 + 0.02);
+          shelterGroup.add(port);
+        }
+      }
 
       // 55° Gable Roof
       const roofPeakH = 2.0;
@@ -385,9 +408,10 @@ export default function Shelter3DViewer({
         pointerEvents: 'none'
       }}>
         <strong style={{ color: '#84cc16' }}>DRDO SIH 26051 // {theatre.toUpperCase()}</strong><br />
-        Foundation: {theatre === 'siachen' ? 'Steel Snow Truss Crib (Elevated 1.4m)' : (theatre === 'ladakh' ? 'Basalt Stone Bed' : 'Sand Plinth')}<br />
-        Solar Array: {theatre === 'siachen' ? '55° Slanted South Roof + Deck Racks' : (theatre === 'ladakh' ? '45° Rooftop PV + South Trombe' : 'Badgir Wind Towers + Cool Roof')}<br />
-        Controls: Left-click + drag to orbit &bull; Scroll to zoom &bull; Red vector = North
+        Logistics: {theatre === 'siachen' ? '1 Mi-17 Sortie • 4.5h Erection • Hex Cam-Locks' : (theatre === 'ladakh' ? 'Basalt Stone Bed • On-Site Masonry' : 'Sand Plinth • Local Adobe')}<br />
+        Insulation Core: {theatre === 'siachen' ? 'Aerogel + VIP + Bio-PCM (R ≥ 5.2)' : (theatre === 'ladakh' ? 'SCEB + Mineral Wool Jacket' : 'AAC + Cool Roof')}<br />
+        Solar Array: {theatre === 'siachen' ? '55° Slanted South Roof + Deck Racks (Bifacial)' : (theatre === 'ladakh' ? '45° Rooftop PV + South Trombe' : 'Badgir Wind Towers + Cool Roof')}<br />
+        Controls: Left-click + drag to orbit • Scroll to zoom • Red vector = True North
       </div>
     </div>
   );
