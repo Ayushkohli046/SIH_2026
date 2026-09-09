@@ -36,7 +36,7 @@ export default function Shelter3DViewer({
     const widthPx = currentMount.clientWidth || 600;
     const heightPx = currentMount.clientHeight || 450;
     const camera = new THREE.PerspectiveCamera(45, widthPx / heightPx, 0.1, 1000);
-    camera.position.set(14, 11, 18);
+    camera.position.set(16, 9.5, 20);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setSize(widthPx, heightPx);
@@ -56,7 +56,7 @@ export default function Shelter3DViewer({
     controls.maxPolarAngle = Math.PI / 2 - 0.02;
     controls.minDistance = 4;
     controls.maxDistance = 80;
-    controls.target.set(0, 2.2, 0);
+    controls.target.set(0, 1.4, 0);
 
     scene.add(new THREE.AmbientLight(0xffffff, 0.6));
     const sun = new THREE.DirectionalLight(0xfffaed, 2.0);
@@ -78,12 +78,13 @@ export default function Shelter3DViewer({
     };
     const groundMat = new THREE.MeshStandardMaterial({
       color: groundColors[theatre] || 0xe5eef5,
-      roughness: 0.95
+      roughness: 0.95,
+      metalness: 0.05
     });
-    const terrain = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), groundMat);
-    terrain.rotation.x = -Math.PI / 2;
-    terrain.receiveShadow = true;
-    scene.add(terrain);
+    const ground = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), groundMat);
+    ground.rotation.x = -Math.PI / 2;
+    ground.receiveShadow = true;
+    scene.add(ground);
 
     scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 0, -1), new THREE.Vector3(0, 0.05, 0), 8, 0xef4444, 1.8, 1.0));
 
@@ -107,6 +108,25 @@ export default function Shelter3DViewer({
       shape.moveTo(-rWidth / 2, 0);
       shape.lineTo(0, rHeight);
       shape.lineTo(rWidth / 2, 0);
+      shape.closePath();
+      const geom = new THREE.ExtrudeGeometry(shape, { steps: 1, depth: rLen, bevelEnabled: false });
+      geom.center();
+      geom.rotateY(Math.PI / 2);
+      return geom;
+    }
+
+    function createQuonsetArchGeometry(rLen, rWidth, archH) {
+      const shape = new THREE.Shape();
+      const halfW = rWidth / 2;
+      const segments = 48;
+      shape.moveTo(halfW, 0);
+      for (let i = 1; i <= segments; i++) {
+        const theta = (i / segments) * Math.PI;
+        const x = halfW * Math.cos(theta);
+        const y = archH * Math.sin(theta);
+        shape.lineTo(x, y);
+      }
+      shape.lineTo(halfW, 0);
       shape.closePath();
       const geom = new THREE.ExtrudeGeometry(shape, { steps: 1, depth: rLen, bevelEnabled: false });
       geom.center();
@@ -219,44 +239,92 @@ export default function Shelter3DViewer({
         shelterGroup.add(doorLeaf);
 
       } else if (variant === 'beta') {
-        // Quonset Barrel Vault
-        const archR = width / 2;
+        // Option B: Blizzard-Vault Quonset Arch
+        const archHeight = height * 0.95;
         const skidH = 0.35;
 
-        const skid = new THREE.Mesh(new THREE.BoxGeometry(length + 0.6, skidH, width + 0.6), darkSteelMat);
+        const skid = new THREE.Mesh(new THREE.BoxGeometry(length + 0.8, skidH, width + 0.8), darkSteelMat);
         skid.position.set(0, skidH / 2, 0);
         shelterGroup.add(skid);
 
-        const archGeom = new THREE.CylinderGeometry(archR, archR, length, 32, 1, false, 0, Math.PI);
-        archGeom.rotateZ(Math.PI / 2);
-        archGeom.rotateY(Math.PI / 2);
-        const arch = new THREE.Mesh(archGeom, panelMat);
-        arch.position.set(0, skidH, 0);
-        shelterGroup.add(arch);
+        for (let ix = -1; ix <= 1; ix++) {
+          [-width / 2 - 0.3, width / 2 + 0.3].forEach(pz => {
+            const aug = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.01, 0.75, 6), new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 }));
+            aug.position.set(ix * (length * 0.42), -0.25, pz);
+            shelterGroup.add(aug);
 
-        [-length / 2, length / 2].forEach((px, idx) => {
-          const endGeom = new THREE.CircleGeometry(archR, 24, 0, Math.PI);
-          endGeom.rotateY(idx === 0 ? -Math.PI / 2 : Math.PI / 2);
-          const endMesh = new THREE.Mesh(endGeom, panelMat);
-          endMesh.position.set(px, skidH, 0);
-          shelterGroup.add(endMesh);
-        });
-
-        // Curved solar modules
-        for (let a of [-0.3, 0, 0.3]) {
-          const py = skidH + (archR + 0.04) * Math.sin(Math.PI / 2 + a);
-          const pz = (archR + 0.04) * Math.cos(Math.PI / 2 + a);
-          const pv = createDetailedSolarModule(length * 0.85, 1.1);
-          pv.position.set(0, py, pz);
-          pv.rotation.x = -a;
-          shelterGroup.add(pv);
+            const shoe = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.30, 0.12, 8), darkSteelMat);
+            shoe.position.set(ix * (length * 0.42), 0.06, pz);
+            shelterGroup.add(shoe);
+          });
         }
 
-        // Circular Hatch
-        const hatch = new THREE.Mesh(new THREE.CylinderGeometry(0.65, 0.65, 0.08, 20), steelMat);
-        hatch.position.set(length / 2 + 0.02, skidH + 1.1, 0);
-        hatch.rotation.z = Math.PI / 2;
-        shelterGroup.add(hatch);
+        const archGeom = createQuonsetArchGeometry(length, width, archHeight);
+        const arch = new THREE.Mesh(archGeom, panelMat);
+        arch.position.set(0, skidH + archHeight / 2, 0);
+        arch.castShadow = true;
+        arch.receiveShadow = true;
+        shelterGroup.add(arch);
+
+        // Titanium Structural Arch Rib Rings
+        const ribGeom = createQuonsetArchGeometry(0.12, width + 0.12, archHeight + 0.06);
+        const nRibs = Math.max(5, bays * 2 + 2);
+        for (let i = 0; i <= nRibs; i++) {
+          const rx = -length / 2 + (i * length) / nRibs;
+          const rib = new THREE.Mesh(ribGeom, steelMat);
+          rib.position.set(rx, skidH + (archHeight + 0.06) / 2, 0);
+          shelterGroup.add(rib);
+        }
+
+        // Curved Solar Panels
+        const solarAngles = [
+          { theta: Math.PI * 0.30 },
+          { theta: Math.PI * 0.42 },
+          { theta: Math.PI * 0.58 },
+          { theta: Math.PI * 0.70 }
+        ];
+        solarAngles.forEach(({ theta }) => {
+          const pz = (width / 2 + 0.04) * Math.cos(theta);
+          const py = skidH + (archHeight + 0.04) * Math.sin(theta);
+          const rotX = Math.atan2(archHeight * Math.cos(theta), (width / 2) * Math.sin(theta));
+
+          const pv = createDetailedSolarModule(length * 0.86, 0.95);
+          pv.position.set(0, py, pz);
+          pv.rotation.x = rotX;
+          shelterGroup.add(pv);
+        });
+
+        // Submarine Hatch Door
+        const hatchX = length / 2 + 0.04;
+        const hatchY = skidH + 1.15;
+        const hatchFrame = new THREE.Mesh(new THREE.TorusGeometry(0.68, 0.07, 12, 28), steelMat);
+        hatchFrame.position.set(hatchX, hatchY, 0);
+        hatchFrame.rotation.y = Math.PI / 2;
+        shelterGroup.add(hatchFrame);
+
+        const hatchDoor = new THREE.Mesh(new THREE.CylinderGeometry(0.64, 0.64, 0.07, 24), darkSteelMat);
+        hatchDoor.position.set(hatchX - 0.01, hatchY, 0);
+        hatchDoor.rotation.z = Math.PI / 2;
+        shelterGroup.add(hatchDoor);
+
+        const wheel = new THREE.Mesh(new THREE.TorusGeometry(0.24, 0.035, 8, 16), new THREE.MeshStandardMaterial({ color: 0x84cc16 }));
+        wheel.position.set(hatchX + 0.05, hatchY, 0);
+        wheel.rotation.y = Math.PI / 2;
+        shelterGroup.add(wheel);
+
+        // Guy-Wires
+        for (let ix = -1; ix <= 1; ix += 2) {
+          [-width / 2 - 1.8, width / 2 + 1.8].forEach(pz => {
+            const topY = skidH + archHeight * 0.78;
+            const topZ = (pz > 0 ? 1 : -1) * (width * 0.44);
+            const px = ix * (length * 0.35);
+            const cableLen = Math.hypot(pz - topZ, topY);
+            const cable = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, cableLen, 6), steelMat);
+            cable.position.set(px, topY / 2, (topZ + pz) / 2);
+            cable.rotation.x = Math.atan2(pz - topZ, topY);
+            shelterGroup.add(cable);
+          });
+        }
 
       } else if (variant === 'gamma') {
         // High-Clearance Arctic Pod

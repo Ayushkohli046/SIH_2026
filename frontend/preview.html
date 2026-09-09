@@ -34,22 +34,53 @@
       height: 100%;
     }
 
-    /* Top Command Header & Integrated Camera Bar (Never Overlaps) */
+    /* Top Command Header & Integrated Camera Bar (Compact & Minimizable) */
     .hud-header {
       position: absolute;
-      top: 14px;
-      left: 16px;
-      right: 480px;
+      top: 12px;
+      left: 14px;
+      max-width: 580px;
+      width: auto;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      background: rgba(6, 10, 15, 0.95);
+      gap: 6px;
+      background: rgba(6, 10, 15, 0.90);
       border: 1px solid #1c2b20;
       border-left: 4px solid #84cc16;
-      padding: 10px 14px;
-      border-radius: 3px;
-      backdrop-filter: blur(12px);
+      padding: 8px 12px;
+      border-radius: 4px;
+      backdrop-filter: blur(14px);
       z-index: 10;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hud-header.collapsed {
+      padding: 6px 12px;
+      gap: 0;
+      max-width: fit-content;
+      background: rgba(6, 10, 15, 0.75);
+    }
+    .hud-header.collapsed .hud-collapsible-body {
+      display: none;
+    }
+    .hud-toggle-btn {
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 3px 8px;
+      border-radius: 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .hud-toggle-btn:hover {
+      border-color: #84cc16;
+      color: #84cc16;
+      background: rgba(132, 204, 22, 0.1);
     }
     .hud-header-top {
       display: flex;
@@ -768,36 +799,44 @@
 
   <!-- 3D Canvas Container -->
   <div id="canvas-container">
-    <div class="hud-header">
+    <div class="hud-header" id="main-hud-header">
       <div class="hud-header-top">
         <div class="brand-group">
           <span class="hydra-badge">TEAM HYDRA</span>
           <span class="project-tag">DRDO CAD SUITE</span>
           <span class="sih-id">SIH 26051</span>
         </div>
-        <div class="telemetry-row">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <button class="compare-btn-trigger" id="btn-open-compare" title="Open Multi-Shelter Architecture Evaluator">
+            📊 COMPARE SHELTERS
+          </button>
+          <button class="hud-toggle-btn" id="btn-toggle-hud" title="Minimize / Expand CAD Header (Press 'H')">
+            <span id="hud-toggle-icon">➖</span> <span id="hud-toggle-text">MINIMIZE</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hud-collapsible-body" id="hud-collapsible-body">
+        <div class="telemetry-row" style="margin-top: 4px;">
           <div>THEATRE: <span id="top-theatre">SIACHEN ARCTIC</span></div>
           <div>SOLAR: <span id="top-solar">DUAL-SLOPE (BOTH SIDES)</span></div>
           <div>TRANSPORT: <span id="top-base">3 to 4 FLIGHTS (Mi-17 @ 16,000 ft)</span></div>
         </div>
-        <button class="compare-btn-trigger" id="btn-open-compare">
-          📊 COMPARE SHELTERS (LIVE WEATHER)
-        </button>
-      </div>
 
-      <!-- Shelter Design Variant Quick Selector Bar -->
-      <div class="hud-variant-bar">
-        <span class="cam-label" style="color: #38bdf8;">SHELTER DESIGN:</span>
-        <div id="variant-button-container" style="display: flex; gap: 6px; flex-wrap: wrap;">
-          <!-- Dynamically populated per terrain -->
+        <!-- Shelter Design Variant Quick Selector Bar -->
+        <div class="hud-variant-bar">
+          <span class="cam-label" style="color: #38bdf8;">SHELTER DESIGN:</span>
+          <div id="variant-button-container" style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <!-- Dynamically populated per terrain -->
+          </div>
         </div>
-      </div>
 
-      <!-- Terrain-Specific Dynamic Camera Toolbar -->
-      <div class="hud-camera-bar">
-        <span class="cam-label">CAM FOCUS:</span>
-        <div id="cam-button-container" style="display: flex; gap: 6px; flex-wrap: wrap;">
-          <!-- Dynamically populated per terrain -->
+        <!-- Terrain-Specific Dynamic Camera Toolbar -->
+        <div class="hud-camera-bar">
+          <span class="cam-label">CAM FOCUS:</span>
+          <div id="cam-button-container" style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <!-- Dynamically populated per terrain -->
+          </div>
         </div>
       </div>
     </div>
@@ -1157,12 +1196,12 @@
           <div>&bull; <span class="formula-eq">Aerogel/VIP Core:</span> R_tot = &Sigma;(d_i / k_i) &ge; 12.8 m&sup2;K/W (U = 0.078 W/m&sup2;K)</div>
           <div>&bull; <span class="formula-eq">Bio-PCM Buffer:</span> Q_latent = m_PCM &bull; &Delta;h_fus &asymp; 14.4 kWh (prevents night freezing)</div>
         `,
-        cameraHero: { pos: [15, 11, 19], target: [0, 2.2, 0] },
+        cameraHero: { pos: [16, 9.5, 20], target: [0, 1.4, 0] },
         presets: [
-          { label: '⭐ Front Dual-Solar & Crib (55°)', pos: [15, 11, 19], target: [0, 2.2, 0] },
-          { label: '☀️ Dual-Slope Solar (Both Sides)', pos: [0, 16, 20], target: [0, 4.0, 0] },
-          { label: '🚪 Inward-Opening Safe Door', pos: [length => length * 0.35 + 2.5, 3.2, width => width / 2 + 3.8], target: [length => length * 0.35, 2.4, width => width / 2 + 1.2] },
-          { label: '🏗️ Ice-Auger Glacier Anchors', pos: [10, 1.4, 11], target: [0, 0.7, 0] }
+          { label: '⭐ Hero 3D View (Unobstructed)', pos: [16, 9.5, 20], target: [0, 1.4, 0] },
+          { label: '☀️ Dual-Slope Solar (Both Sides)', pos: [0, 14, 18], target: [0, 2.5, 0] },
+          { label: '🚪 Inward Safe Door / Entry', pos: [length => length * 0.35 + 2.8, 2.4, width => width / 2 + 3.8], target: [length => length * 0.35, 1.6, width => width / 2 + 1.0] },
+          { label: '🏗️ Ice-Auger Glacier Anchors', pos: [11, 1.5, 12], target: [0, 0.6, 0] }
         ]
       },
       ladakh: {
@@ -1191,12 +1230,12 @@
           <div>&bull; <span class="formula-eq">45° Solar Tilt:</span> &beta; = Latitude (34.2°) + 11° = 45.2° (optimal winter capture)</div>
           <div>&bull; <span class="formula-eq">Night Radiant Comfort:</span> q_rad = &epsilon; &bull; &sigma; &bull; (T_wall&sup4; - T_indoor&sup4;)</div>
         `,
-        cameraHero: { pos: [6, 7, 16], target: [0, 2.2, 0] },
+        cameraHero: { pos: [14, 8.5, 17], target: [0, 1.4, 0] },
         presets: [
-          { label: '⭐ South Trombe Solar Wall', pos: [2, 4.0, 10], target: [0, 2.2, 3.5] },
-          { label: '🏔️ Basalt Stone Thermal Mass', pos: [8, 1.8, 9], target: [0, 0.8, 0] },
-          { label: '☀️ 45° Rooftop Solar Rack', pos: [0, 9.5, 12], target: [0, 4.8, 1.5] },
-          { label: '🚪 Recessed Mountain Portal', pos: [length => length * 0.35 + 2.0, 2.6, width => width / 2 + 3.0], target: [length => length * 0.35, 1.8, width => width / 2] }
+          { label: '⭐ South Trombe Solar Wall', pos: [3, 4.5, 12], target: [0, 1.6, 2.5] },
+          { label: '🏔️ Basalt Stone Thermal Mass', pos: [9, 1.8, 10], target: [0, 0.7, 0] },
+          { label: '☀️ 45° Rooftop Solar Rack', pos: [0, 9.0, 13], target: [0, 2.8, 1.0] },
+          { label: '🚪 Recessed Mountain Portal', pos: [length => length * 0.35 + 2.2, 2.2, width => width / 2 + 3.2], target: [length => length * 0.35, 1.4, width => width / 2] }
         ]
       },
       thar: {
@@ -1225,10 +1264,10 @@
           <div>&bull; <span class="formula-eq">Cool Roof Emittance:</span> SRI &ge; 105 (reflects 88% solar, cuts ceiling heat by 18°C)</div>
           <div>&bull; <span class="formula-eq">Sand Plinth Friction:</span> &tau; = c + &sigma;_n &bull; tan(&phi;) (stabilizes shifting dunes)</div>
         `,
-        cameraHero: { pos: [12, 9, 17], target: [0, 2.2, 0] },
+        cameraHero: { pos: [15, 8.5, 18], target: [0, 1.4, 0] },
         presets: [
-          { label: '⭐ Dual Badgir Wind-Towers', pos: [0, 8.5, 13], target: [0, 4.5, 0] },
-          { label: '⛱️ Deep Chhajja Shading Overhang', pos: [7, 3.8, 10], target: [0, 2.8, 4.0] },
+          { label: '⭐ Dual Badgir Wind-Towers', pos: [0, 7.5, 14], target: [0, 2.6, 0] },
+          { label: '⛱️ Deep Chhajja Shading Overhang', pos: [8, 3.5, 11], target: [0, 2.0, 3.0] },
           { label: '🏜️ Sand Plinth & Anti-Erosion Skirt', pos: [10, 1.4, 11], target: [0, 0.4, 0] },
           { label: '🚪 Shaded Deorhi Veranda', pos: [length => length * 0.35 + 2.0, 2.4, width => width / 2 + 2.8], target: [length => length * 0.35, 1.6, width => width / 2] }
         ]
@@ -1547,7 +1586,7 @@
     scene.background = new THREE.Color(THEATRES.siachen.skyColor);
 
     const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.set(15, 11, 19);
+    camera.position.set(16, 9.5, 20);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setSize(container.clientWidth, container.clientHeight);
@@ -1566,7 +1605,7 @@
     controls.maxPolarAngle = Math.PI / 2 - 0.02;
     controls.minDistance = 4;
     controls.maxDistance = 85;
-    controls.target.set(0, 2.2, 0);
+    controls.target.set(0, 1.4, 0);
 
     scene.add(new THREE.AmbientLight(0xffffff, 0.6));
 
@@ -1611,6 +1650,32 @@
       shape.closePath();
 
       const geom = new THREE.ExtrudeGeometry(shape, { steps: 1, depth: roofLength, bevelEnabled: false });
+      geom.center();
+      geom.rotateY(Math.PI / 2);
+      return geom;
+    }
+
+    function createQuonsetArchGeometry(roofLength, roofWidth, archHeight) {
+      const shape = new THREE.Shape();
+      const halfW = roofWidth / 2;
+      const segments = 48;
+
+      shape.moveTo(halfW, 0);
+      for (let i = 1; i <= segments; i++) {
+        const theta = (i / segments) * Math.PI;
+        const x = halfW * Math.cos(theta);
+        const y = archHeight * Math.sin(theta);
+        shape.lineTo(x, y);
+      }
+      shape.lineTo(halfW, 0);
+      shape.closePath();
+
+      const extrudeSettings = {
+        steps: 1,
+        depth: roofLength,
+        bevelEnabled: false
+      };
+      const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
       geom.center();
       geom.rotateY(Math.PI / 2);
       return geom;
@@ -1735,6 +1800,27 @@
           ridgeCap.position.set(0, pylonHeight + 0.35 + height + roofPeakH + 0.05, 0);
           shelterGroup.add(ridgeCap);
 
+          // Roof Ridge Anti-Freeze Ventilator Cowl
+          const ventPipe = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.55, 8), steelMat);
+          ventPipe.position.set(-length * 0.28, pylonHeight + 0.35 + height + roofPeakH + 0.30, 0);
+          shelterGroup.add(ventPipe);
+
+          const ventCowl = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.18, 12), darkSteelMat);
+          ventCowl.position.set(-length * 0.28, pylonHeight + 0.35 + height + roofPeakH + 0.60, 0);
+          shelterGroup.add(ventCowl);
+
+          // Amber Whiteout Hazard Beacon on Ridge
+          const beaconBase = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.10, 0.12, 8), darkSteelMat);
+          beaconBase.position.set(0, pylonHeight + 0.35 + height + roofPeakH + 0.12, 0);
+          shelterGroup.add(beaconBase);
+
+          const beaconLens = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.06, 0.06, 0.12, 8),
+            new THREE.MeshStandardMaterial({ color: 0xf59e0b, emissive: 0xf59e0b, emissiveIntensity: 0.9 })
+          );
+          beaconLens.position.set(0, pylonHeight + 0.35 + height + roofPeakH + 0.24, 0);
+          shelterGroup.add(beaconLens);
+
           // Dual-Slope Solar (Both Sides)
           const slopeHalfW = (width + 0.8) / 2;
           const slantHypot = Math.hypot(slopeHalfW, roofPeakH);
@@ -1768,6 +1854,13 @@
           solarGroup.position.set(0, pylonHeight + 0.35 + height, 0);
           shelterGroup.add(solarGroup);
 
+          // Snow-Stop Battens along eaves
+          [-slopeHalfW - 0.04, slopeHalfW + 0.04].forEach(ez => {
+            const snowStop = new THREE.Mesh(new THREE.BoxGeometry(length + 0.6, 0.08, 0.08), steelMat);
+            snowStop.position.set(0, pylonHeight + 0.35 + height + 0.08, ez);
+            shelterGroup.add(snowStop);
+          });
+
           // Inward Door Vestibule
           const alW = 1.8;
           const alH = 2.3;
@@ -1799,12 +1892,13 @@
           }
 
         } else if (variant === 'beta') {
-          // Option B: Blizzard-Vault Quonset Arch (Aerodynamic Barrel-Vault Shell + Curved Thin-Film PV)
-          const archR = width / 2;
+          // Option B: Blizzard-Vault Quonset Arch (Streamlined Parabolic Vault + Titanium Ribs + Submarine Hatch)
+          const archHeight = height * 0.95;
           const skidH = 0.35;
 
+          // Heavy-Duty Arctic Skid Platform
           const skid = new THREE.Mesh(
-            new THREE.BoxGeometry(length + 0.6, skidH, width + 0.6),
+            new THREE.BoxGeometry(length + 0.8, skidH, width + 0.8),
             new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.4 })
           );
           skid.position.set(0, skidH / 2, 0);
@@ -1812,79 +1906,144 @@
           skid.receiveShadow = true;
           shelterGroup.add(skid);
 
+          // Glacier Ice Augers along perimeter
+          const augerMat = new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9, roughness: 0.2 });
           for (let ix = -1; ix <= 1; ix++) {
-            [-width / 2 - 0.2, width / 2 + 0.2].forEach(pz => {
-              const aug = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.01, 0.7, 6), new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 }));
-              aug.position.set(ix * (length * 0.4), -0.2, pz);
+            [-width / 2 - 0.3, width / 2 + 0.3].forEach(pz => {
+              const aug = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.01, 0.75, 6), augerMat);
+              aug.position.set(ix * (length * 0.42), -0.25, pz);
               shelterGroup.add(aug);
+
+              const shoe = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.30, 0.12, 8), darkSteelMat);
+              shoe.position.set(ix * (length * 0.42), 0.06, pz);
+              shelterGroup.add(shoe);
             });
           }
 
-          const archGeom = new THREE.CylinderGeometry(archR, archR, length, 40, 1, false, 0, Math.PI);
-          archGeom.rotateZ(Math.PI / 2);
-          archGeom.rotateY(Math.PI / 2);
+          // Aerodynamic Quonset Arch Shell (Watertight Extrusion)
+          const archGeom = createQuonsetArchGeometry(length, width, archHeight);
           const archMesh = new THREE.Mesh(archGeom, panelMat);
-          archMesh.position.set(0, skidH, 0);
+          archMesh.position.set(0, skidH + archHeight / 2, 0);
           archMesh.castShadow = true;
           archMesh.receiveShadow = true;
           shelterGroup.add(archMesh);
 
-          [-length / 2, length / 2].forEach((px, idx) => {
-            const endGeom = new THREE.CircleGeometry(archR, 36, 0, Math.PI);
-            endGeom.rotateY(idx === 0 ? -Math.PI / 2 : Math.PI / 2);
-            const endMesh = new THREE.Mesh(endGeom, panelMat);
-            endMesh.position.set(px, skidH, 0);
-            endMesh.castShadow = true;
-            shelterGroup.add(endMesh);
-          });
+          // External Titanium Structural Arch Rib Rings
+          const ribGeom = createQuonsetArchGeometry(0.12, width + 0.12, archHeight + 0.06);
+          const nRibs = Math.max(5, bays * 2 + 2);
+          for (let i = 0; i <= nRibs; i++) {
+            const rx = -length / 2 + (i * length) / nRibs;
+            const rib = new THREE.Mesh(ribGeom, steelMat);
+            rib.position.set(rx, skidH + (archHeight + 0.06) / 2, 0);
+            rib.castShadow = true;
+            shelterGroup.add(rib);
+          }
 
-          const nArchSolar = Math.max(4, bays * 2);
-          const archSegW = (length * 0.88) / nArchSolar;
-          [-0.38, 0, 0.38].forEach(angOffset => {
-            const currAngle = Math.PI / 2 + angOffset;
-            const rSolar = archR + 0.04;
-            const py = skidH + rSolar * Math.sin(currAngle);
-            const pz = rSolar * Math.cos(currAngle);
+          // Ridge Ventilator with Anti-Freeze Thermal Cowl
+          const ventPipe = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.65, 8), steelMat);
+          ventPipe.position.set(-length * 0.25, skidH + archHeight + 0.30, 0);
+          shelterGroup.add(ventPipe);
 
-            for (let i = 0; i < nArchSolar; i++) {
-              const px = -length * 0.44 + (i + 0.5) * archSegW;
-              const sMod = createDetailedSolarModule(archSegW * 0.88, 1.2, solarMat, aluMat);
+          const ventCowl = new THREE.Mesh(new THREE.ConeGeometry(0.32, 0.22, 12), darkSteelMat);
+          ventCowl.position.set(-length * 0.25, skidH + archHeight + 0.65, 0);
+          shelterGroup.add(ventCowl);
+
+          // Flush Curved Thin-Film Solar PV Panels (Both South & North Slopes)
+          const nSolarCols = Math.max(4, bays * 2);
+          const modWidth = (length * 0.86) / nSolarCols;
+          const solarAngles = [
+            { theta: Math.PI * 0.30 }, // South slope (~54 deg)
+            { theta: Math.PI * 0.42 }, // South upper (~75 deg)
+            { theta: Math.PI * 0.58 }, // North upper (snow albedo capture)
+            { theta: Math.PI * 0.70 }  // North slope (snow albedo capture)
+          ];
+
+          solarAngles.forEach(({ theta }) => {
+            const pz = (width / 2 + 0.04) * Math.cos(theta);
+            const py = skidH + (archHeight + 0.04) * Math.sin(theta);
+            const rotX = Math.atan2(archHeight * Math.cos(theta), (width / 2) * Math.sin(theta));
+
+            for (let c = 0; c < nSolarCols; c++) {
+              const px = -length * 0.43 + (c + 0.5) * modWidth;
+              const sMod = createDetailedSolarModule(modWidth * 0.88, 0.95, solarMat, aluMat);
               sMod.position.set(px, py, pz);
-              sMod.rotation.x = -(currAngle - Math.PI / 2);
+              sMod.rotation.x = rotX;
               shelterGroup.add(sMod);
             }
           });
 
-          // Submarine Hatch Door
+          // Submarine Pressure-Hatch Vestibule at Front (+X)
+          const hatchZ = 0;
+          const hatchY = skidH + 1.15;
+          const hatchX = length / 2 + 0.04;
+
+          // Storm Visor Hood over hatch
+          const hoodGeom = new THREE.CylinderGeometry(0.90, 0.90, 0.55, 16, 1, false, 0, Math.PI);
+          hoodGeom.rotateZ(Math.PI / 2);
+          hoodGeom.rotateY(Math.PI / 2);
+          const hood = new THREE.Mesh(hoodGeom, trimMat);
+          hood.position.set(length / 2 + 0.25, hatchY + 0.15, 0);
+          hood.castShadow = true;
+          shelterGroup.add(hood);
+
+          // Heavy Circular Hatch Frame
           const hatchFrame = new THREE.Mesh(
-            new THREE.TorusGeometry(0.70, 0.08, 12, 32),
+            new THREE.TorusGeometry(0.68, 0.07, 12, 32),
             new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.9, roughness: 0.3 })
           );
-          hatchFrame.position.set(length / 2 + 0.04, skidH + 1.1, 0);
+          hatchFrame.position.set(hatchX, hatchY, hatchZ);
           hatchFrame.rotation.y = Math.PI / 2;
           shelterGroup.add(hatchFrame);
 
+          // Pressure Hatch Door Disc
           const hatchDoor = new THREE.Mesh(
-            new THREE.CylinderGeometry(0.68, 0.68, 0.08, 24),
-            new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.3 })
+            new THREE.CylinderGeometry(0.64, 0.64, 0.07, 24),
+            new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.35 })
           );
-          hatchDoor.position.set(length / 2 + 0.02, skidH + 1.1, 0);
+          hatchDoor.position.set(hatchX - 0.01, hatchY, hatchZ);
           hatchDoor.rotation.z = Math.PI / 2;
           shelterGroup.add(hatchDoor);
 
+          // Dogging Handwheel
           const wheel = new THREE.Mesh(
-            new THREE.TorusGeometry(0.24, 0.03, 8, 16),
-            new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 })
+            new THREE.TorusGeometry(0.24, 0.035, 8, 16),
+            new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9, roughness: 0.2 })
           );
-          wheel.position.set(length / 2 + 0.08, skidH + 1.1, 0);
+          wheel.position.set(hatchX + 0.05, hatchY, hatchZ);
           wheel.rotation.y = Math.PI / 2;
           shelterGroup.add(wheel);
 
-          // Aerodynamic Guy-Wires
+          // Wheel Hub & Spokes
+          const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.08, 12), steelMat);
+          hub.position.set(hatchX + 0.04, hatchY, hatchZ);
+          hub.rotation.z = Math.PI / 2;
+          shelterGroup.add(hub);
+
+          for (let sp = 0; sp < 4; sp++) {
+            const spoke = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.44, 0.025), steelMat);
+            spoke.position.set(hatchX + 0.05, hatchY, hatchZ);
+            spoke.rotation.x = (sp * Math.PI) / 4;
+            shelterGroup.add(spoke);
+          }
+
+          // Anti-Drift Aluminum Diamond-Plate Ice Entry Steps
+          const nSteps = 5;
+          for (let s = 0; s < nSteps; s++) {
+            const stepH = (skidH + 0.5) / nSteps;
+            const step = new THREE.Mesh(
+              new THREE.BoxGeometry(0.34, 0.08, 1.2),
+              new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.8, roughness: 0.4 })
+            );
+            step.position.set(length / 2 + 0.35 + s * 0.28, (s + 0.5) * stepH, 0);
+            step.castShadow = true;
+            shelterGroup.add(step);
+          }
+
+          // High-Tension Galvanized Steel Guy-Wires with Turnbuckles
           for (let ix = -1; ix <= 1; ix += 2) {
             [-width / 2 - 1.8, width / 2 + 1.8].forEach(pz => {
-              const topY = skidH + archR * 0.85;
-              const topZ = (pz > 0 ? 1 : -1) * (width * 0.42);
+              const topY = skidH + archHeight * 0.78;
+              const topZ = (pz > 0 ? 1 : -1) * (width * 0.44);
               const px = ix * (length * 0.35);
 
               const cableLen = Math.hypot(pz - topZ, topY);
@@ -1893,9 +2052,21 @@
               cable.rotation.x = Math.atan2(pz - topZ, topY);
               shelterGroup.add(cable);
 
-              const anchor = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.15, 0.25, 8), new THREE.MeshStandardMaterial({ color: 0x84cc16 }));
-              anchor.position.set(px, 0.1, pz);
+              const turnbuckle = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.04, 0.04, 0.30, 8),
+                new THREE.MeshStandardMaterial({ color: 0xd4d4d8, metalness: 0.9 })
+              );
+              turnbuckle.position.set(px, topY * 0.4, (topZ + pz) * 0.4);
+              turnbuckle.rotation.x = Math.atan2(pz - topZ, topY);
+              shelterGroup.add(turnbuckle);
+
+              const anchor = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.22, 0.16, 8), darkSteelMat);
+              anchor.position.set(px, 0.08, pz);
               shelterGroup.add(anchor);
+
+              const groundAug = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.01, 0.6, 6), augerMat);
+              groundAug.position.set(px, -0.22, pz);
+              shelterGroup.add(groundAug);
             });
           }
 
@@ -2689,6 +2860,36 @@
     });
     document.getElementById('btn-close-compare').addEventListener('click', () => {
       modal.classList.remove('active');
+    });
+
+    // Minimizable HUD Header Controls
+    const hudHeader = document.getElementById('main-hud-header');
+    const btnToggleHud = document.getElementById('btn-toggle-hud');
+    const hudToggleIcon = document.getElementById('hud-toggle-icon');
+    const hudToggleText = document.getElementById('hud-toggle-text');
+
+    function toggleHudCollapse() {
+      if (!hudHeader) return;
+      const isCollapsed = hudHeader.classList.toggle('collapsed');
+      if (isCollapsed) {
+        if (hudToggleIcon) hudToggleIcon.textContent = '➕';
+        if (hudToggleText) hudToggleText.textContent = 'EXPAND';
+      } else {
+        if (hudToggleIcon) hudToggleIcon.textContent = '➖';
+        if (hudToggleText) hudToggleText.textContent = 'MINIMIZE';
+      }
+    }
+
+    if (btnToggleHud) {
+      btnToggleHud.addEventListener('click', toggleHudCollapse);
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'h' || e.key === 'H') {
+        if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'SELECT') {
+          toggleHudCollapse();
+        }
+      }
     });
 
     const LOC_PRESETS = {
