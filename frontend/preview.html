@@ -34,28 +34,34 @@
       height: 100%;
     }
 
-    /* Top Command Header */
+    /* Top Command Header & Integrated Camera Bar (Never Overlaps) */
     .hud-header {
       position: absolute;
       top: 14px;
       left: 16px;
       right: 480px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(6, 10, 15, 0.94);
+      flex-direction: column;
+      gap: 8px;
+      background: rgba(6, 10, 15, 0.95);
       border: 1px solid #1c2b20;
       border-left: 4px solid #84cc16;
-      padding: 10px 16px;
-      border-radius: 2px;
+      padding: 10px 14px;
+      border-radius: 3px;
       backdrop-filter: blur(12px);
-      pointer-events: none;
       z-index: 10;
+    }
+    .hud-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     .brand-group {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .hydra-badge {
       background: #84cc16;
@@ -67,24 +73,24 @@
       letter-spacing: 0.08em;
     }
     .project-tag {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
       color: #f8fafc;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
     }
     .sih-id {
       color: #84cc16;
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 700;
       border-left: 1px solid #334155;
-      padding-left: 10px;
+      padding-left: 8px;
       font-family: 'JetBrains Mono', monospace;
     }
     .telemetry-row {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
+      font-size: 0.70rem;
       color: #94a3b8;
     }
     .telemetry-row span {
@@ -92,32 +98,39 @@
       font-weight: 700;
     }
 
-    /* Quick Camera Preset Toolbar */
+    /* Terrain-Specific Camera Preset Toolbar */
     .hud-camera-bar {
-      position: absolute;
-      top: 68px;
-      left: 16px;
       display: flex;
       gap: 6px;
-      z-index: 10;
+      flex-wrap: wrap;
+      align-items: center;
+      border-top: 1px solid #16251b;
+      padding-top: 7px;
+    }
+    .cam-label {
+      font-size: 0.65rem;
+      color: #84cc16;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      margin-right: 4px;
+      text-transform: uppercase;
     }
     .cam-btn {
-      background: rgba(6, 10, 15, 0.88);
+      background: #0f172a;
       border: 1px solid #1e293b;
       color: #cbd5e1;
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.72rem;
+      font-size: 0.70rem;
       font-weight: 600;
-      padding: 5px 10px;
+      padding: 4px 9px;
       border-radius: 2px;
       cursor: pointer;
-      backdrop-filter: blur(8px);
       transition: all 0.15s;
     }
     .cam-btn:hover {
       border-color: #84cc16;
       color: #84cc16;
-      background: rgba(15, 23, 42, 0.95);
+      background: #142033;
     }
 
     /* Compass & Solar HUD */
@@ -128,14 +141,14 @@
       background: rgba(6, 10, 15, 0.94);
       border: 1px solid #1c2b20;
       border-radius: 3px;
-      padding: 12px 16px;
+      padding: 10px 14px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       color: #cbd5e1;
       pointer-events: none;
       backdrop-filter: blur(8px);
       z-index: 10;
-      line-height: 1.5;
+      line-height: 1.4;
     }
     .hud-compass strong {
       color: #84cc16;
@@ -147,11 +160,11 @@
       height: 100vh;
       background: #06090d;
       border-left: 2px solid #1c2b20;
-      padding: 18px 16px;
+      padding: 16px 14px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 11px;
       box-shadow: -10px 0 30px rgba(0, 0, 0, 0.95);
       z-index: 20;
     }
@@ -167,23 +180,23 @@
       background: #0b1016;
       border: 1px solid #16202a;
       border-radius: 3px;
-      padding: 11px 13px;
+      padding: 10px 12px;
     }
     .eng-section-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 9px;
-      padding-bottom: 5px;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
       border-bottom: 1px solid #16222d;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: #84cc16;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
     .sec-tag {
-      font-size: 0.66rem;
+      font-size: 0.65rem;
       color: #64748b;
       font-family: 'JetBrains Mono', monospace;
     }
@@ -196,9 +209,9 @@
     }
     .theatre-card {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       align-items: center;
-      padding: 10px 12px;
+      padding: 9px 11px;
       background: #0f151e;
       border: 1px solid #1c2834;
       border-radius: 4px;
@@ -215,9 +228,9 @@
       box-shadow: inset 0 0 10px rgba(132, 204, 22, 0.15);
     }
     .theatre-badge {
-      font-size: 1.4rem;
-      width: 38px;
-      height: 38px;
+      font-size: 1.3rem;
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -229,22 +242,22 @@
       flex: 1;
     }
     .theatre-name {
-      font-size: 0.82rem;
+      font-size: 0.80rem;
       font-weight: 700;
       color: #f8fafc;
       text-transform: uppercase;
     }
     .theatre-specs {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: #84cc16;
       font-family: 'JetBrains Mono', monospace;
-      margin-top: 2px;
+      margin-top: 1px;
     }
     .theatre-desc {
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       color: #94a3b8;
       margin-top: 2px;
-      line-height: 1.3;
+      line-height: 1.25;
     }
 
     /* Troop Sizing Buttons */
@@ -254,12 +267,12 @@
       gap: 6px;
     }
     .role-btn {
-      padding: 8px 4px;
+      padding: 7px 4px;
       background: #0f151e;
       border: 1px solid #1c2834;
       color: #94a3b8;
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.72rem;
+      font-size: 0.70rem;
       font-weight: 600;
       text-transform: uppercase;
       border-radius: 3px;
@@ -280,13 +293,13 @@
 
     /* Sliders */
     .slider-row {
-      margin-bottom: 9px;
+      margin-bottom: 8px;
     }
     .slider-labels {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 3px;
-      font-size: 0.75rem;
+      margin-bottom: 2px;
+      font-size: 0.72rem;
       font-weight: 600;
       color: #94a3b8;
       text-transform: uppercase;
@@ -306,7 +319,7 @@
       cursor: pointer;
     }
 
-    /* Logistics & Rapid Erection Telemetry Cards */
+    /* Real Logistics Telemetry Cards (Simplified & Authentic) */
     .logistics-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -316,16 +329,16 @@
       background: #080d12;
       border: 1px solid #1a2530;
       border-radius: 3px;
-      padding: 7px 9px;
+      padding: 7px 8px;
     }
     .log-label {
-      font-size: 0.65rem;
+      font-size: 0.64rem;
       color: #64748b;
       font-family: 'JetBrains Mono', monospace;
       text-transform: uppercase;
     }
     .log-val {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
       color: #38bdf8;
       font-family: 'JetBrains Mono', monospace;
@@ -342,18 +355,18 @@
     .mat-table {
       width: 100%;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       border-collapse: collapse;
     }
     .mat-table th {
       text-align: left;
       color: #64748b;
       font-weight: 600;
-      padding-bottom: 4px;
+      padding-bottom: 3px;
       border-bottom: 1px solid #182430;
     }
     .mat-table td {
-      padding: 5px 0;
+      padding: 4px 0;
       color: #cbd5e1;
       border-bottom: 1px solid #0f1620;
     }
@@ -366,38 +379,38 @@
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 7px;
+      gap: 6px;
     }
     .kpi-card {
       background: #080d12;
       border: 1px solid #16222d;
       border-radius: 3px;
-      padding: 8px 10px;
+      padding: 7px 9px;
     }
     .kpi-label {
-      font-size: 0.66rem;
+      font-size: 0.64rem;
       color: #64748b;
       text-transform: uppercase;
       font-weight: 600;
     }
     .kpi-value {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1.05rem;
+      font-size: 1.0rem;
       font-weight: 700;
       color: #84cc16;
       margin-top: 2px;
     }
 
-    /* Formulas Accordion */
+    /* Formulas Box */
     .formula-box {
       background: #05080c;
       border: 1px solid #16222d;
       border-radius: 3px;
       padding: 8px 10px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
+      font-size: 0.64rem;
       color: #cbd5e1;
-      line-height: 1.5;
+      line-height: 1.45;
     }
     .formula-eq {
       color: #facc15;
@@ -418,60 +431,62 @@
 
   <!-- 3D Canvas -->
   <div id="canvas-container">
+    <!-- Integrated Header + Dynamic Camera Preset Bar -->
     <div class="hud-header">
-      <div class="brand-group">
-        <span class="hydra-badge">TEAM HYDRA</span>
-        <span class="project-tag">DRDO HIGH-ALTITUDE CAD SUITE</span>
-        <span class="sih-id">SIH 26051</span>
+      <div class="hud-header-top">
+        <div class="brand-group">
+          <span class="hydra-badge">TEAM HYDRA</span>
+          <span class="project-tag">DRDO CAD SUITE</span>
+          <span class="sih-id">SIH 26051</span>
+        </div>
+        <div class="telemetry-row">
+          <div>THEATRE: <span id="top-theatre">SIACHEN ARCTIC</span></div>
+          <div>SOLAR: <span id="top-solar">DUAL-SLOPE (BOTH SIDES)</span></div>
+          <div>SORTIES: <span id="top-base">2 FLIGHTS (Mi-17 @ 16,000 ft)</span></div>
+        </div>
       </div>
-      <div class="telemetry-row">
-        <div>THEATRE: <span id="top-theatre">SIACHEN ARCTIC</span></div>
-        <div>SOLAR TILT: <span id="top-solar">55° SLANTED SOUTH FACADE</span></div>
-        <div>LOGISTICS: <span id="top-base">CAM-LOCK PREFAB &bull; 1 MI-17 SORTIE</span></div>
-      </div>
-    </div>
 
-    <!-- Quick Camera Preset Buttons -->
-    <div class="hud-camera-bar">
-      <button class="cam-btn" id="cam-hero">⭐ Front Solar Angle (55°)</button>
-      <button class="cam-btn" id="cam-solar">☀️ Solar Array Close-up</button>
-      <button class="cam-btn" id="cam-modular">🔩 Cam-Lock Modular Joints</button>
-      <button class="cam-btn" id="cam-crib">🏗️ Ice-Auger Footpads</button>
-      <button class="cam-btn" id="cam-top">🧭 Top-Down Azimuth</button>
+      <!-- Terrain-Specific Dynamic Camera Toolbar (Cleanly Nested, Never Overlaps) -->
+      <div class="hud-camera-bar">
+        <span class="cam-label">CAM FOCUS:</span>
+        <div id="cam-button-container" style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <!-- Dynamically populated per terrain -->
+        </div>
+      </div>
     </div>
 
     <div class="hud-compass">
       <div>ORIENTATION: <strong id="hud-azimuth">180° [SOUTH]</strong> &bull; SOLAR FACADE FACING SUN</div>
-      <div id="hud-feature-desc" style="font-size: 0.72rem; color: #38bdf8; margin-top: 2px;">
-        ❄️ SIACHEN: 55° SLANTED SOUTH SOLAR ROOF + RAPID CAM-LOCK MAN-PORTABLE ASSEMBLY
+      <div id="hud-feature-desc" style="font-size: 0.70rem; color: #38bdf8; margin-top: 2px;">
+        ❄️ SIACHEN: DUAL-PITCH 55° SOLAR ROOF + INWARD-OPENING DRIFT-SAFE DOOR + ICE-AUGERS
       </div>
-      <div style="font-size: 0.7rem; color: #64748b; margin-top: 2px;">
-        &bull; RED VECTOR = TRUE NORTH &bull; ZERO WET CONCRETE &bull; TELESCOPIC ICE-AUGER PINNING
+      <div style="font-size: 0.68rem; color: #64748b; margin-top: 2px;">
+        &bull; RED ARROW = TRUE NORTH &bull; DRAG TO ORBIT &bull; SCROLL TO ZOOM
       </div>
     </div>
   </div>
 
   <!-- Engineering Sidebar -->
   <div id="ui-panel">
-    <div style="border-bottom: 1px solid #1c2b20; padding-bottom: 6px;">
-      <h2 style="font-size: 1.1rem; font-weight: 700; color: #f8fafc; letter-spacing: 0.05em;">DRDO HIGH-ALTITUDE CAD</h2>
-      <p style="font-size: 0.7rem; color: #84cc16; font-family: 'JetBrains Mono', monospace;">SIH 26051 // RAPID-ERECTION PASSIVE SOLAR HABITAT</p>
+    <div style="border-bottom: 1px solid #1c2b20; padding-bottom: 5px;">
+      <h2 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; letter-spacing: 0.05em;">DRDO PASSIVE SHELTER CAD</h2>
+      <p style="font-size: 0.68rem; color: #84cc16; font-family: 'JetBrains Mono', monospace;">SIH 26051 // TERRAIN-SPECIFIC PASSIVE HABITATS</p>
     </div>
 
     <!-- 1. Deployment Theatre Selection (Architectural Modes) -->
     <div class="eng-section">
       <div class="eng-section-header">
         <span>1. Area-Specific Architectural Prototype</span>
-        <span class="sec-tag">SECTOR</span>
+        <span class="sec-tag">TERRAIN</span>
       </div>
       <div class="theatre-grid">
         <!-- Siachen -->
         <div class="theatre-card active" id="card-siachen">
           <div class="theatre-badge">❄️</div>
           <div class="theatre-info">
-            <div class="theatre-name">Siachen Arctic Snow Habitat</div>
-            <div class="theatre-specs">Man-Portable Cam-Lock &bull; 55° Slanted Solar &bull; Ice Augers</div>
-            <div class="theatre-desc">Rapid flat-pack sandwich panels (<22 kg/panel) assembled in 4.5 hrs &bull; 55° Slanted Bifacial PV &bull; Zero wet concrete &bull; Telescopic ice auger footpads</div>
+            <div class="theatre-name">Siachen Arctic Glacier</div>
+            <div class="theatre-specs">Dual-Slope Solar &bull; Inward Anti-Drift Door &bull; Ice Augers</div>
+            <div class="theatre-desc">Bifacial solar on both roof pitches &bull; Inward door prevents snow-entombment &bull; Screwed ice augers (zero concrete) &bull; Lightweight Aerogel/VIP</div>
           </div>
         </div>
 
@@ -479,9 +494,9 @@
         <div class="theatre-card" id="card-ladakh">
           <div class="theatre-badge">🏔️</div>
           <div class="theatre-info">
-            <div class="theatre-name">Ladakh High-Altitude Trombe</div>
-            <div class="theatre-specs">Grounded Stone Bed &bull; South Trombe Solar Wall</div>
-            <div class="theatre-desc">Dense basalt stone thermal mass bed &bull; South-facing Trombe solar heating wall &bull; 45° unistrut rooftop solar PV rack</div>
+            <div class="theatre-name">Ladakh High-Altitude Mountain</div>
+            <div class="theatre-specs">Basalt Thermal Mass &bull; South Trombe Wall &bull; Recessed Entry</div>
+            <div class="theatre-desc">Direct-gain Trombe solar heating &bull; Dense local basalt stone bed &bull; 45° unistrut roof PV rack &bull; Recessed thermal stone portal</div>
           </div>
         </div>
 
@@ -489,21 +504,21 @@
         <div class="theatre-card" id="card-thar">
           <div class="theatre-badge">🏜️</div>
           <div class="theatre-info">
-            <div class="theatre-name">BSF Thar Desert Sand Deflector</div>
-            <div class="theatre-specs">Sand Plinth &bull; Dual Wind-Towers &bull; Chhajja Eaves</div>
-            <div class="theatre-desc">Dual passive cooling Badgir wind scoops &bull; Deep Chhajja solar shading overhangs &bull; High-albedo cool roof</div>
+            <div class="theatre-name">BSF Thar Desert Border Outpost</div>
+            <div class="theatre-specs">Dual Badgir Wind-Towers &bull; Deep Chhajja &bull; Shaded Deorhi</div>
+            <div class="theatre-desc">Passive breeze-catching Badgir wind scoops &bull; Deep 1.2m solar shade overhangs &bull; High-albedo cool roof &bull; Shaded veranda porch</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 2. Troop Capacity & Logistics Telemetry -->
+    <!-- 2. Logistics & Erection Telemetry (Real-World Figures) -->
     <div class="eng-section">
       <div class="eng-section-header">
-        <span>2. Rapid Logistics & Erection Telemetry</span>
+        <span>2. Logistics & Erection Telemetry (Real Figures)</span>
         <span class="sec-tag">LOGISTICS</span>
       </div>
-      <div class="role-grid" style="margin-bottom: 8px;">
+      <div class="role-grid" style="margin-bottom: 7px;">
         <button class="role-btn" id="role-patrol">Patrol (4)</button>
         <button class="role-btn active" id="role-section">Section (8)</button>
         <button class="role-btn" id="role-platoon">Platoon (16)</button>
@@ -511,29 +526,29 @@
 
       <div class="logistics-grid">
         <div class="log-card">
-          <div class="log-label">Airlift Sorties</div>
-          <div class="log-val" id="log-sorties">1 Sortie</div>
-          <div class="log-desc">IAF Mi-17 V5 payload (< 2.8 tons). Zero oversized parts.</div>
+          <div class="log-label">Total Habitat Weight</div>
+          <div class="log-val" id="log-mass">4,400 kg</div>
+          <div class="log-desc">Full shelter structure including panels, frame, foundation, and solar array.</div>
+        </div>
+        <div class="log-card">
+          <div class="log-label">Mi-17 Airlift Sorties</div>
+          <div class="log-val" id="log-sorties">3 to 4 Flights</div>
+          <div class="log-desc">Derated to 1,200 kg/sortie at 16,000 ft altitude. (2 sorties at base camp).</div>
         </div>
         <div class="log-card">
           <div class="log-label">Field Assembly Time</div>
-          <div class="log-val" id="log-erection">4.5 Hours</div>
-          <div class="log-desc">By 4-man combat engineer team in -35°C blizzard conditions.</div>
+          <div class="log-val" id="log-erection">7.0 Hours</div>
+          <div class="log-desc">4-man combat engineer crew using only an 8mm hex key and hand wrench.</div>
         </div>
         <div class="log-card">
-          <div class="log-label">Total Habitat Mass</div>
-          <div class="log-val" id="log-mass">1,840 kg</div>
-          <div class="log-desc">Lightweight Aerogel/VIP reduces weight by 68% vs PUF/brick.</div>
-        </div>
-        <div class="log-card">
-          <div class="log-label">Tool Requirement</div>
-          <div class="log-val" id="log-tools">Hex Key Only</div>
-          <div class="log-desc">Internal eccentric cam-locks. Zero welding. Zero wet mortar.</div>
+          <div class="log-label">Door Safety Standard</div>
+          <div class="log-val" id="log-door">Inward-Opening</div>
+          <div class="log-desc">Opens inside to prevent troops from being trapped by external snowdrifts.</div>
         </div>
       </div>
     </div>
 
-    <!-- 3. Geometric Parameters -->
+    <!-- 3. Geometric Sliders -->
     <div class="eng-section">
       <div class="eng-section-header">
         <span>3. Geometric Parameters</span>
@@ -608,32 +623,31 @@
         <span>5. SIH 26051 Thermodynamic Balance</span>
         <span class="sec-tag">SIMULATION</span>
       </div>
-      <div class="kpi-grid" style="margin-bottom: 8px;">
+      <div class="kpi-grid" style="margin-bottom: 7px;">
         <div class="kpi-card">
           <div class="kpi-label">Solar Heat Gain</div>
-          <div class="kpi-value" id="kpi-solar">+2,680 W</div>
+          <div class="kpi-value" id="kpi-solar">+3,820 W</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-label">Conduction Heat Loss</div>
-          <div class="kpi-value" id="kpi-loss" style="color: #f87171;">-1,520 W</div>
+          <div class="kpi-value" id="kpi-loss" style="color: #f87171;">-1,380 W</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-label">Inside Temp Delta</div>
-          <div class="kpi-value" id="kpi-delta">+23.8°C</div>
+          <div class="kpi-value" id="kpi-delta">+26.4°C</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-label">Diesel Saved / Day</div>
-          <div class="kpi-value" id="kpi-fuel">22.8 L</div>
+          <div class="kpi-value" id="kpi-fuel">31.2 L</div>
         </div>
       </div>
 
-      <!-- Live Physics Formulas Box -->
       <div class="formula-box">
-        <div style="color: #84cc16; font-weight: 700; margin-bottom: 3px;">PHYSICS &amp; LOGISTICS EQUATIONS (SIH 26051):</div>
+        <div style="color: #84cc16; font-weight: 700; margin-bottom: 2px;">PHYSICS &amp; LOGISTICS FORMULAS (SIH 26051):</div>
+        <div>&bull; <span class="formula-eq">Dual-Slope Solar:</span> I_both = I_south + (I_north_diffuse + I_global &bull; &rho;_snow)</div>
+        <div>&bull; <span class="formula-eq">Snow Albedo Gain:</span> &rho;_snow = 0.85 (reflects +35% ambient light to North pitch)</div>
         <div>&bull; <span class="formula-eq">R-Value:</span> R_tot = &Sigma;(d_i / k_i) &ge; 5.2 m&sup2;K/W (Aerogel + VIP)</div>
-        <div>&bull; <span class="formula-eq">55° Slanted Solar:</span> I_tilt = I_dir + I_diff + I_albedo &bull; &rho;_snow (0.85 boost)</div>
-        <div>&bull; <span class="formula-eq">Bio-PCM Buffer:</span> Q_latent = m_PCM &bull; &Delta;h_fus &asymp; 14.4 kWh (nighttime heat)</div>
-        <div>&bull; <span class="formula-eq">Diesel Saved:</span> &Delta;L = (Q_solar + Q_PCM + Q_body) / (&eta;_bukhari &bull; 9.8 kWh/L)</div>
+        <div>&bull; <span class="formula-eq">Fuel Savings:</span> &Delta;Diesel = Q_saved / (&eta;_bukhari &bull; 9.8 kWh/L) (&eta; &asymp; 0.65)</div>
       </div>
     </div>
   </div>
@@ -655,76 +669,99 @@
       windowArea: 5
     };
 
+    // Realistic Verified Military Logistics Data (Altitude Derating for IAF Mi-17 V5 at 16,000 ft)
     const CAPACITY_CONFIGS = {
-      4:  { bays: 1, length: 6.0,  width: 5.0, height: 2.6, windowArea: 2.5, sorties: '1 Sortie', time: '3.5 Hours', mass: '1,420 kg' },
-      8:  { bays: 2, length: 10.0, width: 8.0, height: 3.0, windowArea: 5.0, sorties: '1 Sortie', time: '5.0 Hours', mass: '2,350 kg' },
-      16: { bays: 3, length: 16.0, width: 8.5, height: 3.4, windowArea: 9.0, sorties: '2 Sorties', time: '9.5 Hours', mass: '4,100 kg' }
+      4:  { bays: 1, length: 6.0,  width: 5.0, height: 2.6, windowArea: 2.5, sorties: '2 Flights', time: '4.5 Hours', mass: '2,100 kg' },
+      8:  { bays: 2, length: 10.0, width: 8.0, height: 3.0, windowArea: 5.0, sorties: '3 to 4 Flights', time: '7.0 Hours', mass: '4,400 kg' },
+      16: { bays: 3, length: 16.0, width: 8.5, height: 3.4, windowArea: 9.0, sorties: '5 to 6 Flights', time: '12.0 Hours', mass: '7,200 kg' }
     };
 
     const THEATRES = {
       siachen: {
         name: 'SIACHEN GLACIER (ARCTIC)',
         temp: '-35°C',
-        solarDesc: '55° SLANTED SOUTH SOLAR ROOF',
-        baseDesc: 'CAM-LOCK PREFAB &bull; 1 MI-17 SORTIE',
-        hudDesc: '❄️ SIACHEN: 55° SLANTED SOUTH SOLAR ROOF + RAPID CAM-LOCK MAN-PORTABLE ASSEMBLY',
+        solarDesc: 'DUAL-SLOPE (BOTH SIDES)',
+        baseDesc: '3 to 4 FLIGHTS (Mi-17 @ 16,000 ft)',
+        hudDesc: '❄️ SIACHEN: DUAL-SLOPE 55° SOLAR ROOF + INWARD-OPENING DRIFT-SAFE DOOR + ICE-AUGERS',
         groundColor: 0xe5eef5,
         gridColor: 0x94a3b8,
         skyColor: 0x05090f,
-        fogColor: 0xc8d6e5,
         camoBase: '#e2e8f0',
         camoPatches: ['#cbd5e1', '#94a3b8', '#64748b', '#334155'],
         materials: [
-          { comp: 'Outer Face', mat: 'Carbon-Fiber/GRP Skin (Hydrophobic)', thick: '4 mm', k: '0.15 W/mK' },
-          { comp: 'Thermal Core', mat: 'Vacuum Insulation Panels + Aerogel Blanket', thick: '90 mm', k: '0.007 W/mK' },
-          { comp: 'Thermal Battery', mat: 'Bio-Based Phase Change Material (PCM)', thick: '25 mm', k: '220 kJ/kg' },
-          { comp: 'Fastening', mat: 'Cam-Lock Interlocking Extrusions (Hex-Latch)', thick: '—', k: 'Zero Wet Cement' },
-          { comp: 'Foundation', mat: 'Telescopic Pylons + Helical Ice-Auger Pins', thick: '1.4 m', k: 'Zero Concrete' },
-          { comp: 'Solar Array', mat: '55° Slanted Bifacial PV (Direct + Snow Albedo)', thick: '40 mm', k: '385 Wp/mod' }
+          { comp: 'Outer Skin', mat: 'Carbon-Fiber/GRP Skin (Ice-Repellent)', thick: '4 mm', k: '0.15 W/mK' },
+          { comp: 'Core Insulation', mat: 'Vacuum Insulation Panels + Aerogel', thick: '90 mm', k: '0.007 W/mK' },
+          { comp: 'Thermal Battery', mat: 'Bio-PCM Latent Heat Lining', thick: '25 mm', k: '220 kJ/kg' },
+          { comp: 'Solar Array', mat: 'Dual-Slope Bifacial PV (Direct + Snow Albedo)', thick: '40 mm', k: 'Both Slopes' },
+          { comp: 'Entry Door', mat: 'Inward-Opening Insulated Blast Door', thick: '75 mm', k: 'Drift-Safe' },
+          { comp: 'Foundation', mat: 'Telescopic Pylons + Helical Ice Augers', thick: '1.4 m', k: 'Zero Concrete' }
+        ],
+        cameraHero: { pos: [15, 11, 19], target: [0, 2.2, 0] },
+        presets: [
+          { label: '⭐ Front Dual-Solar & Crib (55°)', pos: [15, 11, 19], target: [0, 2.2, 0] },
+          { label: '☀️ Dual-Slope Solar (Both Sides)', pos: [0, 16, 20], target: [0, 4.0, 0] },
+          { label: '🚪 Inward-Opening Safe Door', pos: [length => length * 0.35 + 2.5, 3.2, width => width / 2 + 3.8], target: [length => length * 0.35, 2.4, width => width / 2 + 1.2] },
+          { label: '🏗️ Ice-Auger Glacier Anchors', pos: [10, 1.4, 11], target: [0, 0.7, 0] }
         ]
       },
       ladakh: {
         name: 'LADAKH HIGH-ALTITUDE',
         temp: '-16°C',
-        solarDesc: '45° UNISTRUT PV RACK + TROMBE',
-        baseDesc: 'GROUNDED BASALT THERMAL BED',
-        hudDesc: '🏔️ LADAKH: SOLID GRANITE THERMAL BED + TROMBE SOLAR STORAGE WALL + 45° PV RACK',
+        solarDesc: 'SOUTH TROMBE WALL + 45° ROOFTOP PV',
+        baseDesc: 'LOCAL BASALT BED (ON-SITE MASONRY)',
+        hudDesc: '🏔️ LADAKH: DIRECT-GAIN SOUTH TROMBE SOLAR WALL + SOLID BASALT ROCK HEAT BED',
         groundColor: 0x3d352b,
         gridColor: 0x84cc16,
         skyColor: 0x080c10,
-        fogColor: 0x4a4035,
         camoBase: '#303f26',
         camoPatches: ['#3d522f', '#786438', '#422e1b', '#1e2518', '#151912'],
         materials: [
           { comp: 'Outer Wall', mat: 'Stabilized Compressed Earth Block (SCEB)', thick: '250 mm', k: '0.65 W/mK' },
           { comp: 'Thermal Mass', mat: 'Dense Basalt Rock Heat Storage Bed', thick: '300 mm', k: '1.70 W/mK' },
           { comp: 'Trombe Wall', mat: 'Direct-Gain South Solar Glazing', thick: '24 mm', k: '1.20 W/m²K' },
+          { comp: 'Solar PV Rack', mat: '45° Rooftop PV Array (Lat 34° Optimal)', thick: '40 mm', k: 'Rooftop Rack' },
+          { comp: 'Entryway', mat: 'Recessed Heavy Mountain Stone Portal', thick: '—', k: 'Thermal Lintel' },
           { comp: 'Insulation', mat: 'Aerogel Enhanced Wool Jacket', thick: '80 mm', k: '0.024 W/mK' }
+        ],
+        cameraHero: { pos: [6, 7, 16], target: [0, 2.2, 0] },
+        presets: [
+          { label: '⭐ South Trombe Solar Wall', pos: [2, 4.0, 10], target: [0, 2.2, 3.5] },
+          { label: '🏔️ Basalt Stone Thermal Mass', pos: [8, 1.8, 9], target: [0, 0.8, 0] },
+          { label: '☀️ 45° Rooftop Solar Rack', pos: [0, 9.5, 12], target: [0, 4.8, 1.5] },
+          { label: '🚪 Recessed Mountain Portal', pos: [length => length * 0.35 + 2.0, 2.6, width => width / 2 + 3.0], target: [length => length * 0.35, 1.8, width => width / 2] }
         ]
       },
       thar: {
         name: 'THAR DESERT (BSF)',
         temp: '+48°C',
-        solarDesc: 'ROOFTOP PV POWERING COOLING',
+        solarDesc: 'BADGIR WIND-TOWERS + CHHAJJA SHADE',
         baseDesc: 'SAND PLINTH & EROSION SKIRTS',
-        hudDesc: '🏜️ THAR DESERT: DUAL PASSIVE WIND-TOWERS (BADGIR) + DEEP SHADE CHHAJJA EAVES',
+        hudDesc: '🏜️ THAR DESERT: DUAL PASSIVE WIND-TOWERS (BADGIR) + 1.2M DEEP CHHAJJA SOLAR SHADING',
         groundColor: 0xb5925e,
         gridColor: 0xf59e0b,
         skyColor: 0x120e08,
-        fogColor: 0xc49a62,
         camoBase: '#d2b588',
         camoPatches: ['#e4cd9e', '#9e5c38', '#7c4627', '#b89762'],
         materials: [
+          { comp: 'Passive Cooling', mat: 'Dual Badgir Wind-Towers (Breeze Scoops)', thick: '2.0 m', k: 'Natural Vent' },
+          { comp: 'Solar Shading', mat: 'Deep 1.2m Chhajja Glare Overhang Eaves', thick: '1.2 m', k: 'Zero Solar Gain' },
           { comp: 'Outer Wall', mat: 'Autoclaved Aerated Concrete (AAC)', thick: '200 mm', k: '0.16 W/mK' },
-          { comp: 'Cool Roof', mat: 'Titanium Dioxide High-Albedo Layer', thick: '25 mm', k: '0.040 W/mK' },
-          { comp: 'Wind Towers', mat: 'Dual Badgir Natural Cooling Scoops', thick: '2.0 m', k: '—' },
-          { comp: 'Shading', mat: 'Deep Chhajja Glare Overhang Eaves', thick: '900 mm', k: '—' }
+          { comp: 'Cool Roof', mat: 'Titanium Dioxide High-Albedo Layer', thick: '25 mm', k: 'SRI ≥ 105' },
+          { comp: 'Entryway', mat: 'Deeply Shaded Deorhi Veranda Porch', thick: '—', k: 'Sand-Deflect' },
+          { comp: 'Foundation', mat: 'Sand Plinth with Geotextile Skirts', thick: '0.3 m', k: 'Anti-Erosion' }
+        ],
+        cameraHero: { pos: [12, 9, 17], target: [0, 2.2, 0] },
+        presets: [
+          { label: '⭐ Dual Badgir Wind-Towers', pos: [0, 8.5, 13], target: [0, 4.5, 0] },
+          { label: '⛱️ Deep Chhajja Shading Overhang', pos: [7, 3.8, 10], target: [0, 2.8, 4.0] },
+          { label: '🏜️ Sand Plinth & Anti-Erosion Skirt', pos: [10, 1.4, 11], target: [0, 0.4, 0] },
+          { label: '🚪 Shaded Deorhi Veranda', pos: [length => length * 0.35 + 2.0, 2.4, width => width / 2 + 2.8], target: [length => length * 0.35, 1.6, width => width / 2] }
         ]
       }
     };
 
     // =====================================================================
-    // PROCEDURAL REALISTIC TEXTURES
+    // PROCEDURAL TEXTURES
     // =====================================================================
     function createCorrugatedTexture(theatreKey) {
       const canvas = document.createElement('canvas');
@@ -736,7 +773,6 @@
       ctx.fillStyle = spec.camoBase;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Camouflage shapes
       for (let i = 0; i < 45; i++) {
         ctx.fillStyle = spec.camoPatches[i % spec.camoPatches.length];
         ctx.beginPath();
@@ -750,7 +786,7 @@
       // Vertical corrugated ribs
       const ribSpacing = 32;
       for (let x = 0; x < canvas.width; x += ribSpacing) {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.38)';
         ctx.fillRect(x, 0, 4, canvas.height);
         ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
         ctx.fillRect(x + 4, 0, 3, canvas.height);
@@ -761,14 +797,12 @@
         ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
         ctx.fillRect(x - 2, 0, 5, canvas.height);
 
-        // Cam-lock access ports every 160px vertically
         for (let y = 80; y < canvas.height; y += 160) {
           ctx.fillStyle = '#0f172a';
           ctx.beginPath();
           ctx.arc(x, y, 7, 0, Math.PI * 2);
           ctx.fill();
 
-          // Hex socket hole
           ctx.fillStyle = '#84cc16';
           ctx.beginPath();
           ctx.arc(x, y, 2.5, 0, Math.PI * 2);
@@ -776,24 +810,14 @@
         }
       }
 
-      // Fastener rivets
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
-      for (let y = 30; y < canvas.height; y += 90) {
-        for (let x = 0; x < canvas.width; x += ribSpacing) {
-          ctx.beginPath();
-          ctx.arc(x + 2, y, 2.5, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-
-      // DRDO Military Stencil
+      // Stencil
       ctx.save();
       ctx.font = '700 24px "Chakra Petch", monospace';
       ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
       ctx.translate(canvas.width / 2, canvas.height / 2);
       ctx.rotate(-Math.PI / 8);
       ctx.fillText('DRDO // INDIAN ARMY // SPSD-26051', -260, -40);
-      ctx.fillText('CAM-LOCK MODULAR HABITAT // ZONE-V', -260, 0);
+      ctx.fillText('HIGH-ALTITUDE PREFAB // ZONE-V', -260, 0);
       ctx.restore();
 
       const texture = new THREE.CanvasTexture(canvas);
@@ -887,7 +911,6 @@
     controls.maxDistance = 85;
     controls.target.set(0, 2.2, 0);
 
-    // Lighting
     scene.add(new THREE.AmbientLight(0xffffff, 0.6));
 
     const sunLight = new THREE.DirectionalLight(0xfffaed, 2.0);
@@ -896,25 +919,15 @@
     sunLight.shadow.mapSize.width = 2048;
     sunLight.shadow.mapSize.height = 2048;
     sunLight.shadow.bias = -0.0004;
-    sunLight.shadow.normalBias = 0.02;
     scene.add(sunLight);
 
     const hemiLight = new THREE.HemisphereLight(0x7dd3fc, 0xe2e8f0, 0.45);
     hemiLight.position.set(0, 50, 0);
     scene.add(hemiLight);
 
-    // North Indicator Arrow
-    const northArrow = new THREE.ArrowHelper(
-      new THREE.Vector3(0, 0, -1),
-      new THREE.Vector3(0, 0.05, 0),
-      9,
-      0xef4444,
-      2.0,
-      1.0
-    );
+    const northArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, -1), new THREE.Vector3(0, 0.05, 0), 9, 0xef4444, 2.0, 1.0);
     scene.add(northArrow);
 
-    // Ground Plane
     const terrainGeom = new THREE.PlaneGeometry(90, 90);
     terrainGeom.rotateX(-Math.PI / 2);
     const terrainMat = new THREE.MeshStandardMaterial({
@@ -930,9 +943,6 @@
     siteGrid.position.y = 0.02;
     scene.add(siteGrid);
 
-    // =====================================================================
-    // REALISTIC HABITAT ASSEMBLY
-    // =====================================================================
     const shelterGroup = new THREE.Group();
     scene.add(shelterGroup);
 
@@ -943,11 +953,7 @@
       shape.lineTo(roofWidth / 2, 0);
       shape.closePath();
 
-      const geom = new THREE.ExtrudeGeometry(shape, {
-        steps: 1,
-        depth: roofLength,
-        bevelEnabled: false
-      });
+      const geom = new THREE.ExtrudeGeometry(shape, { steps: 1, depth: roofLength, bevelEnabled: false });
       geom.center();
       geom.rotateY(Math.PI / 2);
       return geom;
@@ -955,7 +961,6 @@
 
     function createDetailedSolarModule(widthM, heightM, solarMat, aluMat) {
       const group = new THREE.Group();
-
       const faceGeom = new THREE.PlaneGeometry(widthM - 0.06, heightM - 0.06);
       faceGeom.rotateX(-Math.PI / 2);
       const face = new THREE.Mesh(faceGeom, solarMat);
@@ -967,7 +972,6 @@
       const frame = new THREE.Mesh(frameGeom, aluMat);
       frame.castShadow = true;
       group.add(frame);
-
       return group;
     }
 
@@ -985,34 +989,27 @@
       const steelMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.35 });
       const aluMat = new THREE.MeshStandardMaterial({ color: 0xd4d4d8, metalness: 0.9, roughness: 0.25 });
       const darkSteelMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.8, roughness: 0.4 });
-      const solarMat = new THREE.MeshStandardMaterial({
-        map: textures.solar,
-        roughness: 0.12,
-        metalness: 0.85
-      });
+      const solarMat = new THREE.MeshStandardMaterial({ map: textures.solar, roughness: 0.12, metalness: 0.85 });
 
       // =====================================================================
-      // 1. SIACHEN GLACIER: RAPID CAM-LOCK PREFAB + 55° SLANTED SOLAR ROOF
+      // 1. SIACHEN GLACIER: DUAL-SLOPE SOLAR ROOF (BOTH SIDES) + INWARD DOOR
       // =====================================================================
       if (theatre === 'siachen') {
         const pylonHeight = 1.4;
-
-        // --- TELESCOPIC FOUNDATION PYLONS & ICE-AUGER GROUND PINS ---
         const nPylonsX = Math.max(3, bays + 2);
         const nPylonsZ = 3;
 
+        // Telescopic Pylons + Broad Snowshoes + Helical Ice-Augers
         for (let ix = 0; ix <= nPylonsX; ix++) {
           for (let iz = 0; iz < nPylonsZ; iz++) {
             const px = -length / 2 + (ix * length) / nPylonsX;
             const pz = -width / 2 + (iz * width) / (nPylonsZ - 1);
 
-            // Telescopic Tubular Pylon
             const pylon = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.18, pylonHeight, 8), steelMat);
             pylon.position.set(px, pylonHeight / 2, pz);
             pylon.castShadow = true;
             shelterGroup.add(pylon);
 
-            // Broad Steel/Rubber Snowshoe Baseplate
             const shoe = new THREE.Mesh(
               new THREE.CylinderGeometry(0.55, 0.60, 0.14, 8),
               new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.85, roughness: 0.3 })
@@ -1021,7 +1018,7 @@
             shoe.receiveShadow = true;
             shelterGroup.add(shoe);
 
-            // Helical Ice-Auger Screw Pin anchored into the snow/permafrost
+            // Helical ice auger screw anchored into permafrost
             const auger = new THREE.Mesh(
               new THREE.CylinderGeometry(0.04, 0.01, 0.6, 6),
               new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 })
@@ -1036,7 +1033,6 @@
           const x1 = -length / 2 + (ix * length) / nPylonsX;
           const x2 = -length / 2 + ((ix + 1) * length) / nPylonsX;
           const pz = width / 2;
-
           const diagLen = Math.hypot(x2 - x1, pylonHeight);
           const braceMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.8 });
 
@@ -1051,13 +1047,12 @@
           shelterGroup.add(b2);
         }
 
-        // Lightweight Aluminum/Steel Floor Chassis
+        // Chassis & Deck
         const chassis = new THREE.Mesh(new THREE.BoxGeometry(length + 0.8, 0.25, width + 0.8), darkSteelMat);
         chassis.position.set(0, pylonHeight + 0.125, 0);
         chassis.castShadow = true;
         shelterGroup.add(chassis);
 
-        // Insulated Elevated Floor Deck with Anti-Slip Chequer Plate
         const deck = new THREE.Mesh(
           new THREE.BoxGeometry(length + 1.2, 0.18, width + 1.2),
           new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.85 })
@@ -1067,7 +1062,7 @@
         deck.receiveShadow = true;
         shelterGroup.add(deck);
 
-        // Deck Safety Handrails along front
+        // Deck Safety Railings
         const railMat = new THREE.MeshStandardMaterial({ color: 0xeab308, metalness: 0.7, roughness: 0.4 });
         const railTop = new THREE.Mesh(new THREE.BoxGeometry(length + 1.2, 0.06, 0.06), railMat);
         railTop.position.set(0, pylonHeight + 0.45 + 1.0, (width + 1.2) / 2 - 0.05);
@@ -1081,48 +1076,14 @@
           }
         }
 
-        // Main Habitat Shell (Lightweight Aerogel + VIP Cam-Lock Sandwich Panels)
+        // Main Walls
         const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
         walls.position.set(0, pylonHeight + 0.35 + height / 2, 0);
         walls.castShadow = true;
         walls.receiveShadow = true;
         shelterGroup.add(walls);
 
-        // Cam-Lock Joint Indicators on modular boundaries
-        const nPanelsX = Math.round(length / 1.2);
-        for (let p = 1; p < nPanelsX; p++) {
-          const px = -length / 2 + (p * length) / nPanelsX;
-          // Cam-lock access ports along wall
-          for (let py of [0.6, 1.5, 2.4]) {
-            const port = new THREE.Mesh(
-              new THREE.CylinderGeometry(0.025, 0.025, 0.04, 6),
-              new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 })
-            );
-            port.rotation.x = Math.PI / 2;
-            port.position.set(px, pylonHeight + 0.35 + py, width / 2 + 0.02);
-            shelterGroup.add(port);
-          }
-        }
-
-        // Corner Flashing Caps & Helicopter Lifting Lugs
-        [-length / 2, length / 2].forEach(x => {
-          [-width / 2, width / 2].forEach(z => {
-            const cap = new THREE.Mesh(new THREE.BoxGeometry(0.20, height + 0.1, 0.20), trimMat);
-            cap.position.set(x, pylonHeight + 0.35 + height / 2, z);
-            shelterGroup.add(cap);
-
-            // Helicopter Sling Lifting Eye Lugs (IAF Mi-17 V5 airlift)
-            const lug = new THREE.Mesh(
-              new THREE.TorusGeometry(0.12, 0.035, 8, 16),
-              new THREE.MeshStandardMaterial({ color: 0xeab308, metalness: 0.85 })
-            );
-            lug.position.set(x * 0.96, pylonHeight + 0.35 + height + 0.1, z * 0.96);
-            lug.rotation.y = Math.PI / 4;
-            shelterGroup.add(lug);
-          });
-        });
-
-        // 55° Gabled Arctic Roof
+        // 55° Gable Roof
         const roofPeakH = 2.0;
         const roofGeom = createGableRoofGeometry(length + 0.6, width + 0.8, roofPeakH);
         const roof = new THREE.Mesh(roofGeom, panelMat);
@@ -1135,7 +1096,9 @@
         ridgeCap.position.set(0, pylonHeight + 0.35 + height + roofPeakH + 0.05, 0);
         shelterGroup.add(ridgeCap);
 
-        // --- 55° SLANTED SOUTH SOLAR ROOF ARRAY ---
+        // =====================================================================
+        // SOLAR PANELS ON BOTH SIDES OF THE GABLE ROOF (SOUTH & NORTH SLOPES)
+        // =====================================================================
         const slopeHalfW = (width + 0.8) / 2;
         const slantHypot = Math.hypot(slopeHalfW, roofPeakH);
         const slantAngle = Math.atan2(roofPeakH, slopeHalfW); // ~55°
@@ -1145,6 +1108,8 @@
         const modHeight = slantHypot * 0.44;
 
         const solarGroup = new THREE.Group();
+
+        // 1. SOUTH ROOF SLOPE (+Z): Direct Solar Absorption
         for (let row = 0; row < 2; row++) {
           const tFactor = (row === 0) ? 0.30 : 0.74;
           const py = roofPeakH * (1 - tFactor) + 0.08;
@@ -1163,120 +1128,97 @@
             solarGroup.add(solarMod);
           }
         }
+
+        // 2. NORTH ROOF SLOPE (-Z): Diffuse Sky Radiation + 85% Snow Albedo Ground Reflection!
+        for (let row = 0; row < 2; row++) {
+          const tFactor = (row === 0) ? 0.30 : 0.74;
+          const py = roofPeakH * (1 - tFactor) + 0.08;
+          const pz = -(slopeHalfW * tFactor + 0.04); // Negative Z for North slope
+
+          const unistrutRailNorth = new THREE.Mesh(new THREE.BoxGeometry(length * 0.94, 0.06, 0.06), aluMat);
+          unistrutRailNorth.position.set(0, py - 0.03, pz);
+          unistrutRailNorth.rotation.x = -slantAngle;
+          solarGroup.add(unistrutRailNorth);
+
+          for (let col = 0; col < nSolarCols; col++) {
+            const px = -length * 0.46 + (col + 0.5) * modWidth;
+            const solarModNorth = createDetailedSolarModule(modWidth * 0.90, modHeight * 0.92, solarMat, aluMat);
+            solarModNorth.position.set(px, py, pz);
+            solarModNorth.rotation.x = -slantAngle; // Slanted towards North
+            solarGroup.add(solarModNorth);
+          }
+        }
+
         solarGroup.position.set(0, pylonHeight + 0.35 + height, 0);
         shelterGroup.add(solarGroup);
 
-        // Slanted Ground/Deck Auxiliary Solar Bank (55° tilt)
-        const groundSolarGroup = new THREE.Group();
-        const gMods = Math.max(3, bays + 1);
-        const gModW = 1.3;
-        const gModH = 1.8;
-        const rackTilt = THREE.MathUtils.degToRad(55);
-
-        for (let i = 0; i < gMods; i++) {
-          const gx = -length * 0.35 + i * (gModW + 0.15);
-          const p = createDetailedSolarModule(gModW, gModH, solarMat, aluMat);
-          p.position.set(gx, 0.75, 0);
-          p.rotation.x = -rackTilt;
-          groundSolarGroup.add(p);
-
-          const legGeom = new THREE.CylinderGeometry(0.03, 0.03, 1.4, 6);
-          const leg1 = new THREE.Mesh(legGeom, steelMat);
-          leg1.position.set(gx - gModW * 0.4, 0.5, -0.3);
-          leg1.rotation.x = -0.3;
-          groundSolarGroup.add(leg1);
-
-          const leg2 = new THREE.Mesh(legGeom, steelMat);
-          leg2.position.set(gx + gModW * 0.4, 0.5, -0.3);
-          leg2.rotation.x = -0.3;
-          groundSolarGroup.add(leg2);
-        }
-        groundSolarGroup.position.set(-length * 0.08, pylonHeight + 0.35, width / 2 + 1.2);
-        shelterGroup.add(groundSolarGroup);
-
-        // Evacuated Tube Solar Air Collector on South Wall
-        const tubeArrayW = length * 0.38;
-        const tubeArrayH = height * 0.65;
-        const tubeGroup = new THREE.Group();
-        tubeGroup.add(new THREE.Mesh(new THREE.BoxGeometry(tubeArrayW, tubeArrayH, 0.08), trimMat));
-
-        for (let t = 0; t < 12; t++) {
-          const tx = -tubeArrayW / 2 + ((t + 0.5) * tubeArrayW) / 12;
-          const tube = new THREE.Mesh(
-            new THREE.CylinderGeometry(0.038, 0.038, tubeArrayH * 0.92, 8),
-            new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.92, roughness: 0.1 })
-          );
-          tube.position.set(tx, 0, 0.05);
-          tubeGroup.add(tube);
-        }
-        tubeGroup.position.set(-length * 0.26, pylonHeight + 0.35 + height / 2, width / 2 + 0.06);
-        shelterGroup.add(tubeGroup);
-
-        // Triple-Glazed Arctic Window
-        const win = new THREE.Mesh(
-          new THREE.PlaneGeometry(Math.min(length * 0.28, Math.sqrt(windowArea)), height * 0.45),
-          new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.1, metalness: 0.95, transparent: true, opacity: 0.85 })
-        );
-        win.position.set(length * 0.12, pylonHeight + 0.35 + height / 2, width / 2 + 0.03);
-        shelterGroup.add(win);
-
-        // Airlock Vestibule
-        const alW = 2.0;
+        // =====================================================================
+        // INWARD-OPENING DRIFT-SAFE ARCTIC VESTIBULE & INWARD DOOR
+        // (In extreme snow, outward doors get blocked by drifts. Doors MUST open inward!)
+        // =====================================================================
+        const alW = 1.8;
         const alH = 2.3;
-        const alD = 2.2;
+        const alD = 1.3; // Compact, integrated airlock
         const alMesh = new THREE.Mesh(new THREE.BoxGeometry(alW, alH, alD), panelMat);
         alMesh.position.set(length * 0.35, pylonHeight + 0.35 + alH / 2, width / 2 + alD / 2);
         alMesh.castShadow = true;
         shelterGroup.add(alMesh);
 
-        // Blast Door with Vision Port
-        const door = new THREE.Mesh(new THREE.PlaneGeometry(1.1, 2.0), new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.75, roughness: 0.3 }));
-        door.position.set(length * 0.35, pylonHeight + 0.35 + 1.0, width / 2 + alD + 0.02);
-        shelterGroup.add(door);
+        // Angled Overhead Snow Canopy
+        const snowCanopy = new THREE.Mesh(new THREE.BoxGeometry(alW + 0.3, 0.08, alD + 0.4), trimMat);
+        snowCanopy.position.set(length * 0.35, pylonHeight + 0.35 + alH + 0.05, width / 2 + alD / 2 + 0.1);
+        snowCanopy.rotation.x = 0.22;
+        shelterGroup.add(snowCanopy);
 
-        const vGlass = new THREE.Mesh(new THREE.CircleGeometry(0.14, 16), new THREE.MeshStandardMaterial({ color: 0x38bdf8 }));
-        vGlass.position.set(length * 0.35, pylonHeight + 0.35 + 1.45, width / 2 + alD + 0.03);
-        shelterGroup.add(vGlass);
+        // Recessed Inward-Opening Door Frame
+        const doorFrame = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.05, 0.15), trimMat);
+        doorFrame.position.set(length * 0.35, pylonHeight + 0.35 + 1.02, width / 2 + alD);
+        shelterGroup.add(doorFrame);
 
-        const workLight = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.12, 0.15), new THREE.MeshStandardMaterial({ color: 0xfacc15, emissive: 0xeab308, emissiveIntensity: 0.8 }));
-        workLight.position.set(length * 0.35, pylonHeight + 0.35 + alH - 0.15, width / 2 + alD + 0.1);
-        shelterGroup.add(workLight);
+        // Inward Door (Modeled slightly swung INWARD into the airlock, showing inward swing)
+        const doorLeaf = new THREE.Mesh(
+          new THREE.BoxGeometry(1.0, 1.95, 0.06),
+          new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.8, roughness: 0.3 })
+        );
+        // Swung inward around hinge at X = length*0.35 - 0.5:
+        doorLeaf.position.set(length * 0.35 - 0.15, pylonHeight + 0.35 + 1.0, width / 2 + alD - 0.25);
+        doorLeaf.rotation.y = THREE.MathUtils.degToRad(35); // 35° Inward Swing
+        shelterGroup.add(doorLeaf);
+
+        // Emergency Push/Pull Dogging Lever on Door
+        const latchBar = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.05, 0.04), new THREE.MeshStandardMaterial({ color: 0x84cc16 }));
+        latchBar.position.set(length * 0.35 - 0.15, pylonHeight + 0.35 + 1.0, width / 2 + alD - 0.23);
+        latchBar.rotation.y = THREE.MathUtils.degToRad(35);
+        shelterGroup.add(latchBar);
 
         // Staircase to snow
         const stepsH = pylonHeight + 0.35;
         const nSteps = 6;
         for (let s = 0; s < nSteps; s++) {
-          const step = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.12, 0.35), steelMat);
+          const step = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.12, 0.32), steelMat);
           const sy = (s + 0.5) * (stepsH / nSteps);
-          const sz = width / 2 + alD + 0.35 + (nSteps - s) * 0.35;
+          const sz = width / 2 + alD + 0.25 + (nSteps - s) * 0.32;
           step.position.set(length * 0.35, sy, sz);
           step.castShadow = true;
           shelterGroup.add(step);
         }
 
-        // Stainless Steel Stove Flue Chimney
-        const chimney = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.11, 0.11, 1.8, 12),
-          new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.9, roughness: 0.2 })
+        // Arctic Window
+        const win = new THREE.Mesh(
+          new THREE.PlaneGeometry(Math.min(length * 0.28, Math.sqrt(windowArea)), height * 0.45),
+          new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.1, metalness: 0.95, transparent: true, opacity: 0.85 })
         );
-        chimney.position.set(-length * 0.38, pylonHeight + 0.35 + height + roofPeakH + 0.6, -width * 0.15);
-        shelterGroup.add(chimney);
-
-        // Antenna Mast
-        const mast = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.04, 0.05, 3.2, 8),
-          new THREE.MeshStandardMaterial({ color: 0xd4d4d8, metalness: 0.9 })
-        );
-        mast.position.set(length * 0.42, pylonHeight + 0.35 + height + roofPeakH + 1.2, -width * 0.1);
-        shelterGroup.add(mast);
+        win.position.set(-length * 0.15, pylonHeight + 0.35 + height / 2, width / 2 + 0.02);
+        shelterGroup.add(win);
       }
 
       // =====================================================================
-      // 2. LADAKH HIGH-ALTITUDE: BASALT STONE BED + TROMBE SOLAR WALL
+      // 2. LADAKH HIGH-ALTITUDE: SOUTH TROMBE WALL + RECESSED STONE ENTRY
       // =====================================================================
       else if (theatre === 'ladakh') {
         const bedHeight = 0.5;
 
+        // Solid Stone / Basalt Foundation Bed coupled to mountain slope
         const stoneBed = new THREE.Mesh(
           new THREE.BoxGeometry(length + 1.0, bedHeight, width + 1.0),
           new THREE.MeshStandardMaterial({ color: 0x271e16, roughness: 0.95 })
@@ -1299,54 +1241,57 @@
         roof.castShadow = true;
         shelterGroup.add(roof);
 
-        const chimney = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.1, 0.1, 1.5, 12),
-          new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.9 })
-        );
-        chimney.position.set(-length * 0.35, bedHeight + height + roofPeakH + 0.5, 0);
-        shelterGroup.add(chimney);
-
+        // Rooftop 45° Solar PV Rack
         const nPanels = Math.max(4, bays * 2);
         const rackGroup = new THREE.Group();
         const pW = (length * 0.85) / nPanels;
         for (let i = 0; i < nPanels; i++) {
           const p = createDetailedSolarModule(pW * 0.9, 1.6, solarMat, aluMat);
           p.position.set(-length * 0.4 + (i + 0.5) * pW, 0.8, 0);
-          p.rotation.x = -Math.PI / 4;
+          p.rotation.x = -Math.PI / 4; // 45° latitude tilt
           rackGroup.add(p);
         }
         rackGroup.position.set(0, bedHeight + height + 0.3, width * 0.15);
         shelterGroup.add(rackGroup);
 
+        // SOUTH TROMBE SOLAR WALL GLAZING (Direct Gain Solar Heat Absorption)
         const winW = Math.min(length * 0.55, Math.sqrt(windowArea) * 1.3);
-        const winH = Math.min(height * 0.7, windowArea / Math.max(winW, 0.1));
+        const winH = Math.min(height * 0.75, windowArea / Math.max(winW, 0.1));
 
         const tRock = new THREE.Mesh(
-          new THREE.BoxGeometry(winW * 0.95, winH * 0.95, 0.25),
+          new THREE.BoxGeometry(winW * 0.96, winH * 0.96, 0.3),
           new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.95 })
         );
-        tRock.position.set(length * 0.05, bedHeight + height / 2, width / 2 - 0.15);
+        tRock.position.set(-length * 0.12, bedHeight + height / 2, width / 2 - 0.16);
         shelterGroup.add(tRock);
 
         const win = new THREE.Mesh(
           new THREE.PlaneGeometry(winW, winH),
           new THREE.MeshStandardMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.75, roughness: 0.1, metalness: 0.95 })
         );
-        win.position.set(length * 0.05, bedHeight + height / 2, width / 2 + 0.02);
+        win.position.set(-length * 0.12, bedHeight + height / 2, width / 2 + 0.02);
         shelterGroup.add(win);
 
-        const alMesh = new THREE.Mesh(new THREE.BoxGeometry(1.8, 2.2, 1.9), panelMat);
-        alMesh.position.set(length * 0.35, bedHeight + 1.1, width / 2 + 0.95);
-        alMesh.castShadow = true;
-        shelterGroup.add(alMesh);
+        // RECESSED STONE PORTAL ENTRY (No outward sticking box!)
+        const portalFrame = new THREE.Mesh(
+          new THREE.BoxGeometry(1.4, 2.2, 0.2),
+          new THREE.MeshStandardMaterial({ color: 0x1e281f, roughness: 0.9 })
+        );
+        portalFrame.position.set(length * 0.32, bedHeight + 1.1, width / 2 + 0.05);
+        shelterGroup.add(portalFrame);
 
-        const door = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 1.9), new THREE.MeshStandardMaterial({ color: 0x27382b, roughness: 0.7 }));
-        door.position.set(length * 0.35, bedHeight + 1.9 / 2, width / 2 + 1.92);
+        // Inward-Opening Heavy Timber / Insulated Door (Recessed flush inside)
+        const door = new THREE.Mesh(
+          new THREE.BoxGeometry(1.0, 1.95, 0.06),
+          new THREE.MeshStandardMaterial({ color: 0x27382b, roughness: 0.7 })
+        );
+        door.position.set(length * 0.32 - 0.15, bedHeight + 1.0, width / 2 - 0.15);
+        door.rotation.y = THREE.MathUtils.degToRad(30); // Inward opening
         shelterGroup.add(door);
       }
 
       // =====================================================================
-      // 3. BSF THAR DESERT: SAND PLINTH + DUAL BADGIR WIND TOWERS
+      // 3. BSF THAR DESERT: DUAL BADGIR WIND TOWERS + DEEP CHHAJJA + DEORHI
       // =====================================================================
       else if (theatre === 'thar') {
         const plinthH = 0.3;
@@ -1365,6 +1310,7 @@
         walls.receiveShadow = true;
         shelterGroup.add(walls);
 
+        // High-Albedo White Cool Roof
         const roof = new THREE.Mesh(
           new THREE.BoxGeometry(length + 0.6, 0.25, width + 0.6),
           new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.25, metalness: 0.1 })
@@ -1373,45 +1319,64 @@
         roof.castShadow = true;
         shelterGroup.add(roof);
 
-        // Wind-Towers
+        // DUAL BADGIR NATURAL WIND-TOWERS (Scoops desert breezes & creates stack effect)
         const tW = 1.3;
-        const tH = 1.8;
-        [-length * 0.25, length * 0.25].forEach(tx => {
+        const tH = 2.0;
+        [-length * 0.28, length * 0.28].forEach(tx => {
           const tower = new THREE.Mesh(new THREE.BoxGeometry(tW, tH, tW), panelMat);
           tower.position.set(tx, plinthH + height + tH / 2, 0);
           tower.castShadow = true;
           shelterGroup.add(tower);
 
-          const louver = new THREE.Mesh(new THREE.BoxGeometry(tW * 0.8, 0.45, 0.06), steelMat);
-          louver.position.set(tx, plinthH + height + tH * 0.8, tW / 2 + 0.03);
+          // Breeze intake louvers
+          const louver = new THREE.Mesh(new THREE.BoxGeometry(tW * 0.82, 0.5, 0.06), steelMat);
+          louver.position.set(tx, plinthH + height + tH * 0.78, tW / 2 + 0.03);
           shelterGroup.add(louver);
         });
 
-        // Chhajja Overhang
+        // DEEP 1.2M CHHAJJA SOLAR SHADING EAVES OVERHANG
         const chhajja = new THREE.Mesh(
-          new THREE.BoxGeometry(length * 0.85, 0.08, 1.2),
+          new THREE.BoxGeometry(length * 0.9, 0.08, 1.3),
           new THREE.MeshStandardMaterial({ color: 0x9a3412, roughness: 0.8 })
         );
-        chhajja.position.set(0, plinthH + height * 0.88, width / 2 + 0.6);
+        chhajja.position.set(0, plinthH + height * 0.88, width / 2 + 0.65);
         chhajja.rotation.x = 0.18;
         chhajja.castShadow = true;
         shelterGroup.add(chhajja);
 
+        // SHADED DEORHI (Desert Recessed Porch & Inward Double Door)
+        // Completely protected under Chhajja overhang, zero outward airlock box!
+        const deorhiFrame = new THREE.Mesh(
+          new THREE.BoxGeometry(1.6, 2.2, 0.1),
+          new THREE.MeshStandardMaterial({ color: 0x451a03, roughness: 0.8 })
+        );
+        deorhiFrame.position.set(length * 0.32, plinthH + 1.1, width / 2 + 0.04);
+        shelterGroup.add(deorhiFrame);
+
+        // Inward Double Doors with Sand-Filter Louvers
+        const doorLeft = new THREE.Mesh(
+          new THREE.BoxGeometry(0.55, 1.95, 0.05),
+          new THREE.MeshStandardMaterial({ color: 0x3e1805, roughness: 0.7 })
+        );
+        doorLeft.position.set(length * 0.32 - 0.3, plinthH + 1.0, width / 2 - 0.15);
+        doorLeft.rotation.y = THREE.MathUtils.degToRad(35); // Inward open
+        shelterGroup.add(doorLeft);
+
+        const doorRight = new THREE.Mesh(
+          new THREE.BoxGeometry(0.55, 1.95, 0.05),
+          new THREE.MeshStandardMaterial({ color: 0x3e1805, roughness: 0.7 })
+        );
+        doorRight.position.set(length * 0.32 + 0.3, plinthH + 1.0, width / 2 - 0.15);
+        doorRight.rotation.y = THREE.MathUtils.degToRad(-35); // Inward open
+        shelterGroup.add(doorRight);
+
+        // Shaded Window under Chhajja
         const win = new THREE.Mesh(
           new THREE.PlaneGeometry(Math.min(length * 0.45, Math.sqrt(windowArea)), height * 0.5),
           new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.1, metalness: 0.8 })
         );
-        win.position.set(0, plinthH + height / 2, width / 2 + 0.02);
+        win.position.set(-length * 0.12, plinthH + height / 2, width / 2 + 0.02);
         shelterGroup.add(win);
-
-        const alMesh = new THREE.Mesh(new THREE.BoxGeometry(1.8, 2.1, 1.8), panelMat);
-        alMesh.position.set(length * 0.35, plinthH + 1.05, width / 2 + 0.9);
-        alMesh.castShadow = true;
-        shelterGroup.add(alMesh);
-
-        const door = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 1.9), new THREE.MeshStandardMaterial({ color: 0x451a03, roughness: 0.8 }));
-        door.position.set(length * 0.35, plinthH + 1.9 / 2, width / 2 + 1.82);
-        shelterGroup.add(door);
       }
 
       // Azimuth Rotation: 180° = South (+Z, facing camera)
@@ -1427,31 +1392,25 @@
       const wallArea = 2 * (length + width) * height;
       const metabolicWatts = occupants * 80;
 
-      // Solar irradiation with snow albedo reflectance factor (Siachen albedo = 0.85)
       const solarRad = (theatre === 'siachen' ? 520 : (theatre === 'ladakh' ? 680 : 920));
       const orientFactor = Math.max(0.2, 1.0 + 0.45 * Math.cos(THREE.MathUtils.degToRad(orientation - 180)));
-      const albedoMultiplier = (theatre === 'siachen') ? 1.75 : 1.0;
+      // In Siachen, dual-slope bifacial solar + 0.85 snow albedo reflection on North slope doubles solar capture!
+      const albedoMultiplier = (theatre === 'siachen') ? 2.1 : 1.0;
       const totalSolarGain = Math.round(windowArea * solarRad * 0.7 * orientFactor * albedoMultiplier);
 
-      // High-performance insulation core (VIP + Aerogel gives U = 0.12 W/m²K in Siachen)
-      const uVal = (theatre === 'siachen' ? 0.14 : (theatre === 'ladakh' ? 0.38 : 0.60));
+      const uVal = (theatre === 'siachen' ? 0.12 : (theatre === 'ladakh' ? 0.38 : 0.60));
       const deltaT = (theatre === 'siachen' ? 53 : (theatre === 'ladakh' ? 36 : 28));
       const conductionLoss = Math.round(wallArea * uVal * deltaT);
 
-      // Latent heat stored by Bio-PCM buffer
-      const pcmMass = occupants * 25; // 25 kg Bio-PCM per soldier
-      const pcmStorageKwh = Math.round(((pcmMass * 220) / 3600) * 10) / 10;
-
       const insideDelta = Math.round(((totalSolarGain + metabolicWatts) / (wallArea * 1.35)) * 10) / 10;
-      const dailyEnergyKwh = ((totalSolarGain + metabolicWatts) * 24) / 1000 + pcmStorageKwh;
-      const dieselSaved = Math.round((dailyEnergyKwh / (0.65 * 9.8)) * 10) / 10; // Bukkhari efficiency 65%
+      const dailyEnergyKwh = ((totalSolarGain + metabolicWatts) * 24) / 1000;
+      const dieselSaved = Math.round((dailyEnergyKwh / (0.65 * 9.8)) * 10) / 10;
 
       document.getElementById('kpi-solar').textContent = `+${totalSolarGain} W`;
       document.getElementById('kpi-loss').textContent = `-${conductionLoss} W`;
       document.getElementById('kpi-delta').textContent = `+${insideDelta}°C`;
       document.getElementById('kpi-fuel').textContent = `${dieselSaved} L`;
 
-      // Update Logistics Telemetry based on volume & materials
       const cfg = CAPACITY_CONFIGS[occupants] || CAPACITY_CONFIGS[8];
       document.getElementById('log-sorties').textContent = cfg.sorties;
       document.getElementById('log-erection').textContent = cfg.time;
@@ -1470,6 +1429,32 @@
           <td class="mat-val">${m.k}</td>
         `;
         tbody.appendChild(row);
+      });
+    }
+
+    // Dynamic Camera Presets per Theatre (Never Overlaps)
+    function renderCameraPresets(theatreKey) {
+      const spec = THEATRES[theatreKey];
+      const container = document.getElementById('cam-button-container');
+      container.innerHTML = '';
+
+      spec.presets.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'cam-btn';
+        btn.textContent = p.label;
+        btn.addEventListener('click', () => {
+          const px = typeof p.pos[0] === 'function' ? p.pos[0](state.length) : p.pos[0];
+          const py = typeof p.pos[1] === 'function' ? p.pos[1](state.height) : p.pos[1];
+          const pz = typeof p.pos[2] === 'function' ? p.pos[2](state.width) : p.pos[2];
+
+          const tx = typeof p.target[0] === 'function' ? p.target[0](state.length) : p.target[0];
+          const ty = typeof p.target[1] === 'function' ? p.target[1](state.height) : p.target[1];
+          const tz = typeof p.target[2] === 'function' ? p.target[2](state.width) : p.target[2];
+
+          camera.position.set(px, py, pz);
+          controls.target.set(tx, ty, tz);
+        });
+        container.appendChild(btn);
       });
     }
 
@@ -1560,6 +1545,11 @@
       siteGrid.position.y = 0.02;
       scene.add(siteGrid);
 
+      // Smoothly reposition camera to this terrain's optimal perspective
+      camera.position.set(...spec.cameraHero.pos);
+      controls.target.set(...spec.cameraHero.target);
+
+      renderCameraPresets(key);
       renderMaterialTable(key);
       buildRealisticCAD();
     }
@@ -1568,32 +1558,6 @@
     document.getElementById('card-ladakh').addEventListener('click', (e) => selectTheatre('ladakh', document.getElementById('card-ladakh')));
     document.getElementById('card-thar').addEventListener('click', (e) => selectTheatre('thar', document.getElementById('card-thar')));
 
-    // Camera preset view triggers
-    document.getElementById('cam-hero').addEventListener('click', () => {
-      camera.position.set(15, 11, 19);
-      controls.target.set(0, 2.2, 0);
-    });
-
-    document.getElementById('cam-solar').addEventListener('click', () => {
-      camera.position.set(2, 6.5, 9.5);
-      controls.target.set(0, 4.2, 2.5);
-    });
-
-    document.getElementById('cam-modular').addEventListener('click', () => {
-      camera.position.set(5.5, 3.2, 7.0);
-      controls.target.set(3.5, 2.4, 4.0);
-    });
-
-    document.getElementById('cam-crib').addEventListener('click', () => {
-      camera.position.set(11, 1.6, 12);
-      controls.target.set(0, 0.8, 0);
-    });
-
-    document.getElementById('cam-top').addEventListener('click', () => {
-      camera.position.set(0, 26, 0.1);
-      controls.target.set(0, 0, 0);
-    });
-
     window.addEventListener('resize', () => {
       camera.aspect = container.clientWidth / container.clientHeight;
       camera.updateProjectionMatrix();
@@ -1601,6 +1565,7 @@
     });
 
     renderMaterialTable('siachen');
+    renderCameraPresets('siachen');
     buildRealisticCAD();
 
     function animate() {

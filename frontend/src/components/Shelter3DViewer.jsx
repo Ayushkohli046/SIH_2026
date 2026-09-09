@@ -239,6 +239,7 @@ export default function Shelter3DViewer({
         const py = roofPeakH * (1 - tFactor) + 0.08;
         const pz = slopeHalfW * tFactor + 0.04;
 
+        // 1. SOUTH ROOF SLOPE (+Z): Direct Solar
         for (let col = 0; col < nSolarCols; col++) {
           const px = -length * 0.46 + (col + 0.5) * modWidth;
           const mod = createDetailedSolarModule(modWidth * 0.90, modHeight * 0.92);
@@ -246,39 +247,45 @@ export default function Shelter3DViewer({
           mod.rotation.x = slantAngle;
           solarGroup.add(mod);
         }
+
+        // 2. NORTH ROOF SLOPE (-Z): Diffuse Sky + 85% Snow Albedo Ground Reflection
+        const pyNorth = roofPeakH * (1 - tFactor) + 0.08;
+        const pzNorth = -(slopeHalfW * tFactor + 0.04);
+        for (let col = 0; col < nSolarCols; col++) {
+          const px = -length * 0.46 + (col + 0.5) * modWidth;
+          const modN = createDetailedSolarModule(modWidth * 0.90, modHeight * 0.92);
+          modN.position.set(px, pyNorth, pzNorth);
+          modN.rotation.x = -slantAngle;
+          solarGroup.add(modN);
+        }
       }
       solarGroup.position.set(0, pylonH + 0.35 + height, 0);
       shelterGroup.add(solarGroup);
 
-      // Slanted Ground/Deck Solar Rack (55° tilt)
-      const groundSolar = new THREE.Group();
-      const gMods = Math.max(3, bays + 1);
-      const gModW = 1.3;
-      const rackTilt = THREE.MathUtils.degToRad(55);
-      for (let i = 0; i < gMods; i++) {
-        const gx = -length * 0.35 + i * (gModW + 0.15);
-        const p = createDetailedSolarModule(gModW, 1.8);
-        p.position.set(gx, 0.75, 0);
-        p.rotation.x = -rackTilt;
-        groundSolar.add(p);
-      }
-      groundSolar.position.set(-length * 0.08, pylonH + 0.35, width / 2 + 1.2);
-      shelterGroup.add(groundSolar);
-
-      // Airlock & Industrial Staircase
-      const alMesh = new THREE.Mesh(new THREE.BoxGeometry(2.0, 2.3, 2.2), panelMat);
-      alMesh.position.set(length * 0.35, pylonH + 0.35 + 1.15, width / 2 + 1.1);
+      // Inward-Opening Drift-Safe Arctic Vestibule (Opens inward so snowdrifts outside cannot trap troops!)
+      const alW = 1.8;
+      const alH = 2.3;
+      const alD = 1.3;
+      const alMesh = new THREE.Mesh(new THREE.BoxGeometry(alW, alH, alD), panelMat);
+      alMesh.position.set(length * 0.35, pylonH + 0.35 + alH / 2, width / 2 + alD / 2);
       alMesh.castShadow = true;
       shelterGroup.add(alMesh);
 
-      const door = new THREE.Mesh(new THREE.PlaneGeometry(1.1, 2.0), steelMat);
-      door.position.set(length * 0.35, pylonH + 0.35 + 1.0, width / 2 + 2.22);
-      shelterGroup.add(door);
+      const snowHood = new THREE.Mesh(new THREE.BoxGeometry(alW + 0.2, 0.08, alD + 0.3), trimMat);
+      snowHood.position.set(length * 0.35, pylonH + 0.35 + alH + 0.04, width / 2 + alD / 2 + 0.05);
+      snowHood.rotation.x = 0.2;
+      shelterGroup.add(snowHood);
+
+      // Inward-Swung Door Leaf
+      const doorLeaf = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.95, 0.06), steelMat);
+      doorLeaf.position.set(length * 0.35 - 0.15, pylonH + 0.35 + 1.0, width / 2 + alD - 0.25);
+      doorLeaf.rotation.y = THREE.MathUtils.degToRad(35); // 35° Inward Swing
+      shelterGroup.add(doorLeaf);
 
       const nSteps = 6;
       for (let s = 0; s < nSteps; s++) {
-        const step = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.12, 0.35), steelMat);
-        step.position.set(length * 0.35, (s + 0.5) * ((pylonH + 0.35) / nSteps), width / 2 + 2.2 + 0.35 + (nSteps - s) * 0.35);
+        const step = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.12, 0.32), steelMat);
+        step.position.set(length * 0.35, (s + 0.5) * ((pylonH + 0.35) / nSteps), width / 2 + alD + 0.25 + (nSteps - s) * 0.32);
         step.castShadow = true;
         shelterGroup.add(step);
       }
@@ -320,13 +327,23 @@ export default function Shelter3DViewer({
 
       // Trombe Solar Glazing
       const winW = Math.min(length * 0.55, Math.sqrt(windowArea) * 1.3);
-      const winH = Math.min(height * 0.7, windowArea / Math.max(winW, 0.1));
+      const winH = Math.min(height * 0.75, windowArea / Math.max(winW, 0.1));
       const win = new THREE.Mesh(new THREE.PlaneGeometry(winW, winH), new THREE.MeshStandardMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.75 }));
-      win.position.set(length * 0.05, bedH + height / 2, width / 2 + 0.02);
+      win.position.set(-length * 0.12, bedH + height / 2, width / 2 + 0.02);
       shelterGroup.add(win);
+
+      // Recessed Mountain Portal with Inward Door
+      const portal = new THREE.Mesh(new THREE.BoxGeometry(1.4, 2.2, 0.15), trimMat);
+      portal.position.set(length * 0.32, bedH + 1.1, width / 2 + 0.05);
+      shelterGroup.add(portal);
+
+      const door = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.95, 0.06), new THREE.MeshStandardMaterial({ color: 0x27382b, roughness: 0.7 }));
+      door.position.set(length * 0.32 - 0.15, bedH + 1.0, width / 2 - 0.15);
+      door.rotation.y = THREE.MathUtils.degToRad(30); // Inward open
+      shelterGroup.add(door);
     }
     // =====================================================================
-    // 3. THAR DESERT: SAND PLINTH + DUAL BADGIR WIND-TOWERS + CHHAJJA
+    // 3. THAR DESERT: DUAL BADGIR WIND-TOWERS + DEEP CHHAJJA + SHADED DEORHI
     // =====================================================================
     else if (theatre === 'thar') {
       const plinthH = 0.3;
@@ -342,21 +359,41 @@ export default function Shelter3DViewer({
 
       const roof = new THREE.Mesh(new THREE.BoxGeometry(length + 0.6, 0.25, width + 0.6), new THREE.MeshStandardMaterial({ color: 0xf8fafc }));
       roof.position.set(0, plinthH + height + 0.125, 0);
+      roof.castShadow = true;
       shelterGroup.add(roof);
 
-      // Wind-Towers
-      [-length * 0.25, length * 0.25].forEach(tx => {
-        const tower = new THREE.Mesh(new THREE.BoxGeometry(1.3, 1.8, 1.3), panelMat);
-        tower.position.set(tx, plinthH + height + 0.9, 0);
+      // Wind-Towers (Breeze Scoops)
+      [-length * 0.28, length * 0.28].forEach(tx => {
+        const tower = new THREE.Mesh(new THREE.BoxGeometry(1.3, 2.0, 1.3), panelMat);
+        tower.position.set(tx, plinthH + height + 1.0, 0);
         tower.castShadow = true;
         shelterGroup.add(tower);
+
+        const louver = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.5, 0.06), steelMat);
+        louver.position.set(tx, plinthH + height + 1.5, 0.68);
+        shelterGroup.add(louver);
       });
 
-      // Chhajja Overhang
-      const chhajja = new THREE.Mesh(new THREE.BoxGeometry(length * 0.85, 0.08, 1.2), new THREE.MeshStandardMaterial({ color: 0x9a3412 }));
-      chhajja.position.set(0, plinthH + height * 0.88, width / 2 + 0.6);
+      // Deep 1.2m Chhajja Overhang
+      const chhajja = new THREE.Mesh(new THREE.BoxGeometry(length * 0.9, 0.08, 1.3), new THREE.MeshStandardMaterial({ color: 0x9a3412 }));
+      chhajja.position.set(0, plinthH + height * 0.88, width / 2 + 0.65);
       chhajja.rotation.x = 0.18;
       shelterGroup.add(chhajja);
+
+      // Shaded Deorhi (Desert Recessed Porch & Inward Double Doors)
+      const deorhi = new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.2, 0.1), new THREE.MeshStandardMaterial({ color: 0x451a03 }));
+      deorhi.position.set(length * 0.32, plinthH + 1.1, width / 2 + 0.04);
+      shelterGroup.add(deorhi);
+
+      const dLeft = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.95, 0.05), new THREE.MeshStandardMaterial({ color: 0x3e1805 }));
+      dLeft.position.set(length * 0.32 - 0.3, plinthH + 1.0, width / 2 - 0.15);
+      dLeft.rotation.y = THREE.MathUtils.degToRad(35);
+      shelterGroup.add(dLeft);
+
+      const dRight = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.95, 0.05), new THREE.MeshStandardMaterial({ color: 0x3e1805 }));
+      dRight.position.set(length * 0.32 + 0.3, plinthH + 1.0, width / 2 - 0.15);
+      dRight.rotation.y = THREE.MathUtils.degToRad(-35);
+      shelterGroup.add(dRight);
     }
 
     // Orientation Azimuth: 180° = South (+Z, facing camera)
