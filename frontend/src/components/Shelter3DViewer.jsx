@@ -445,9 +445,10 @@ export default function Shelter3DViewer({
         pointerEvents: 'none'
       }}>
         <strong style={{ color: '#84cc16' }}>DRDO SIH 26051 // {theatre.toUpperCase()}</strong><br />
-        Logistics: {theatre === 'siachen' ? '1 Mi-17 Sortie • 4.5h Erection • Hex Cam-Locks' : (theatre === 'ladakh' ? 'Basalt Stone Bed • On-Site Masonry' : 'Sand Plinth • Local Adobe')}<br />
-        Insulation Core: {theatre === 'siachen' ? 'Aerogel + VIP + Bio-PCM (R ≥ 5.2)' : (theatre === 'ladakh' ? 'SCEB + Mineral Wool Jacket' : 'AAC + Cool Roof')}<br />
-        Solar Array: {theatre === 'siachen' ? '55° Slanted South Roof + Deck Racks (Bifacial)' : (theatre === 'ladakh' ? '45° Rooftop PV + South Trombe' : 'Badgir Wind Towers + Cool Roof')}<br />
+        Logistics: {theatre === 'siachen' ? (occupants <= 4 ? '2.1T Mass • 2 Mi-17 Sorties (@16k ft) • 4.5h Erection' : (occupants <= 8 ? '4.4T Mass • 3-4 Mi-17 Sorties (@16k ft) • 7.0h Erection' : '7.2T Mass • 5-6 Mi-17 Sorties • 12h Erection')) : (theatre === 'ladakh' ? (occupants <= 8 ? '18.8T Mass • 4 ALS 4x4 Trucks • Basalt Bed' : '32.5T Mass • 7 ALS Trucks') : (occupants <= 8 ? '9.8T Mass • 2 Tatra 6x6 Trucks • Badgir Scoops' : '16.4T Mass • 3 Tatra Trucks'))}<br />
+        Insulation: {theatre === 'siachen' ? 'Aerogel + VIP Core (U = 0.078 W/m²K) + Bio-PCM (14.4 kWh)' : (theatre === 'ladakh' ? '300mm Basalt Bed + South Trombe Wall + SCEB' : '200mm AAC + Cool Roof (SRI ≥ 105) + 1.2m Chhajja')}<br />
+        Solar: {theatre === 'siachen' ? 'Dual-Slope 55° Monocrystalline PV (South Direct + North 85% Snow Albedo)' : (theatre === 'ladakh' ? 'South Trombe Convective Loop + 45° Rooftop PV' : 'Dual Badgir Natural Wind-Towers + Deep Shading')}<br />
+        Safety: {theatre === 'siachen' ? 'Inward-Opening Drift-Safe Door • Helical Ice Augers' : (theatre === 'ladakh' ? 'Recessed Stone Portal • Inward Door' : 'Shaded Deorhi Veranda • Sand-Filter Double Doors')}<br />
         Controls: Left-click + drag to orbit • Scroll to zoom • Red vector = True North
       </div>
     </div>
