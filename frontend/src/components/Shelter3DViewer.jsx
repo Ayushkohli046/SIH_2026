@@ -148,6 +148,98 @@ export default function Shelter3DViewer({
       return group;
     }
 
+    function createGroundedMilitaryStairs(startX, startY, startZ, endX, endZ, widthM, nSteps, stepMat, metalMat) {
+      const g = new THREE.Group();
+      const run = Math.hypot(endX - startX, endZ - startZ);
+      const rise = startY;
+      const diagLen = Math.hypot(run, rise);
+      const angleY = Math.atan2(endX - startX, endZ - startZ);
+      const pitch = Math.atan2(rise, run);
+      const halfW = widthM / 2;
+
+      [-halfW, halfW].forEach(offsetLat => {
+        const stringer = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.16, diagLen), metalMat);
+        stringer.position.set(
+          (startX + endX) / 2 + offsetLat * Math.cos(angleY),
+          rise / 2,
+          (startZ + endZ) / 2 - offsetLat * Math.sin(angleY)
+        );
+        stringer.rotation.y = angleY;
+        stringer.rotation.x = pitch;
+        stringer.castShadow = true;
+        g.add(stringer);
+
+        const basePlate = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.04, 0.28), metalMat);
+        basePlate.position.set(
+          endX + offsetLat * Math.cos(angleY),
+          0.02,
+          endZ - offsetLat * Math.sin(angleY)
+        );
+        g.add(basePlate);
+
+        const aug = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.035, 0.01, 0.4, 6),
+          new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 })
+        );
+        aug.position.set(endX + offsetLat * Math.cos(angleY), -0.15, endZ - offsetLat * Math.sin(angleY));
+        g.add(aug);
+      });
+
+      for (let i = 0; i < nSteps; i++) {
+        const t = (i + 0.5) / nSteps;
+        const px = startX + t * (endX - startX);
+        const py = startY * (1 - (i + 1) / (nSteps + 1));
+        const pz = startZ + t * (endZ - startZ);
+
+        const step = new THREE.Mesh(new THREE.BoxGeometry(widthM - 0.02, 0.04, 0.28), stepMat);
+        step.position.set(px, py, pz);
+        step.rotation.y = angleY;
+        step.castShadow = true;
+        g.add(step);
+      }
+
+      [-halfW, halfW].forEach(offsetLat => {
+        const post = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, startY, 8), metalMat);
+        post.position.set(
+          startX + offsetLat * Math.cos(angleY),
+          startY / 2,
+          startZ - offsetLat * Math.sin(angleY)
+        );
+        post.castShadow = true;
+        g.add(post);
+
+        const shoe = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.22, 0.08, 8), metalMat);
+        shoe.position.set(
+          startX + offsetLat * Math.cos(angleY),
+          0.04,
+          startZ - offsetLat * Math.sin(angleY)
+        );
+        g.add(shoe);
+      });
+
+      [-halfW - 0.02, halfW + 0.02].forEach(offsetLat => {
+        const topP = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 1.0, 8), metalMat);
+        topP.position.set(startX + offsetLat * Math.cos(angleY), startY + 0.5, startZ - offsetLat * Math.sin(angleY));
+        g.add(topP);
+
+        const botP = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 1.0, 8), metalMat);
+        botP.position.set(endX + offsetLat * Math.cos(angleY), 0.5, endZ - offsetLat * Math.sin(angleY));
+        g.add(botP);
+
+        const rail = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, diagLen, 8), metalMat);
+        rail.position.set(
+          (startX + endX) / 2 + offsetLat * Math.cos(angleY),
+          rise / 2 + 0.95,
+          (startZ + endZ) / 2 - offsetLat * Math.sin(angleY)
+        );
+        rail.rotation.y = angleY;
+        rail.rotation.x = pitch;
+        g.add(rail);
+      });
+
+      return g;
+    }
+
     // =====================================================================
     // 1. SIACHEN GLACIER (ARCTIC)
     // =====================================================================
@@ -238,6 +330,36 @@ export default function Shelter3DViewer({
         doorLeaf.rotation.y = THREE.MathUtils.degToRad(35);
         shelterGroup.add(doorLeaf);
 
+        // Realistic Grounded Access Landing & Stairs (Option A)
+        const landW = 1.4;
+        const landD = 1.0;
+        const landY = pylonH + 0.35;
+        const landZ = width / 2 + 1.3 + landD / 2;
+        const landX = length * 0.35;
+
+        const landing = new THREE.Mesh(new THREE.BoxGeometry(landW, 0.12, landD), darkSteelMat);
+        landing.position.set(landX, landY - 0.06, landZ);
+        landing.castShadow = true;
+        shelterGroup.add(landing);
+
+        [-landW / 2 + 0.12, landW / 2 - 0.12].forEach(lx => {
+          const lPost = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, landY, 8), steelMat);
+          lPost.position.set(landX + lx, landY / 2, landZ + landD / 2 - 0.1);
+          lPost.castShadow = true;
+          shelterGroup.add(lPost);
+
+          const lShoe = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.22, 0.08, 8), darkSteelMat);
+          lShoe.position.set(landX + lx, 0.04, landZ + landD / 2 - 0.1);
+          shelterGroup.add(lShoe);
+        });
+
+        const stairsA = createGroundedMilitaryStairs(
+          landX, landY, landZ + landD / 2,
+          landX, landZ + landD / 2 + 2.4,
+          1.2, 6, steelMat, steelMat
+        );
+        shelterGroup.add(stairsA);
+
       } else if (variant === 'beta') {
         // Option B: Blizzard-Vault Quonset Arch
         const archHeight = height * 0.95;
@@ -294,23 +416,82 @@ export default function Shelter3DViewer({
           shelterGroup.add(pv);
         });
 
-        // Submarine Hatch Door
-        const hatchX = length / 2 + 0.04;
-        const hatchY = skidH + 1.15;
-        const hatchFrame = new THREE.Mesh(new THREE.TorusGeometry(0.68, 0.07, 12, 28), steelMat);
-        hatchFrame.position.set(hatchX, hatchY, 0);
-        hatchFrame.rotation.y = Math.PI / 2;
-        shelterGroup.add(hatchFrame);
+        // Realistic Military Arctic Vestibule & Grounded Stairs (Option B)
+        const vestW = 1.5;
+        const vestD = 1.1;
+        const vestH = 2.2;
+        const vestX = length / 2 + vestD / 2;
+        const vestY = skidH + vestH / 2;
 
-        const hatchDoor = new THREE.Mesh(new THREE.CylinderGeometry(0.64, 0.64, 0.07, 24), darkSteelMat);
-        hatchDoor.position.set(hatchX - 0.01, hatchY, 0);
-        hatchDoor.rotation.z = Math.PI / 2;
-        shelterGroup.add(hatchDoor);
+        const vestMesh = new THREE.Mesh(new THREE.BoxGeometry(vestD, vestH, vestW), panelMat);
+        vestMesh.position.set(vestX, vestY, 0);
+        vestMesh.castShadow = true;
+        shelterGroup.add(vestMesh);
 
-        const wheel = new THREE.Mesh(new THREE.TorusGeometry(0.24, 0.035, 8, 16), new THREE.MeshStandardMaterial({ color: 0x84cc16 }));
-        wheel.position.set(hatchX + 0.05, hatchY, 0);
-        wheel.rotation.y = Math.PI / 2;
-        shelterGroup.add(wheel);
+        const canopy = new THREE.Mesh(new THREE.BoxGeometry(vestD + 0.25, 0.08, vestW + 0.2), trimMat);
+        canopy.position.set(vestX + 0.05, skidH + vestH + 0.04, 0);
+        canopy.rotation.z = -0.12;
+        shelterGroup.add(canopy);
+
+        const doorW = 0.95;
+        const doorH = 1.95;
+        const doorThick = 0.08;
+        const doorX = length / 2 + vestD + doorThick / 2;
+        const doorY = skidH + doorH / 2 + 0.05;
+
+        const doorPanel = new THREE.Mesh(new THREE.BoxGeometry(doorThick, doorH, doorW), steelMat);
+        doorPanel.position.set(doorX, doorY, 0);
+        doorPanel.castShadow = true;
+        shelterGroup.add(doorPanel);
+
+        // Grounded Landing Platform & Flight (Option B)
+        const landBW = 1.4;
+        const landBD = 0.85;
+        const landBY = skidH;
+        const landBX = length / 2 + vestD + landBD / 2;
+
+        const platformB = new THREE.Mesh(new THREE.BoxGeometry(landBD, 0.06, landBW), darkSteelMat);
+        platformB.position.set(landBX, landBY - 0.03, 0);
+        platformB.castShadow = true;
+        shelterGroup.add(platformB);
+
+        [-landBW / 2 + 0.12, landBW / 2 - 0.12].forEach(pz => {
+          const pPost = new THREE.Mesh(new THREE.BoxGeometry(0.08, landBY, 0.08), steelMat);
+          pPost.position.set(landBX + landBD / 2 - 0.1, landBY / 2, pz);
+          pPost.castShadow = true;
+          shelterGroup.add(pPost);
+
+          const pFoot = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.16, 0.06, 8), darkSteelMat);
+          pFoot.position.set(landBX + landBD / 2 - 0.1, 0.03, pz);
+          shelterGroup.add(pFoot);
+        });
+
+        const groundPlateX = landBX + landBD / 2 + 0.65;
+        const groundFooter = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.04, landBW), darkSteelMat);
+        groundFooter.position.set(groundPlateX, 0.02, 0);
+        shelterGroup.add(groundFooter);
+
+        const step1 = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.04, landBW - 0.04), steelMat);
+        step1.position.set(landBX + landBD / 2 + 0.30, landBY * 0.5, 0);
+        step1.castShadow = true;
+        shelterGroup.add(step1);
+
+        [-landBW / 2, landBW / 2].forEach(pz => {
+          const stringerLen = Math.hypot(0.65, landBY);
+          const strPitch = Math.atan2(landBY, 0.65);
+          const stringer = new THREE.Mesh(new THREE.BoxGeometry(stringerLen, 0.12, 0.05), steelMat);
+          stringer.position.set(landBX + landBD / 2 + 0.32, landBY / 2, pz);
+          stringer.rotation.z = -strPitch;
+          shelterGroup.add(stringer);
+
+          const railLen = Math.hypot(groundPlateX - landBX, landBY);
+          const railPitch = Math.atan2(landBY, groundPlateX - landBX);
+          const rail = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, railLen, 8), aluMat);
+          rail.position.set((landBX + groundPlateX) / 2, landBY / 2 + 0.95, pz);
+          rail.rotation.z = -railPitch;
+          rail.rotation.y = Math.PI / 2;
+          shelterGroup.add(rail);
+        });
 
         // Guy-Wires
         for (let ix = -1; ix <= 1; ix += 2) {
@@ -344,6 +525,36 @@ export default function Shelter3DViewer({
         const pod = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
         pod.position.set(0, pylonH + 0.35 + height / 2, 0);
         shelterGroup.add(pod);
+
+        // Grounded Boarding Platform & Stairs (Option C)
+        const landCW = 1.5;
+        const landCD = 1.0;
+        const landCY = pylonH + 0.35;
+        const landCZ = width / 2 + 1.4 + landCD / 2;
+        const landCX = length * 0.36;
+
+        const landingC = new THREE.Mesh(new THREE.BoxGeometry(landCW, 0.14, landCD), darkSteelMat);
+        landingC.position.set(landCX, landCY - 0.07, landCZ);
+        landingC.castShadow = true;
+        shelterGroup.add(landingC);
+
+        [-landCW / 2 + 0.15, landCW / 2 - 0.15].forEach(lx => {
+          const cPost = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, landCY, 8), steelMat);
+          cPost.position.set(landCX + lx, landCY / 2, landCZ + landCD / 2 - 0.12);
+          cPost.castShadow = true;
+          shelterGroup.add(cPost);
+
+          const cShoe = new THREE.Mesh(new THREE.CylinderGeometry(0.20, 0.25, 0.08, 8), darkSteelMat);
+          cShoe.position.set(landCX + lx, 0.04, landCZ + landCD / 2 - 0.12);
+          shelterGroup.add(cShoe);
+        });
+
+        const stairsC = createGroundedMilitaryStairs(
+          landCX, landCY, landCZ + landCD / 2,
+          landCX, landCZ + landCD / 2 + 3.0,
+          1.2, 8, steelMat, steelMat
+        );
+        shelterGroup.add(stairsC);
 
         // Mast with Dual Solar Panels
         const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 2.4, 8), aluMat);
@@ -527,27 +738,50 @@ export default function Shelter3DViewer({
   const activeLabel = (variantLabels[theatre] && variantLabels[theatre][variant]) || variant.toUpperCase();
 
   return (
-    <div style={{ width: '100%', height: '480px', position: 'relative', borderRadius: '3px', overflow: 'hidden', border: '1px solid #1c2b20' }}>
-      <div ref={mountRef} style={{ width: '100%', height: '100%' }} />
+    <div style={{ width: '100%', height: '520px', display: 'flex', flexDirection: 'column', borderRadius: '4px', overflow: 'hidden', border: '1px solid #1c2b20', background: '#060a0f' }}>
+      {/* Sleek Top CAD Ribbon Bar (Zero Canvas Overlap) */}
       <div style={{
-        position: 'absolute',
-        top: '12px',
-        left: '12px',
-        background: 'rgba(6, 10, 15, 0.94)',
-        border: '1px solid #1c2b20',
-        borderLeft: '3px solid #84cc16',
-        color: '#e2e8f0',
-        padding: '8px 12px',
-        borderRadius: '2px',
+        height: '42px',
+        minHeight: '42px',
+        background: '#060a0f',
+        borderBottom: '1px solid #1c2b20',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 12px',
         fontSize: '11px',
         fontFamily: 'monospace',
-        lineHeight: '1.4',
-        pointerEvents: 'none'
+        color: '#e2e8f0',
+        zIndex: 10
       }}>
-        <strong style={{ color: '#84cc16' }}>DRDO SIH 26051 // {theatre.toUpperCase()} &bull; {activeLabel}</strong><br />
-        Logistics: {theatre === 'siachen' ? (occupants <= 4 ? '2.1T Mass • 2 Mi-17 Sorties (@16k ft) • 4.5h Erection' : (occupants <= 8 ? '4.4T Mass • 3-4 Mi-17 Sorties (@16k ft) • 7.0h Erection' : '7.2T Mass • 5-6 Mi-17 Sorties • 12h Erection')) : (theatre === 'ladakh' ? (occupants <= 8 ? '18.8T Mass • 4 ALS 4x4 Trucks • Basalt Bed' : '32.5T Mass • 7 ALS Trucks') : (occupants <= 8 ? '9.8T Mass • 2 Tatra 6x6 Trucks • Badgir Scoops' : '16.4T Mass • 3 Tatra Trucks'))}<br />
-        Insulation: {theatre === 'siachen' ? 'Aerogel + VIP Core (U = 0.078 W/m²K) + Bio-PCM (14.4 kWh)' : (theatre === 'ladakh' ? '300mm Basalt Bed + South Trombe Wall + SCEB' : '200mm AAC + Cool Roof (SRI ≥ 105) + 1.2m Chhajja')}<br />
-        Controls: Left-click + drag to orbit • Scroll to zoom • Red vector = True North
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ background: '#84cc16', color: '#000', fontWeight: 800, padding: '2px 6px', borderRadius: '2px', fontSize: '10px' }}>TEAM HYDRA</span>
+          <strong style={{ color: '#84cc16' }}>DRDO CAD &bull; {theatre.toUpperCase()} &bull; {activeLabel}</strong>
+        </div>
+        <div style={{ color: '#64748b', fontSize: '10px' }}>
+          Logistics: <span style={{ color: '#38bdf8' }}>{theatre === 'siachen' ? (occupants <= 4 ? '2.1T • 2 Sorties' : (occupants <= 8 ? '4.4T • 3-4 Sorties' : '7.2T • 5-6 Sorties')) : (theatre === 'ladakh' ? (occupants <= 8 ? '18.8T • 4 ALS Trucks' : '32.5T • 7 Trucks') : (occupants <= 8 ? '9.8T • 2 Tatra Trucks' : '16.4T • 3 Trucks'))}</span>
+        </div>
+      </div>
+
+      {/* Unobstructed 3D Viewport */}
+      <div style={{ flex: 1, position: 'relative', width: '100%', height: 'calc(100% - 42px)' }}>
+        <div ref={mountRef} style={{ width: '100%', height: '100%' }} />
+        {/* Minimal Bottom-Left Compass Pill */}
+        <div style={{
+          position: 'absolute',
+          bottom: '10px',
+          left: '10px',
+          background: 'rgba(6, 10, 15, 0.88)',
+          border: '1px solid #1c2b20',
+          padding: '4px 8px',
+          borderRadius: '2px',
+          fontSize: '10px',
+          fontFamily: 'monospace',
+          color: '#94a3b8',
+          pointerEvents: 'none'
+        }}>
+          ORIENTATION: <span style={{ color: '#84cc16' }}>{orientation}°</span> &bull; Red Vector = True North
+        </div>
       </div>
     </div>
   );

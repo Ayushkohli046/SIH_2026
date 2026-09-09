@@ -20,12 +20,70 @@
       height: 100vh;
       width: 100vw;
       display: flex;
+      flex-direction: column;
+    }
+
+    /* Fixed Top CAD Header Ribbon (Zero Canvas Overlap) */
+    .cad-navbar {
+      height: 48px;
+      min-height: 48px;
+      width: 100vw;
+      background: #060a0f;
+      border-bottom: 1px solid #1c2b20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 100;
+      gap: 16px;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-center {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .theatre-badge-pill {
+      background: #0d1926;
+      border: 1px solid #1e3a5f;
+      padding: 3px 8px;
+      border-radius: 2px;
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: #38bdf8;
+      font-weight: 700;
+    }
+    .nav-lbl {
+      font-size: 0.65rem;
+      color: #64748b;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    /* Main Workbench below navbar */
+    #app-workbench {
+      flex: 1;
+      height: calc(100vh - 48px);
+      width: 100vw;
+      display: flex;
+      position: relative;
+      overflow: hidden;
     }
 
     /* 3D Viewport */
     #canvas-container {
       flex: 1;
-      height: 100vh;
+      height: 100%;
       position: relative;
     }
     #canvas-container canvas {
@@ -34,61 +92,30 @@
       height: 100%;
     }
 
-    /* Top Command Header & Integrated Camera Bar (Compact & Minimizable) */
-    .hud-header {
+    /* Sleek Camera Dock in top right of viewport (Zero collision with bottom HUD) */
+    .camera-dock {
       position: absolute;
-      top: 12px;
-      left: 14px;
-      max-width: 580px;
-      width: auto;
+      top: 14px;
+      right: 14px;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 6px;
-      background: rgba(6, 10, 15, 0.90);
-      border: 1px solid #1c2b20;
-      border-left: 4px solid #84cc16;
-      padding: 8px 12px;
+      background: rgba(6, 10, 15, 0.85);
+      border: 1px solid #1e2e3d;
+      padding: 5px 10px;
       border-radius: 4px;
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(10px);
       z-index: 10;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     }
-    .hud-header.collapsed {
-      padding: 6px 12px;
-      gap: 0;
-      max-width: fit-content;
-      background: rgba(6, 10, 15, 0.75);
-    }
-    .hud-header.collapsed .hud-collapsible-body {
-      display: none;
-    }
-    .hud-toggle-btn {
-      background: #0f172a;
-      border: 1px solid #334155;
-      color: #94a3b8;
-      font-size: 0.68rem;
-      font-family: 'JetBrains Mono', monospace;
-      padding: 3px 8px;
-      border-radius: 2px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.15s;
-    }
-    .hud-toggle-btn:hover {
-      border-color: #84cc16;
+    .dock-lbl {
+      font-size: 0.64rem;
       color: #84cc16;
-      background: rgba(132, 204, 22, 0.1);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      margin-right: 2px;
     }
-    .hud-header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+
     .brand-group {
       display: flex;
       align-items: center;
@@ -117,17 +144,6 @@
       padding-left: 8px;
       font-family: 'JetBrains Mono', monospace;
     }
-    .telemetry-row {
-      display: flex;
-      gap: 14px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.70rem;
-      color: #94a3b8;
-    }
-    .telemetry-row span {
-      color: #38bdf8;
-      font-weight: 700;
-    }
 
     /* Comparison Evaluator Modal Trigger Button */
     .compare-btn-trigger {
@@ -137,7 +153,7 @@
       font-family: 'Chakra Petch', sans-serif;
       font-size: 0.72rem;
       font-weight: 700;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 2px;
       cursor: pointer;
       display: flex;
@@ -150,15 +166,7 @@
       transform: translateY(-1px);
     }
 
-    /* Shelter Design Variant Selector Toolbar */
-    .hud-variant-bar {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      align-items: center;
-      border-top: 1px solid #16251b;
-      padding-top: 7px;
-    }
+    /* Shelter Design Variant Selector Toolbar in Navbar */
     .variant-btn {
       background: #0b141e;
       border: 1px solid #1c2e3d;
@@ -187,31 +195,14 @@
       box-shadow: 0 0 8px rgba(56, 189, 248, 0.25);
     }
 
-    /* Terrain-Specific Dynamic Camera Toolbar */
-    .hud-camera-bar {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      align-items: center;
-      border-top: 1px solid #121c16;
-      padding-top: 6px;
-    }
-    .cam-label {
-      font-size: 0.65rem;
-      color: #84cc16;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      margin-right: 4px;
-      text-transform: uppercase;
-    }
     .cam-btn {
       background: #0f172a;
       border: 1px solid #1e293b;
       color: #cbd5e1;
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.70rem;
+      font-size: 0.68rem;
       font-weight: 600;
-      padding: 4px 9px;
+      padding: 3px 8px;
       border-radius: 2px;
       cursor: pointer;
       transition: all 0.15s;
@@ -246,7 +237,7 @@
     /* Engineering Sidebar */
     #ui-panel {
       width: 470px;
-      height: 100vh;
+      height: 100%;
       background: #06090d;
       border-left: 2px solid #1c2b20;
       padding: 16px 14px;
@@ -797,63 +788,59 @@
 </head>
 <body>
 
-  <!-- 3D Canvas Container -->
-  <div id="canvas-container">
-    <div class="hud-header" id="main-hud-header">
-      <div class="hud-header-top">
-        <div class="brand-group">
-          <span class="hydra-badge">TEAM HYDRA</span>
-          <span class="project-tag">DRDO CAD SUITE</span>
-          <span class="sih-id">SIH 26051</span>
-        </div>
-        <div style="display: flex; align-items: center; gap: 6px;">
-          <button class="compare-btn-trigger" id="btn-open-compare" title="Open Multi-Shelter Architecture Evaluator">
-            📊 COMPARE SHELTERS
-          </button>
-          <button class="hud-toggle-btn" id="btn-toggle-hud" title="Minimize / Expand CAD Header (Press 'H')">
-            <span id="hud-toggle-icon">➖</span> <span id="hud-toggle-text">MINIMIZE</span>
-          </button>
+  <!-- 1. Dedicated Fixed Top CAD Header Ribbon (Zero Viewport Overlap) -->
+  <header class="cad-navbar">
+    <div class="nav-left">
+      <div class="brand-group">
+        <span class="hydra-badge">TEAM HYDRA</span>
+        <span class="project-tag">DRDO CAD SUITE</span>
+        <span class="sih-id">SIH 26051</span>
+      </div>
+      <div class="theatre-badge-pill">THEATRE: <span id="top-theatre">SIACHEN ARCTIC</span></div>
+      <div class="theatre-badge-pill" style="border-color: #334155; color: #94a3b8;">SORTIES: <strong id="top-base" style="color: #38bdf8;">3-4 Mi-17</strong></div>
+      <div class="theatre-badge-pill" style="border-color: #334155; color: #94a3b8;">SOLAR: <strong id="top-solar" style="color: #84cc16;">DUAL-SLOPE</strong></div>
+    </div>
+
+    <div class="nav-center">
+      <span class="nav-lbl">SHELTER VARIANT:</span>
+      <div id="variant-button-container" style="display: flex; gap: 6px;">
+        <!-- Dynamically populated per terrain -->
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <button class="compare-btn-trigger" id="btn-open-compare" title="Open Multi-Shelter Architecture Evaluator">
+        📊 COMPARE SHELTERS (LIVE WEATHER)
+      </button>
+    </div>
+  </header>
+
+  <!-- 2. Main CAD Workbench (Unobstructed 3D Canvas + Engineering Sidebar) -->
+  <main id="app-workbench">
+    <!-- 3D Canvas Container -->
+    <div id="canvas-container">
+      <!-- Minimal Bottom-Right Camera Dock -->
+      <div class="camera-dock">
+        <span class="dock-lbl">CAM FOCUS:</span>
+        <div id="cam-button-container" style="display: flex; gap: 6px;">
+          <!-- Dynamically populated per terrain -->
         </div>
       </div>
 
-      <div class="hud-collapsible-body" id="hud-collapsible-body">
-        <div class="telemetry-row" style="margin-top: 4px;">
-          <div>THEATRE: <span id="top-theatre">SIACHEN ARCTIC</span></div>
-          <div>SOLAR: <span id="top-solar">DUAL-SLOPE (BOTH SIDES)</span></div>
-          <div>TRANSPORT: <span id="top-base">3 to 4 FLIGHTS (Mi-17 @ 16,000 ft)</span></div>
+      <!-- Minimal Bottom-Left Compass & Orientation HUD -->
+      <div class="hud-compass">
+        <div>ORIENTATION: <strong id="hud-azimuth">180° [SOUTH]</strong> &bull; SOLAR FACADE FACING SUN</div>
+        <div id="hud-feature-desc" style="font-size: 0.70rem; color: #38bdf8; margin-top: 2px;">
+          ❄️ SIACHEN: DUAL-SLOPE 55° SOLAR ROOF + INWARD-OPENING DRIFT-SAFE DOOR + ICE-AUGERS
         </div>
-
-        <!-- Shelter Design Variant Quick Selector Bar -->
-        <div class="hud-variant-bar">
-          <span class="cam-label" style="color: #38bdf8;">SHELTER DESIGN:</span>
-          <div id="variant-button-container" style="display: flex; gap: 6px; flex-wrap: wrap;">
-            <!-- Dynamically populated per terrain -->
-          </div>
-        </div>
-
-        <!-- Terrain-Specific Dynamic Camera Toolbar -->
-        <div class="hud-camera-bar">
-          <span class="cam-label">CAM FOCUS:</span>
-          <div id="cam-button-container" style="display: flex; gap: 6px; flex-wrap: wrap;">
-            <!-- Dynamically populated per terrain -->
-          </div>
+        <div style="font-size: 0.68rem; color: #64748b; margin-top: 2px;">
+          &bull; RED ARROW = TRUE NORTH &bull; DRAG TO ORBIT &bull; SCROLL TO ZOOM
         </div>
       </div>
     </div>
 
-    <div class="hud-compass">
-      <div>ORIENTATION: <strong id="hud-azimuth">180° [SOUTH]</strong> &bull; SOLAR FACADE FACING SUN</div>
-      <div id="hud-feature-desc" style="font-size: 0.70rem; color: #38bdf8; margin-top: 2px;">
-        ❄️ SIACHEN: DUAL-SLOPE 55° SOLAR ROOF + INWARD-OPENING DRIFT-SAFE DOOR + ICE-AUGERS
-      </div>
-      <div style="font-size: 0.68rem; color: #64748b; margin-top: 2px;">
-        &bull; RED ARROW = TRUE NORTH &bull; DRAG TO ORBIT &bull; SCROLL TO ZOOM
-      </div>
-    </div>
-  </div>
-
-  <!-- Engineering Sidebar -->
-  <div id="ui-panel">
+    <!-- Engineering Sidebar -->
+    <div id="ui-panel">
     <div style="border-bottom: 1px solid #1c2b20; padding-bottom: 5px;">
       <h2 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; letter-spacing: 0.05em;">DRDO PASSIVE SHELTER CAD</h2>
       <p style="font-size: 0.68rem; color: #84cc16; font-family: 'JetBrains Mono', monospace;">SIH 26051 // TERRAIN-SPECIFIC PASSIVE HABITATS</p>
@@ -1044,6 +1031,7 @@
       </div>
     </div>
   </div>
+  </main>
 
   <!-- =====================================================================
        COMPARISON & LIVE EVALUATOR MODAL (3 BEST OPTIONS + WHY CHOOSE THEM)
@@ -1199,8 +1187,20 @@
         cameraHero: { pos: [16, 9.5, 20], target: [0, 1.4, 0] },
         presets: [
           { label: '⭐ Hero 3D View (Unobstructed)', pos: [16, 9.5, 20], target: [0, 1.4, 0] },
-          { label: '☀️ Dual-Slope Solar (Both Sides)', pos: [0, 14, 18], target: [0, 2.5, 0] },
-          { label: '🚪 Inward Safe Door / Entry', pos: [length => length * 0.35 + 2.8, 2.4, width => width / 2 + 3.8], target: [length => length * 0.35, 1.6, width => width / 2 + 1.0] },
+          { label: '☀️ Solar Harvest Array', pos: [0, 14, 18], target: [0, 2.5, 0] },
+          {
+            label: '🚪 Access Entrance & Stairs',
+            pos: [
+              length => (state.variant === 'beta' ? length / 2 + 4.2 : length * 0.35 + 2.8),
+              2.4,
+              width => (state.variant === 'beta' ? 3.4 : width / 2 + 3.8)
+            ],
+            target: [
+              length => (state.variant === 'beta' ? length / 2 + 1.2 : length * 0.35),
+              1.2,
+              width => (state.variant === 'beta' ? 0 : width / 2 + 1.0)
+            ]
+          },
           { label: '🏗️ Ice-Auger Glacier Anchors', pos: [11, 1.5, 12], target: [0, 0.6, 0] }
         ]
       },
@@ -1697,6 +1697,105 @@
       return group;
     }
 
+    // Authentic Grounded Military Access Staircase (No Floating Geometry)
+    function createGroundedMilitaryStairs(startX, startY, startZ, endX, endZ, widthM, nSteps, stepMat, metalMat) {
+      const g = new THREE.Group();
+      const run = Math.hypot(endX - startX, endZ - startZ);
+      const rise = startY; // from landing down to ground 0
+      const diagLen = Math.hypot(run, rise);
+      const angleY = Math.atan2(endX - startX, endZ - startZ);
+      const pitch = Math.atan2(rise, run);
+      const halfW = widthM / 2;
+
+      // Twin diagonal C-channel steel stringers (Left & Right)
+      [-halfW, halfW].forEach(offsetLat => {
+        const stringer = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.16, diagLen), metalMat);
+        stringer.position.set(
+          (startX + endX) / 2 + offsetLat * Math.cos(angleY),
+          rise / 2,
+          (startZ + endZ) / 2 - offsetLat * Math.sin(angleY)
+        );
+        stringer.rotation.y = angleY;
+        stringer.rotation.x = pitch;
+        stringer.castShadow = true;
+        g.add(stringer);
+
+        // Ground base plate touching ice/earth
+        const basePlate = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.04, 0.28), metalMat);
+        basePlate.position.set(
+          endX + offsetLat * Math.cos(angleY),
+          0.02,
+          endZ - offsetLat * Math.sin(angleY)
+        );
+        g.add(basePlate);
+
+        // Ground Ice Auger
+        const aug = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.035, 0.01, 0.4, 6),
+          new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 })
+        );
+        aug.position.set(endX + offsetLat * Math.cos(angleY), -0.15, endZ - offsetLat * Math.sin(angleY));
+        g.add(aug);
+      });
+
+      // Treads (Horizontal diamond-plate steps)
+      for (let i = 0; i < nSteps; i++) {
+        const t = (i + 0.5) / nSteps;
+        const px = startX + t * (endX - startX);
+        const py = startY * (1 - (i + 1) / (nSteps + 1));
+        const pz = startZ + t * (endZ - startZ);
+
+        const step = new THREE.Mesh(new THREE.BoxGeometry(widthM - 0.02, 0.04, 0.28), stepMat);
+        step.position.set(px, py, pz);
+        step.rotation.y = angleY;
+        step.castShadow = true;
+        g.add(step);
+      }
+
+      // Vertical Support Stanchions under landing
+      [-halfW, halfW].forEach(offsetLat => {
+        const post = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, startY, 8), metalMat);
+        post.position.set(
+          startX + offsetLat * Math.cos(angleY),
+          startY / 2,
+          startZ - offsetLat * Math.sin(angleY)
+        );
+        post.castShadow = true;
+        g.add(post);
+
+        const shoe = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.22, 0.08, 8), metalMat);
+        shoe.position.set(
+          startX + offsetLat * Math.cos(angleY),
+          0.04,
+          startZ - offsetLat * Math.sin(angleY)
+        );
+        g.add(shoe);
+      });
+
+      // Safety Handrails along the stairs
+      [-halfW - 0.02, halfW + 0.02].forEach(offsetLat => {
+        const topP = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 1.0, 8), metalMat);
+        topP.position.set(startX + offsetLat * Math.cos(angleY), startY + 0.5, startZ - offsetLat * Math.sin(angleY));
+        g.add(topP);
+
+        const botP = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 1.0, 8), metalMat);
+        botP.position.set(endX + offsetLat * Math.cos(angleY), 0.5, endZ - offsetLat * Math.sin(angleY));
+        g.add(botP);
+
+        const rail = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, diagLen, 8), metalMat);
+        rail.position.set(
+          (startX + endX) / 2 + offsetLat * Math.cos(angleY),
+          rise / 2 + 0.95,
+          (startZ + endZ) / 2 - offsetLat * Math.sin(angleY)
+        );
+        rail.rotation.y = angleY;
+        rail.rotation.x = pitch;
+        g.add(rail);
+      });
+
+      return g;
+    }
+
     function buildRealisticCAD() {
       while (shelterGroup.children.length > 0) {
         const obj = shelterGroup.children[0];
@@ -1883,13 +1982,45 @@
           doorLeaf.rotation.y = THREE.MathUtils.degToRad(35);
           shelterGroup.add(doorLeaf);
 
-          const nSteps = 6;
-          for (let s = 0; s < nSteps; s++) {
-            const step = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.12, 0.32), steelMat);
-            step.position.set(length * 0.35, (s + 0.5) * ((pylonHeight + 0.35) / nSteps), width / 2 + alD + 0.25 + (nSteps - s) * 0.32);
-            step.castShadow = true;
-            shelterGroup.add(step);
-          }
+          // Realistic Grounded Access Landing & Staircase (Zero Floating)
+          const landW = 1.4;
+          const landD = 1.0;
+          const landY = pylonHeight + 0.35;
+          const landZ = width / 2 + alD + landD / 2;
+          const landX = length * 0.35;
+
+          const landing = new THREE.Mesh(
+            new THREE.BoxGeometry(landW, 0.12, landD),
+            new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.8, roughness: 0.4 })
+          );
+          landing.position.set(landX, landY - 0.06, landZ);
+          landing.castShadow = true;
+          shelterGroup.add(landing);
+
+          // Vertical ground support posts under landing (connecting Y=1.75m down to ground Y=0)
+          [-landW / 2 + 0.12, landW / 2 - 0.12].forEach(lx => {
+            const lPost = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, landY, 8), steelMat);
+            lPost.position.set(landX + lx, landY / 2, landZ + landD / 2 - 0.1);
+            lPost.castShadow = true;
+            shelterGroup.add(lPost);
+
+            const lShoe = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.22, 0.08, 8), darkSteelMat);
+            lShoe.position.set(landX + lx, 0.04, landZ + landD / 2 - 0.1);
+            shelterGroup.add(lShoe);
+          });
+
+          // Grounded diagonal flight of stairs down to ice
+          const stairStartX = landX;
+          const stairStartZ = landZ + landD / 2;
+          const stairEndX = landX;
+          const stairEndZ = stairStartZ + 2.4;
+
+          const stairsA = createGroundedMilitaryStairs(
+            stairStartX, landY, stairStartZ,
+            stairEndX, stairEndZ,
+            1.2, 6, steelMat, steelMat
+          );
+          shelterGroup.add(stairsA);
 
         } else if (variant === 'beta') {
           // Option B: Blizzard-Vault Quonset Arch (Streamlined Parabolic Vault + Titanium Ribs + Submarine Hatch)
@@ -1972,72 +2103,166 @@
             }
           });
 
-          // Submarine Pressure-Hatch Vestibule at Front (+X)
-          const hatchZ = 0;
-          const hatchY = skidH + 1.15;
-          const hatchX = length / 2 + 0.04;
+          // -----------------------------------------------------------------
+          // Realistic Military Arctic Vestibule & Grounded Access Steps
+          // (No hypothetical submarine hatch; 100% buildable prefab construction)
+          // -----------------------------------------------------------------
+          const vestW = 1.5;
+          const vestD = 1.1;
+          const vestH = 2.2;
+          const vestX = length / 2 + vestD / 2;
+          const vestY = skidH + vestH / 2;
 
-          // Storm Visor Hood over hatch
-          const hoodGeom = new THREE.CylinderGeometry(0.90, 0.90, 0.55, 16, 1, false, 0, Math.PI);
-          hoodGeom.rotateZ(Math.PI / 2);
-          hoodGeom.rotateY(Math.PI / 2);
-          const hood = new THREE.Mesh(hoodGeom, trimMat);
-          hood.position.set(length / 2 + 0.25, hatchY + 0.15, 0);
-          hood.castShadow = true;
-          shelterGroup.add(hood);
-
-          // Heavy Circular Hatch Frame
-          const hatchFrame = new THREE.Mesh(
-            new THREE.TorusGeometry(0.68, 0.07, 12, 32),
-            new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.9, roughness: 0.3 })
+          // 1. Insulated Weather-Airlock Vestibule Box (Prevents blizzard wind infiltration)
+          const vestMesh = new THREE.Mesh(
+            new THREE.BoxGeometry(vestD, vestH, vestW),
+            panelMat
           );
-          hatchFrame.position.set(hatchX, hatchY, hatchZ);
-          hatchFrame.rotation.y = Math.PI / 2;
-          shelterGroup.add(hatchFrame);
+          vestMesh.position.set(vestX, vestY, 0);
+          vestMesh.castShadow = true;
+          vestMesh.receiveShadow = true;
+          shelterGroup.add(vestMesh);
 
-          // Pressure Hatch Door Disc
-          const hatchDoor = new THREE.Mesh(
-            new THREE.CylinderGeometry(0.64, 0.64, 0.07, 24),
-            new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.35 })
+          // Sloped snow-deflector roof canopy over vestibule
+          const canopy = new THREE.Mesh(
+            new THREE.BoxGeometry(vestD + 0.25, 0.08, vestW + 0.2),
+            trimMat
           );
-          hatchDoor.position.set(hatchX - 0.01, hatchY, hatchZ);
-          hatchDoor.rotation.z = Math.PI / 2;
-          shelterGroup.add(hatchDoor);
+          canopy.position.set(vestX + 0.05, skidH + vestH + 0.04, 0);
+          canopy.rotation.z = -0.12;
+          canopy.castShadow = true;
+          shelterGroup.add(canopy);
 
-          // Dogging Handwheel
-          const wheel = new THREE.Mesh(
-            new THREE.TorusGeometry(0.24, 0.035, 8, 16),
-            new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9, roughness: 0.2 })
+          // 2. Heavy-Duty Rectangular Insulated Arctic Personnel Door (Cold-Store Spec)
+          const doorW = 0.95;
+          const doorH = 1.95;
+          const doorThick = 0.08;
+          const doorX = length / 2 + vestD + doorThick / 2;
+          const doorY = skidH + doorH / 2 + 0.05;
+
+          const doorFrame = new THREE.Mesh(
+            new THREE.BoxGeometry(0.06, doorH + 0.1, doorW + 0.12),
+            darkSteelMat
           );
-          wheel.position.set(hatchX + 0.05, hatchY, hatchZ);
-          wheel.rotation.y = Math.PI / 2;
-          shelterGroup.add(wheel);
+          doorFrame.position.set(doorX - 0.02, doorY, 0);
+          doorFrame.castShadow = true;
+          shelterGroup.add(doorFrame);
 
-          // Wheel Hub & Spokes
-          const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.08, 12), steelMat);
-          hub.position.set(hatchX + 0.04, hatchY, hatchZ);
-          hub.rotation.z = Math.PI / 2;
-          shelterGroup.add(hub);
+          const doorPanel = new THREE.Mesh(
+            new THREE.BoxGeometry(doorThick, doorH, doorW),
+            new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.75, roughness: 0.35 })
+          );
+          doorPanel.position.set(doorX, doorY, 0);
+          doorPanel.castShadow = true;
+          shelterGroup.add(doorPanel);
 
-          for (let sp = 0; sp < 4; sp++) {
-            const spoke = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.44, 0.025), steelMat);
-            spoke.position.set(hatchX + 0.05, hatchY, hatchZ);
-            spoke.rotation.x = (sp * Math.PI) / 4;
-            shelterGroup.add(spoke);
-          }
+          // Industrial Heavy Lever Latch Handle
+          const latchHandle = new THREE.Mesh(
+            new THREE.BoxGeometry(0.12, 0.04, 0.22),
+            aluMat
+          );
+          latchHandle.position.set(doorX + doorThick / 2 + 0.04, skidH + 1.05, 0.32);
+          shelterGroup.add(latchHandle);
 
-          // Anti-Drift Aluminum Diamond-Plate Ice Entry Steps
-          const nSteps = 5;
-          for (let s = 0; s < nSteps; s++) {
-            const stepH = (skidH + 0.5) / nSteps;
-            const step = new THREE.Mesh(
-              new THREE.BoxGeometry(0.34, 0.08, 1.2),
-              new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.8, roughness: 0.4 })
-            );
-            step.position.set(length / 2 + 0.35 + s * 0.28, (s + 0.5) * stepH, 0);
-            step.castShadow = true;
-            shelterGroup.add(step);
-          }
+          // Freeze-proof Heated Observation Viewport (Triple-Glazed)
+          const windowGlass = new THREE.Mesh(
+            new THREE.BoxGeometry(doorThick + 0.02, 0.40, 0.32),
+            new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.85, metalness: 0.9 })
+          );
+          windowGlass.position.set(doorX, skidH + 1.45, 0);
+          shelterGroup.add(windowGlass);
+
+          // 3. Grounded Welded Steel Access Platform & Flight (100% Grounded, Zero Floating)
+          const landW = 1.4;
+          const landD = 0.85;
+          const landY = skidH; // 0.35m
+          const landX = length / 2 + vestD + landD / 2;
+
+          // Main horizontal landing platform outside door
+          const platform = new THREE.Mesh(
+            new THREE.BoxGeometry(landD, 0.06, landW),
+            new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.4 })
+          );
+          platform.position.set(landX, landY - 0.03, 0);
+          platform.castShadow = true;
+          platform.receiveShadow = true;
+          shelterGroup.add(platform);
+
+          // Vertical structural posts under platform connecting down to ice (Y=0)
+          [-landW / 2 + 0.12, landW / 2 - 0.12].forEach(pz => {
+            const pPost = new THREE.Mesh(new THREE.BoxGeometry(0.08, landY, 0.08), steelMat);
+            pPost.position.set(landX + landD / 2 - 0.1, landY / 2, pz);
+            pPost.castShadow = true;
+            shelterGroup.add(pPost);
+
+            const pFoot = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.16, 0.06, 8), darkSteelMat);
+            pFoot.position.set(landX + landD / 2 - 0.1, 0.03, pz);
+            pFoot.receiveShadow = true;
+            shelterGroup.add(pFoot);
+
+            const pAuger = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.01, 0.4, 6), augerMat);
+            pAuger.position.set(landX + landD / 2 - 0.1, -0.15, pz);
+            shelterGroup.add(pAuger);
+          });
+
+          // Ground Base Footer Plate on ice surface (Y = 0.02)
+          const groundPlateX = landX + landD / 2 + 0.65;
+          const groundFooter = new THREE.Mesh(
+            new THREE.BoxGeometry(0.55, 0.04, landW),
+            new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.4 })
+          );
+          groundFooter.position.set(groundPlateX, 0.02, 0);
+          groundFooter.receiveShadow = true;
+          shelterGroup.add(groundFooter);
+
+          // Ice augers securing ground footer into ice
+          [-landW / 2 + 0.2, landW / 2 - 0.2].forEach(pz => {
+            const gAug = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.01, 0.4, 6), augerMat);
+            gAug.position.set(groundPlateX, -0.15, pz);
+            shelterGroup.add(gAug);
+          });
+
+          // Intermediate Step Tread (Diamond-plate steel)
+          const step1X = landX + landD / 2 + 0.30;
+          const step1Y = landY * 0.5; // 0.175m
+          const step1 = new THREE.Mesh(
+            new THREE.BoxGeometry(0.32, 0.04, landW - 0.04),
+            new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.8, roughness: 0.35 })
+          );
+          step1.position.set(step1X, step1Y, 0);
+          step1.castShadow = true;
+          shelterGroup.add(step1);
+
+          // Twin Diagonal C-Channel Steel Stringers (Left & Right) from landing to ground plate
+          [-landW / 2, landW / 2].forEach(pz => {
+            const stringerLen = Math.hypot(0.65, landY);
+            const strPitch = Math.atan2(landY, 0.65);
+            const stringer = new THREE.Mesh(new THREE.BoxGeometry(stringerLen, 0.12, 0.05), steelMat);
+            stringer.position.set(landX + landD / 2 + 0.32, landY / 2, pz);
+            stringer.rotation.z = -strPitch;
+            stringer.castShadow = true;
+            shelterGroup.add(stringer);
+
+            // Handrail vertical stanchion posts (Platform end + Ground end)
+            const postHigh = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.95, 8), aluMat);
+            postHigh.position.set(landX, landY + 0.475, pz);
+            postHigh.castShadow = true;
+            shelterGroup.add(postHigh);
+
+            const postLow = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.95, 8), aluMat);
+            postLow.position.set(groundPlateX, 0.475, pz);
+            postLow.castShadow = true;
+            shelterGroup.add(postLow);
+
+            // Diagonal top handrail
+            const railLen = Math.hypot(groundPlateX - landX, landY);
+            const railPitch = Math.atan2(landY, groundPlateX - landX);
+            const rail = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, railLen, 8), aluMat);
+            rail.position.set((landX + groundPlateX) / 2, landY / 2 + 0.95, pz);
+            rail.rotation.z = -railPitch;
+            rail.rotation.y = Math.PI / 2;
+            shelterGroup.add(rail);
+          });
 
           // High-Tension Galvanized Steel Guy-Wires with Turnbuckles
           for (let ix = -1; ix <= 1; ix += 2) {
@@ -2163,13 +2388,40 @@
           airlock.castShadow = true;
           shelterGroup.add(airlock);
 
-          const stepCount = 8;
-          for (let s = 0; s < stepCount; s++) {
-            const stp = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.12, 0.30), steelMat);
-            stp.position.set(length * 0.36, (s + 0.5) * ((pylonH + 0.35) / stepCount), width / 2 + 1.4 + (stepCount - s) * 0.30);
-            stp.castShadow = true;
-            shelterGroup.add(stp);
-          }
+          // Grounded Heavy-Duty Boarding Stairs for Option C (Zero Floating)
+          const landWC = 1.5;
+          const landDC = 1.0;
+          const landYC = pylonH + 0.35;
+          const landZC = width / 2 + 1.4 + landDC / 2;
+          const landXC = length * 0.36;
+
+          const landingC = new THREE.Mesh(
+            new THREE.BoxGeometry(landWC, 0.14, landDC),
+            new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.3 })
+          );
+          landingC.position.set(landXC, landYC - 0.07, landZC);
+          landingC.castShadow = true;
+          shelterGroup.add(landingC);
+
+          // Support legs from landing down to ground (Y=0)
+          [-landWC / 2 + 0.15, landWC / 2 - 0.15].forEach(lx => {
+            const cPost = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, landYC, 8), steelMat);
+            cPost.position.set(landXC + lx, landYC / 2, landZC + landDC / 2 - 0.12);
+            cPost.castShadow = true;
+            shelterGroup.add(cPost);
+
+            const cShoe = new THREE.Mesh(new THREE.CylinderGeometry(0.20, 0.25, 0.08, 8), darkSteelMat);
+            cShoe.position.set(landXC + lx, 0.04, landZC + landDC / 2 - 0.12);
+            shelterGroup.add(cShoe);
+          });
+
+          // Grounded diagonal flight of stairs
+          const stairsC = createGroundedMilitaryStairs(
+            landXC, landYC, landZC + landDC / 2,
+            landXC, landZC + landDC / 2 + 3.0,
+            1.2, 8, steelMat, steelMat
+          );
+          shelterGroup.add(stairsC);
         }
       }
 
@@ -2547,29 +2799,34 @@
       const dailyEnergyKwh = ((totalSolarGain + metabolicWatts) * 24) / 1000;
       const dieselSaved = Math.round((dailyEnergyKwh / (0.65 * 9.8)) * 10) / 10;
 
-      document.getElementById('kpi-solar').textContent = `+${totalSolarGain} W`;
-      document.getElementById('kpi-loss').textContent = `-${conductionLoss} W`;
-      document.getElementById('kpi-delta').textContent = `+${insideDelta}°C`;
-      document.getElementById('kpi-fuel').textContent = `${dieselSaved} L`;
+      const setSafeText = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+
+      setSafeText('kpi-solar', `+${totalSolarGain} W`);
+      setSafeText('kpi-loss', `-${conductionLoss} W`);
+      setSafeText('kpi-delta', `+${insideDelta}°C`);
+      setSafeText('kpi-fuel', `${dieselSaved} L`);
 
       // Dynamic Logistics Telemetry based on [theatre][occupants]
       const logSpec = LOGISTICS_DATA[theatre][occupants];
-      document.getElementById('log-mass').textContent = logSpec.mass;
-      document.getElementById('log-transport-label').textContent = logSpec.transportLabel;
-      document.getElementById('log-sorties').textContent = logSpec.transportVal;
-      document.getElementById('log-transport-desc').textContent = logSpec.transportDesc;
-      document.getElementById('log-erection').textContent = logSpec.time;
-      document.getElementById('log-erection-desc').textContent = logSpec.timeDesc;
-      document.getElementById('log-door').textContent = logSpec.foundation;
-      document.getElementById('log-door-desc').textContent = logSpec.fDesc;
-      document.getElementById('top-base').textContent = logSpec.transportVal;
+      setSafeText('log-mass', logSpec.mass);
+      setSafeText('log-transport-label', logSpec.transportLabel);
+      setSafeText('log-sorties', logSpec.transportVal);
+      setSafeText('log-transport-desc', logSpec.transportDesc);
+      setSafeText('log-erection', logSpec.time);
+      setSafeText('log-erection-desc', logSpec.timeDesc);
+      setSafeText('log-door', logSpec.foundation);
+      setSafeText('log-door-desc', logSpec.fDesc);
+      setSafeText('top-base', logSpec.transportVal);
 
       // Update active variant indicators
       const vSpec = SHELTER_VARIANTS[theatre][variant];
       if (vSpec) {
-        document.getElementById('hud-feature-desc').textContent = vSpec.hudDesc;
-        document.getElementById('top-solar').textContent = vSpec.name.toUpperCase();
-        document.getElementById('sidebar-variant-badge').textContent = vSpec.badge;
+        setSafeText('hud-feature-desc', vSpec.hudDesc);
+        setSafeText('top-solar', vSpec.name.toUpperCase());
+        setSafeText('sidebar-variant-badge', vSpec.badge);
       }
     }
 
