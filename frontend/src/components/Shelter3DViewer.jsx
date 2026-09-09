@@ -14,6 +14,7 @@ export default function Shelter3DViewer({
   orientation = 180,
   windowArea = 5,
   theatre = 'siachen', // 'siachen' | 'ladakh' | 'thar'
+  variant = 'alpha',   // 'alpha' | 'beta' | 'gamma'
   occupants = 8
 }) {
   const mountRef = useRef(null);
@@ -35,7 +36,6 @@ export default function Shelter3DViewer({
     const widthPx = currentMount.clientWidth || 600;
     const heightPx = currentMount.clientHeight || 450;
     const camera = new THREE.PerspectiveCamera(45, widthPx / heightPx, 0.1, 1000);
-    // View from front-quarter facing the South facade
     camera.position.set(14, 11, 18);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
@@ -47,7 +47,6 @@ export default function Shelter3DViewer({
     renderer.toneMappingExposure = 1.15;
     currentMount.appendChild(renderer.domElement);
 
-    // Prevent page scroll when zooming on canvas
     const onWheel = (e) => e.preventDefault();
     renderer.domElement.addEventListener('wheel', onWheel, { passive: false });
 
@@ -59,7 +58,6 @@ export default function Shelter3DViewer({
     controls.maxDistance = 80;
     controls.target.set(0, 2.2, 0);
 
-    // Lighting
     scene.add(new THREE.AmbientLight(0xffffff, 0.6));
     const sun = new THREE.DirectionalLight(0xfffaed, 2.0);
     sun.position.set(25, 40, 25);
@@ -73,7 +71,6 @@ export default function Shelter3DViewer({
     hemi.position.set(0, 50, 0);
     scene.add(hemi);
 
-    // Ground Plane
     const groundColors = {
       siachen: 0xe5eef5,
       ladakh: 0x3d352b,
@@ -88,13 +85,11 @@ export default function Shelter3DViewer({
     terrain.receiveShadow = true;
     scene.add(terrain);
 
-    // North Indicator Arrow (pointing along -Z)
     scene.add(new THREE.ArrowHelper(new THREE.Vector3(0, 0, -1), new THREE.Vector3(0, 0.05, 0), 8, 0xef4444, 1.8, 1.0));
 
     const shelterGroup = new THREE.Group();
     scene.add(shelterGroup);
 
-    // Materials
     const camoColors = {
       siachen: 0xdde6ed,
       ladakh: 0x303f26,
@@ -107,7 +102,6 @@ export default function Shelter3DViewer({
     const solarMat = new THREE.MeshStandardMaterial({ color: 0x102a43, roughness: 0.12, metalness: 0.9 });
     const trimMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.85 });
 
-    // Helper: Gabled Roof Geometry
     function createGableRoofGeometry(rLen, rWidth, rHeight) {
       const shape = new THREE.Shape();
       shape.moveTo(-rWidth / 2, 0);
@@ -120,7 +114,6 @@ export default function Shelter3DViewer({
       return geom;
     }
 
-    // Helper: Solar PV Module with Anodized Aluminum Casing Frame
     function createDetailedSolarModule(widthM, heightM) {
       const group = new THREE.Group();
       const face = new THREE.Mesh(new THREE.PlaneGeometry(widthM - 0.06, heightM - 0.06), solarMat);
@@ -136,162 +129,170 @@ export default function Shelter3DViewer({
     }
 
     // =====================================================================
-    // 1. SIACHEN GLACIER: HEAVY SNOW CRIB + 55° SLANTED SOUTH SOLAR ROOF
+    // 1. SIACHEN GLACIER (ARCTIC)
     // =====================================================================
     if (theatre === 'siachen') {
-      const pylonH = 1.4;
-      const nPylonsX = Math.max(3, bays + 2);
+      if (variant === 'alpha') {
+        const pylonH = 1.4;
+        const nPylonsX = Math.max(3, bays + 2);
 
-      // Pylons & Snowshoes
-      for (let ix = 0; ix <= nPylonsX; ix++) {
-        for (let iz = 0; iz < 3; iz++) {
-          const px = -length / 2 + (ix * length) / nPylonsX;
-          const pz = -width / 2 + (iz * width) / 2;
+        for (let ix = 0; ix <= nPylonsX; ix++) {
+          for (let iz = 0; iz < 3; iz++) {
+            const px = -length / 2 + (ix * length) / nPylonsX;
+            const pz = -width / 2 + (iz * width) / 2;
 
-          const pylon = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.20, pylonH, 8), steelMat);
-          pylon.position.set(px, pylonH / 2, pz);
-          pylon.castShadow = true;
-          shelterGroup.add(pylon);
+            const pylon = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.20, pylonH, 8), steelMat);
+            pylon.position.set(px, pylonH / 2, pz);
+            pylon.castShadow = true;
+            shelterGroup.add(pylon);
 
-          const shoe = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.60, 0.14, 8), steelMat);
-          shoe.position.set(px, 0.07, pz);
-          shoe.receiveShadow = true;
-          shelterGroup.add(shoe);
+            const shoe = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.60, 0.14, 8), steelMat);
+            shoe.position.set(px, 0.07, pz);
+            shoe.receiveShadow = true;
+            shelterGroup.add(shoe);
 
-          // Helical Ice-Auger Screw Pin anchored into permafrost/glacier
-          const auger = new THREE.Mesh(
-            new THREE.CylinderGeometry(0.04, 0.01, 0.6, 6),
-            new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 })
-          );
-          auger.position.set(px, -0.25, pz);
-          shelterGroup.add(auger);
-        }
-      }
-
-      // X-Braces between front pylons
-      for (let ix = 0; ix < nPylonsX; ix++) {
-        const x1 = -length / 2 + (ix * length) / nPylonsX;
-        const x2 = -length / 2 + ((ix + 1) * length) / nPylonsX;
-        const pz = width / 2;
-        const diagLen = Math.hypot(x2 - x1, pylonH);
-        const b1 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, diagLen, 6), steelMat);
-        b1.position.set((x1 + x2) / 2, pylonH / 2, pz);
-        b1.rotation.z = Math.atan2(pylonH, x2 - x1);
-        shelterGroup.add(b1);
-
-        const b2 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, diagLen, 6), steelMat);
-        b2.position.set((x1 + x2) / 2, pylonH / 2, pz);
-        b2.rotation.z = -Math.atan2(pylonH, x2 - x1);
-        shelterGroup.add(b2);
-      }
-
-      // Chassis & Deck
-      const chassis = new THREE.Mesh(new THREE.BoxGeometry(length + 0.8, 0.25, width + 0.8), darkSteelMat);
-      chassis.position.set(0, pylonH + 0.125, 0);
-      shelterGroup.add(chassis);
-
-      const deck = new THREE.Mesh(new THREE.BoxGeometry(length + 1.2, 0.18, width + 1.2), steelMat);
-      deck.position.set(0, pylonH + 0.25 + 0.09, 0);
-      deck.castShadow = true;
-      shelterGroup.add(deck);
-
-      // Walls
-      const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
-      walls.position.set(0, pylonH + 0.35 + height / 2, 0);
-      walls.castShadow = true;
-      walls.receiveShadow = true;
-      shelterGroup.add(walls);
-
-      // Cam-Lock Joint Indicators on 1.2m modular boundaries
-      const nPanelsX = Math.round(length / 1.2);
-      for (let p = 1; p < nPanelsX; p++) {
-        const px = -length / 2 + (p * length) / nPanelsX;
-        for (let py of [0.6, 1.5, 2.4]) {
-          const port = new THREE.Mesh(
-            new THREE.CylinderGeometry(0.025, 0.025, 0.04, 6),
-            new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 })
-          );
-          port.rotation.x = Math.PI / 2;
-          port.position.set(px, pylonH + 0.35 + py, width / 2 + 0.02);
-          shelterGroup.add(port);
-        }
-      }
-
-      // 55° Gable Roof
-      const roofPeakH = 2.0;
-      const roofGeom = createGableRoofGeometry(length + 0.6, width + 0.8, roofPeakH);
-      const roof = new THREE.Mesh(roofGeom, panelMat);
-      roof.position.set(0, pylonH + 0.35 + height + roofPeakH / 2, 0);
-      roof.castShadow = true;
-      shelterGroup.add(roof);
-
-      // 55° Slanted Solar Panels on South Roof Slope
-      const slopeHalfW = (width + 0.8) / 2;
-      const slantHypot = Math.hypot(slopeHalfW, roofPeakH);
-      const slantAngle = Math.atan2(roofPeakH, slopeHalfW); // ~55°
-      const nSolarCols = Math.max(4, bays * 2);
-      const modWidth = (length * 0.92) / nSolarCols;
-      const modHeight = slantHypot * 0.44;
-
-      const solarGroup = new THREE.Group();
-      for (let row = 0; row < 2; row++) {
-        const tFactor = (row === 0) ? 0.30 : 0.74;
-        const py = roofPeakH * (1 - tFactor) + 0.08;
-        const pz = slopeHalfW * tFactor + 0.04;
-
-        // 1. SOUTH ROOF SLOPE (+Z): Direct Solar
-        for (let col = 0; col < nSolarCols; col++) {
-          const px = -length * 0.46 + (col + 0.5) * modWidth;
-          const mod = createDetailedSolarModule(modWidth * 0.90, modHeight * 0.92);
-          mod.position.set(px, py, pz);
-          mod.rotation.x = slantAngle;
-          solarGroup.add(mod);
+            const auger = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.01, 0.6, 6), new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 }));
+            auger.position.set(px, -0.25, pz);
+            shelterGroup.add(auger);
+          }
         }
 
-        // 2. NORTH ROOF SLOPE (-Z): Diffuse Sky + 85% Snow Albedo Ground Reflection
-        const pyNorth = roofPeakH * (1 - tFactor) + 0.08;
-        const pzNorth = -(slopeHalfW * tFactor + 0.04);
-        for (let col = 0; col < nSolarCols; col++) {
-          const px = -length * 0.46 + (col + 0.5) * modWidth;
-          const modN = createDetailedSolarModule(modWidth * 0.90, modHeight * 0.92);
-          modN.position.set(px, pyNorth, pzNorth);
-          modN.rotation.x = -slantAngle;
-          solarGroup.add(modN);
+        const chassis = new THREE.Mesh(new THREE.BoxGeometry(length + 0.8, 0.25, width + 0.8), darkSteelMat);
+        chassis.position.set(0, pylonH + 0.125, 0);
+        shelterGroup.add(chassis);
+
+        const deck = new THREE.Mesh(new THREE.BoxGeometry(length + 1.2, 0.18, width + 1.2), steelMat);
+        deck.position.set(0, pylonH + 0.25 + 0.09, 0);
+        deck.castShadow = true;
+        shelterGroup.add(deck);
+
+        const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+        walls.position.set(0, pylonH + 0.35 + height / 2, 0);
+        walls.castShadow = true;
+        walls.receiveShadow = true;
+        shelterGroup.add(walls);
+
+        const roofPeakH = 2.0;
+        const roofGeom = createGableRoofGeometry(length + 0.6, width + 0.8, roofPeakH);
+        const roof = new THREE.Mesh(roofGeom, panelMat);
+        roof.position.set(0, pylonH + 0.35 + height + roofPeakH / 2, 0);
+        roof.castShadow = true;
+        shelterGroup.add(roof);
+
+        // Dual-Slope Solar
+        const slopeHalfW = (width + 0.8) / 2;
+        const slantHypot = Math.hypot(slopeHalfW, roofPeakH);
+        const slantAngle = Math.atan2(roofPeakH, slopeHalfW);
+        const nSolarCols = Math.max(4, bays * 2);
+        const modWidth = (length * 0.92) / nSolarCols;
+        const modHeight = slantHypot * 0.44;
+
+        const solarGroup = new THREE.Group();
+        for (let row = 0; row < 2; row++) {
+          const tFactor = (row === 0) ? 0.30 : 0.74;
+          const py = roofPeakH * (1 - tFactor) + 0.08;
+          const pz = slopeHalfW * tFactor + 0.04;
+          for (let col = 0; col < nSolarCols; col++) {
+            const px = -length * 0.46 + (col + 0.5) * modWidth;
+            const mod = createDetailedSolarModule(modWidth * 0.90, modHeight * 0.92);
+            mod.position.set(px, py, pz);
+            mod.rotation.x = slantAngle;
+            solarGroup.add(mod);
+
+            const modN = createDetailedSolarModule(modWidth * 0.90, modHeight * 0.92);
+            modN.position.set(px, py, -pz);
+            modN.rotation.x = -slantAngle;
+            solarGroup.add(modN);
+          }
         }
-      }
-      solarGroup.position.set(0, pylonH + 0.35 + height, 0);
-      shelterGroup.add(solarGroup);
+        solarGroup.position.set(0, pylonH + 0.35 + height, 0);
+        shelterGroup.add(solarGroup);
 
-      // Inward-Opening Drift-Safe Arctic Vestibule (Opens inward so snowdrifts outside cannot trap troops!)
-      const alW = 1.8;
-      const alH = 2.3;
-      const alD = 1.3;
-      const alMesh = new THREE.Mesh(new THREE.BoxGeometry(alW, alH, alD), panelMat);
-      alMesh.position.set(length * 0.35, pylonH + 0.35 + alH / 2, width / 2 + alD / 2);
-      alMesh.castShadow = true;
-      shelterGroup.add(alMesh);
+        const alMesh = new THREE.Mesh(new THREE.BoxGeometry(1.8, 2.3, 1.3), panelMat);
+        alMesh.position.set(length * 0.35, pylonH + 0.35 + 1.15, width / 2 + 0.65);
+        alMesh.castShadow = true;
+        shelterGroup.add(alMesh);
 
-      const snowHood = new THREE.Mesh(new THREE.BoxGeometry(alW + 0.2, 0.08, alD + 0.3), trimMat);
-      snowHood.position.set(length * 0.35, pylonH + 0.35 + alH + 0.04, width / 2 + alD / 2 + 0.05);
-      snowHood.rotation.x = 0.2;
-      shelterGroup.add(snowHood);
+        const doorLeaf = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.95, 0.06), steelMat);
+        doorLeaf.position.set(length * 0.35 - 0.15, pylonH + 0.35 + 1.0, width / 2 + 1.05);
+        doorLeaf.rotation.y = THREE.MathUtils.degToRad(35);
+        shelterGroup.add(doorLeaf);
 
-      // Inward-Swung Door Leaf
-      const doorLeaf = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.95, 0.06), steelMat);
-      doorLeaf.position.set(length * 0.35 - 0.15, pylonH + 0.35 + 1.0, width / 2 + alD - 0.25);
-      doorLeaf.rotation.y = THREE.MathUtils.degToRad(35); // 35° Inward Swing
-      shelterGroup.add(doorLeaf);
+      } else if (variant === 'beta') {
+        // Quonset Barrel Vault
+        const archR = width / 2;
+        const skidH = 0.35;
 
-      const nSteps = 6;
-      for (let s = 0; s < nSteps; s++) {
-        const step = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.12, 0.32), steelMat);
-        step.position.set(length * 0.35, (s + 0.5) * ((pylonH + 0.35) / nSteps), width / 2 + alD + 0.25 + (nSteps - s) * 0.32);
-        step.castShadow = true;
-        shelterGroup.add(step);
+        const skid = new THREE.Mesh(new THREE.BoxGeometry(length + 0.6, skidH, width + 0.6), darkSteelMat);
+        skid.position.set(0, skidH / 2, 0);
+        shelterGroup.add(skid);
+
+        const archGeom = new THREE.CylinderGeometry(archR, archR, length, 32, 1, false, 0, Math.PI);
+        archGeom.rotateZ(Math.PI / 2);
+        archGeom.rotateY(Math.PI / 2);
+        const arch = new THREE.Mesh(archGeom, panelMat);
+        arch.position.set(0, skidH, 0);
+        shelterGroup.add(arch);
+
+        [-length / 2, length / 2].forEach((px, idx) => {
+          const endGeom = new THREE.CircleGeometry(archR, 24, 0, Math.PI);
+          endGeom.rotateY(idx === 0 ? -Math.PI / 2 : Math.PI / 2);
+          const endMesh = new THREE.Mesh(endGeom, panelMat);
+          endMesh.position.set(px, skidH, 0);
+          shelterGroup.add(endMesh);
+        });
+
+        // Curved solar modules
+        for (let a of [-0.3, 0, 0.3]) {
+          const py = skidH + (archR + 0.04) * Math.sin(Math.PI / 2 + a);
+          const pz = (archR + 0.04) * Math.cos(Math.PI / 2 + a);
+          const pv = createDetailedSolarModule(length * 0.85, 1.1);
+          pv.position.set(0, py, pz);
+          pv.rotation.x = -a;
+          shelterGroup.add(pv);
+        }
+
+        // Circular Hatch
+        const hatch = new THREE.Mesh(new THREE.CylinderGeometry(0.65, 0.65, 0.08, 20), steelMat);
+        hatch.position.set(length / 2 + 0.02, skidH + 1.1, 0);
+        hatch.rotation.z = Math.PI / 2;
+        shelterGroup.add(hatch);
+
+      } else if (variant === 'gamma') {
+        // High-Clearance Arctic Pod
+        const pylonH = 2.0;
+        for (let ix = -1; ix <= 1; ix++) {
+          [-width / 2, width / 2].forEach(pz => {
+            const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.20, 0.24, pylonH, 8), steelMat);
+            leg.position.set(ix * (length * 0.45), pylonH / 2, pz);
+            shelterGroup.add(leg);
+          });
+        }
+
+        const chassis = new THREE.Mesh(new THREE.BoxGeometry(length + 0.8, 0.35, width + 0.8), darkSteelMat);
+        chassis.position.set(0, pylonH + 0.175, 0);
+        shelterGroup.add(chassis);
+
+        const pod = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+        pod.position.set(0, pylonH + 0.35 + height / 2, 0);
+        shelterGroup.add(pod);
+
+        // Mast with Dual Solar Panels
+        const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 2.4, 8), aluMat);
+        mast.position.set(0, pylonH + 0.35 + height + 1.2, 0);
+        shelterGroup.add(mast);
+
+        [-1.2, 1.2].forEach(px => {
+          const tP = createDetailedSolarModule(2.0, 1.3);
+          tP.position.set(px, pylonH + 0.35 + height + 2.5, 0);
+          tP.rotation.x = -Math.PI / 3.5;
+          shelterGroup.add(tP);
+        });
       }
     }
+
     // =====================================================================
-    // 2. LADAKH: BASALT BED + TROMBE WALL + 45° ROOF SOLAR RACK
+    // 2. LADAKH HIGH-ALTITUDE MOUNTAIN
     // =====================================================================
     else if (theatre === 'ladakh') {
       const bedH = 0.5;
@@ -299,51 +300,61 @@ export default function Shelter3DViewer({
       bed.position.set(0, bedH / 2, 0);
       shelterGroup.add(bed);
 
-      const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
-      walls.position.set(0, bedH + height / 2, 0);
-      walls.castShadow = true;
-      walls.receiveShadow = true;
-      shelterGroup.add(walls);
+      if (variant === 'alpha') {
+        const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+        walls.position.set(0, bedH + height / 2, 0);
+        shelterGroup.add(walls);
 
-      const roofPeakH = 1.4;
-      const roofGeom = createGableRoofGeometry(length + 0.4, width + 0.6, roofPeakH);
-      const roof = new THREE.Mesh(roofGeom, panelMat);
-      roof.position.set(0, bedH + height + roofPeakH / 2, 0);
-      roof.castShadow = true;
-      shelterGroup.add(roof);
+        const roofGeom = createGableRoofGeometry(length + 0.4, width + 0.6, 1.4);
+        const roof = new THREE.Mesh(roofGeom, panelMat);
+        roof.position.set(0, bedH + height + 0.7, 0);
+        shelterGroup.add(roof);
 
-      // 45° Rooftop Solar Rack
-      const nPanels = Math.max(4, bays * 2);
-      const rackGroup = new THREE.Group();
-      const pW = (length * 0.85) / nPanels;
-      for (let i = 0; i < nPanels; i++) {
-        const p = createDetailedSolarModule(pW * 0.9, 1.6);
-        p.position.set(-length * 0.4 + (i + 0.5) * pW, 0.8, 0);
-        p.rotation.x = -Math.PI / 4;
-        rackGroup.add(p);
+        const rack = createDetailedSolarModule(length * 0.8, 1.6);
+        rack.position.set(0, bedH + height + 0.8, width * 0.15);
+        rack.rotation.x = -Math.PI / 4;
+        shelterGroup.add(rack);
+
+        const win = new THREE.Mesh(new THREE.PlaneGeometry(Math.min(length * 0.5, 5), height * 0.7), new THREE.MeshStandardMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.75 }));
+        win.position.set(-length * 0.12, bedH + height / 2, width / 2 + 0.02);
+        shelterGroup.add(win);
+
+        const portal = new THREE.Mesh(new THREE.BoxGeometry(1.4, 2.2, 0.15), trimMat);
+        portal.position.set(length * 0.32, bedH + 1.1, width / 2 + 0.05);
+        shelterGroup.add(portal);
+
+      } else if (variant === 'beta') {
+        const mainW = width - 1.2;
+        const mainWalls = new THREE.Mesh(new THREE.BoxGeometry(length, height, mainW), panelMat);
+        mainWalls.position.set(0, bedH + height / 2, -0.6);
+        shelterGroup.add(mainWalls);
+
+        const solarium = new THREE.Mesh(new THREE.PlaneGeometry(length * 0.7, height * 0.85), new THREE.MeshStandardMaterial({ color: 0x93c5fd, transparent: true, opacity: 0.6 }));
+        solarium.position.set(-length * 0.08, bedH + height * 0.45, width / 2);
+        shelterGroup.add(solarium);
+
+        const rack = createDetailedSolarModule(length * 0.8, 1.4);
+        rack.position.set(0, bedH + height + 0.5, -0.6);
+        rack.rotation.x = -Math.PI / 4;
+        shelterGroup.add(rack);
+
+      } else if (variant === 'gamma') {
+        const walls = new THREE.Mesh(new THREE.BoxGeometry(length + 0.4, height, width + 0.4), panelMat);
+        walls.position.set(0, bedH + height / 2, 0);
+        shelterGroup.add(walls);
+
+        const earthRoof = new THREE.Mesh(new THREE.BoxGeometry(length + 0.6, 0.4, width + 0.6), new THREE.MeshStandardMaterial({ color: 0x2e3820 }));
+        earthRoof.position.set(0, bedH + height + 0.2, 0);
+        shelterGroup.add(earthRoof);
+
+        const parapet = new THREE.Mesh(new THREE.BoxGeometry(length + 0.7, 0.4, 0.3), trimMat);
+        parapet.position.set(0, bedH + height + 0.4, width / 2 + 0.2);
+        shelterGroup.add(parapet);
       }
-      rackGroup.position.set(0, bedH + height + 0.3, width * 0.15);
-      shelterGroup.add(rackGroup);
-
-      // Trombe Solar Glazing
-      const winW = Math.min(length * 0.55, Math.sqrt(windowArea) * 1.3);
-      const winH = Math.min(height * 0.75, windowArea / Math.max(winW, 0.1));
-      const win = new THREE.Mesh(new THREE.PlaneGeometry(winW, winH), new THREE.MeshStandardMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.75 }));
-      win.position.set(-length * 0.12, bedH + height / 2, width / 2 + 0.02);
-      shelterGroup.add(win);
-
-      // Recessed Mountain Portal with Inward Door
-      const portal = new THREE.Mesh(new THREE.BoxGeometry(1.4, 2.2, 0.15), trimMat);
-      portal.position.set(length * 0.32, bedH + 1.1, width / 2 + 0.05);
-      shelterGroup.add(portal);
-
-      const door = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.95, 0.06), new THREE.MeshStandardMaterial({ color: 0x27382b, roughness: 0.7 }));
-      door.position.set(length * 0.32 - 0.15, bedH + 1.0, width / 2 - 0.15);
-      door.rotation.y = THREE.MathUtils.degToRad(30); // Inward open
-      shelterGroup.add(door);
     }
+
     // =====================================================================
-    // 3. THAR DESERT: DUAL BADGIR WIND-TOWERS + DEEP CHHAJJA + SHADED DEORHI
+    // 3. THAR DESERT (BSF)
     // =====================================================================
     else if (theatre === 'thar') {
       const plinthH = 0.3;
@@ -351,52 +362,53 @@ export default function Shelter3DViewer({
       plinth.position.set(0, plinthH / 2, 0);
       shelterGroup.add(plinth);
 
-      const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
-      walls.position.set(0, plinthH + height / 2, 0);
-      walls.castShadow = true;
-      walls.receiveShadow = true;
-      shelterGroup.add(walls);
+      if (variant === 'alpha') {
+        const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+        walls.position.set(0, plinthH + height / 2, 0);
+        shelterGroup.add(walls);
 
-      const roof = new THREE.Mesh(new THREE.BoxGeometry(length + 0.6, 0.25, width + 0.6), new THREE.MeshStandardMaterial({ color: 0xf8fafc }));
-      roof.position.set(0, plinthH + height + 0.125, 0);
-      roof.castShadow = true;
-      shelterGroup.add(roof);
+        const roof = new THREE.Mesh(new THREE.BoxGeometry(length + 0.6, 0.25, width + 0.6), new THREE.MeshStandardMaterial({ color: 0xf8fafc }));
+        roof.position.set(0, plinthH + height + 0.125, 0);
+        shelterGroup.add(roof);
 
-      // Wind-Towers (Breeze Scoops)
-      [-length * 0.28, length * 0.28].forEach(tx => {
-        const tower = new THREE.Mesh(new THREE.BoxGeometry(1.3, 2.0, 1.3), panelMat);
-        tower.position.set(tx, plinthH + height + 1.0, 0);
-        tower.castShadow = true;
-        shelterGroup.add(tower);
+        [-length * 0.28, length * 0.28].forEach(tx => {
+          const tower = new THREE.Mesh(new THREE.BoxGeometry(1.3, 2.0, 1.3), panelMat);
+          tower.position.set(tx, plinthH + height + 1.0, 0);
+          shelterGroup.add(tower);
+        });
 
-        const louver = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.5, 0.06), steelMat);
-        louver.position.set(tx, plinthH + height + 1.5, 0.68);
-        shelterGroup.add(louver);
-      });
+        const chhajja = new THREE.Mesh(new THREE.BoxGeometry(length * 0.9, 0.08, 1.3), new THREE.MeshStandardMaterial({ color: 0x9a3412 }));
+        chhajja.position.set(0, plinthH + height * 0.88, width / 2 + 0.65);
+        chhajja.rotation.x = 0.18;
+        shelterGroup.add(chhajja);
 
-      // Deep 1.2m Chhajja Overhang
-      const chhajja = new THREE.Mesh(new THREE.BoxGeometry(length * 0.9, 0.08, 1.3), new THREE.MeshStandardMaterial({ color: 0x9a3412 }));
-      chhajja.position.set(0, plinthH + height * 0.88, width / 2 + 0.65);
-      chhajja.rotation.x = 0.18;
-      shelterGroup.add(chhajja);
+      } else if (variant === 'beta') {
+        const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+        walls.position.set(0, plinthH + height / 2, 0);
+        shelterGroup.add(walls);
 
-      // Shaded Deorhi (Desert Recessed Porch & Inward Double Doors)
-      const deorhi = new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.2, 0.1), new THREE.MeshStandardMaterial({ color: 0x451a03 }));
-      deorhi.position.set(length * 0.32, plinthH + 1.1, width / 2 + 0.04);
-      shelterGroup.add(deorhi);
+        const chimney = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.5, 3.2, 16), new THREE.MeshStandardMaterial({ color: 0x18181b }));
+        chimney.position.set(0, plinthH + height + 1.6, -width * 0.35);
+        shelterGroup.add(chimney);
 
-      const dLeft = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.95, 0.05), new THREE.MeshStandardMaterial({ color: 0x3e1805 }));
-      dLeft.position.set(length * 0.32 - 0.3, plinthH + 1.0, width / 2 - 0.15);
-      dLeft.rotation.y = THREE.MathUtils.degToRad(35);
-      shelterGroup.add(dLeft);
+        [-length * 0.3, length * 0.3].forEach(px => {
+          const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 1.0, 12), new THREE.MeshStandardMaterial({ color: 0xd97706 }));
+          pipe.position.set(px, 0.5, width / 2 + 1.1);
+          shelterGroup.add(pipe);
+        });
 
-      const dRight = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.95, 0.05), new THREE.MeshStandardMaterial({ color: 0x3e1805 }));
-      dRight.position.set(length * 0.32 + 0.3, plinthH + 1.0, width / 2 - 0.15);
-      dRight.rotation.y = THREE.MathUtils.degToRad(-35);
-      shelterGroup.add(dRight);
+      } else if (variant === 'gamma') {
+        const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+        walls.position.set(0, plinthH + height / 2, 0);
+        shelterGroup.add(walls);
+
+        const canopyRoof = createDetailedSolarModule(length + 1.2, width + 1.4);
+        canopyRoof.position.set(0, plinthH + height + 0.8, 0);
+        canopyRoof.rotation.x = -0.06;
+        shelterGroup.add(canopyRoof);
+      }
     }
 
-    // Orientation Azimuth: 180° = South (+Z, facing camera)
     const azimuthAngle = THREE.MathUtils.degToRad(180 - orientation);
     shelterGroup.rotation.y = azimuthAngle;
 
@@ -424,7 +436,27 @@ export default function Shelter3DViewer({
       }
       if (currentMount && renderer.domElement) currentMount.removeChild(renderer.domElement);
     };
-  }, [length, width, height, orientation, windowArea, theatre, occupants]);
+  }, [length, width, height, orientation, windowArea, theatre, variant, occupants]);
+
+  const variantLabels = {
+    siachen: {
+      alpha: 'Option A: Aero-Ridge Dual-Solar (55° Bifacial Solar Roof & VIP Flat-Pack)',
+      beta: 'Option B: Blizzard-Vault Quonset Arch (Cd=0.38 & 225 km/h Hurricane Rating)',
+      gamma: 'Option C: Arctic-Pod Autonomous Bunker (72h Zero-Fuel & 40kWh Bio-PCM)'
+    },
+    ladakh: {
+      alpha: 'Option A: Solaris-Trombe Mass (Direct-Gain Trombe Wall & Basalt Bed)',
+      beta: 'Option B: Solarium Green-Buffer (Attached Greenhouse & Fresh-Air Preheating)',
+      gamma: 'Option C: Rammed-Basalt SCEB Fortress (350mm Ballistic Earth Walls & Turf Roof)'
+    },
+    thar: {
+      alpha: 'Option A: Badgir Wind-Master (Dual Natural Wind-Towers & 1.2m Deep Chhajja)',
+      beta: 'Option B: Earth-Air Geothermal Qanat (24°C Subterranean Loop & Solar Chimney)',
+      gamma: 'Option C: Kinetic PV Canopy Shield (Double-Skin Parasol Roof & 6.5kW Solar)'
+    }
+  };
+
+  const activeLabel = (variantLabels[theatre] && variantLabels[theatre][variant]) || variant.toUpperCase();
 
   return (
     <div style={{ width: '100%', height: '480px', position: 'relative', borderRadius: '3px', overflow: 'hidden', border: '1px solid #1c2b20' }}>
@@ -444,11 +476,9 @@ export default function Shelter3DViewer({
         lineHeight: '1.4',
         pointerEvents: 'none'
       }}>
-        <strong style={{ color: '#84cc16' }}>DRDO SIH 26051 // {theatre.toUpperCase()}</strong><br />
+        <strong style={{ color: '#84cc16' }}>DRDO SIH 26051 // {theatre.toUpperCase()} &bull; {activeLabel}</strong><br />
         Logistics: {theatre === 'siachen' ? (occupants <= 4 ? '2.1T Mass • 2 Mi-17 Sorties (@16k ft) • 4.5h Erection' : (occupants <= 8 ? '4.4T Mass • 3-4 Mi-17 Sorties (@16k ft) • 7.0h Erection' : '7.2T Mass • 5-6 Mi-17 Sorties • 12h Erection')) : (theatre === 'ladakh' ? (occupants <= 8 ? '18.8T Mass • 4 ALS 4x4 Trucks • Basalt Bed' : '32.5T Mass • 7 ALS Trucks') : (occupants <= 8 ? '9.8T Mass • 2 Tatra 6x6 Trucks • Badgir Scoops' : '16.4T Mass • 3 Tatra Trucks'))}<br />
         Insulation: {theatre === 'siachen' ? 'Aerogel + VIP Core (U = 0.078 W/m²K) + Bio-PCM (14.4 kWh)' : (theatre === 'ladakh' ? '300mm Basalt Bed + South Trombe Wall + SCEB' : '200mm AAC + Cool Roof (SRI ≥ 105) + 1.2m Chhajja')}<br />
-        Solar: {theatre === 'siachen' ? 'Dual-Slope 55° Monocrystalline PV (South Direct + North 85% Snow Albedo)' : (theatre === 'ladakh' ? 'South Trombe Convective Loop + 45° Rooftop PV' : 'Dual Badgir Natural Wind-Towers + Deep Shading')}<br />
-        Safety: {theatre === 'siachen' ? 'Inward-Opening Drift-Safe Door • Helical Ice Augers' : (theatre === 'ladakh' ? 'Recessed Stone Portal • Inward Door' : 'Shaded Deorhi Veranda • Sand-Filter Double Doors')}<br />
         Controls: Left-click + drag to orbit • Scroll to zoom • Red vector = True North
       </div>
     </div>

@@ -119,14 +119,51 @@
       transform: translateY(-1px);
     }
 
-    /* Terrain-Specific Dynamic Camera Toolbar */
-    .hud-camera-bar {
+    /* Shelter Design Variant Selector Toolbar */
+    .hud-variant-bar {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
       align-items: center;
       border-top: 1px solid #16251b;
       padding-top: 7px;
+    }
+    .variant-btn {
+      background: #0b141e;
+      border: 1px solid #1c2e3d;
+      color: #94a3b8;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.70rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s;
+    }
+    .variant-btn:hover {
+      border-color: #38bdf8;
+      color: #f1f5f9;
+      background: #132233;
+    }
+    .variant-btn.active {
+      background: rgba(56, 189, 248, 0.18);
+      border-color: #38bdf8;
+      color: #38bdf8;
+      font-weight: 700;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.25);
+    }
+
+    /* Terrain-Specific Dynamic Camera Toolbar */
+    .hud-camera-bar {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+      border-top: 1px solid #121c16;
+      padding-top: 6px;
     }
     .cam-label {
       font-size: 0.65rem;
@@ -439,26 +476,26 @@
     }
 
     /* =====================================================================
-       COMPARISON & LIVE EVALUATOR MODAL STYLES
+       COMPARISON & ARCHITECTURAL EVALUATOR MODAL STYLES
        ===================================================================== */
     #compare-modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(3, 6, 9, 0.88);
-      backdrop-filter: blur(10px);
+      background: rgba(3, 6, 9, 0.90);
+      backdrop-filter: blur(12px);
       z-index: 100;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
     }
     #compare-modal.active {
       display: flex;
     }
     .modal-card {
-      width: 95vw;
-      max-width: 1100px;
-      max-height: 92vh;
+      width: 96vw;
+      max-width: 1240px;
+      max-height: 94vh;
       background: #080d14;
       border: 1px solid #1f2e24;
       border-top: 4px solid #84cc16;
@@ -469,7 +506,7 @@
       overflow: hidden;
     }
     .modal-header {
-      padding: 14px 20px;
+      padding: 12px 20px;
       background: #0d141e;
       border-bottom: 1px solid #1a2736;
       display: flex;
@@ -477,11 +514,11 @@
       align-items: center;
     }
     .modal-body {
-      padding: 16px 20px;
+      padding: 14px 20px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
     .loc-bar {
       display: flex;
@@ -489,7 +526,7 @@
       align-items: center;
       background: #0d1520;
       border: 1px solid #1c2b3a;
-      padding: 10px 14px;
+      padding: 8px 12px;
       border-radius: 4px;
       flex-wrap: wrap;
     }
@@ -498,8 +535,8 @@
       border: 1px solid #27394c;
       color: #f8fafc;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      padding: 6px 10px;
+      font-size: 0.74rem;
+      padding: 5px 9px;
       border-radius: 3px;
     }
     .btn-fetch {
@@ -507,7 +544,7 @@
       color: #04070a;
       border: none;
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 800;
       padding: 6px 14px;
       border-radius: 3px;
@@ -517,24 +554,193 @@
       background: #a3e635;
     }
 
+    /* 3-Option Shelter Cards in Modal */
+    .variant-grid-modal {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .variant-card-modal {
+      background: #0b121a;
+      border: 1px solid #1c2c3b;
+      border-top: 3px solid #64748b;
+      border-radius: 4px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .variant-card-modal:hover {
+      border-color: #38bdf8;
+      background: #0f1924;
+      transform: translateY(-2px);
+    }
+    .variant-card-modal.selected {
+      border-top-color: #84cc16;
+      border-color: #84cc16;
+      background: rgba(132, 204, 22, 0.08);
+      box-shadow: 0 0 16px rgba(132, 204, 22, 0.16);
+    }
+    .v-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .v-opt-badge {
+      background: #1e293b;
+      color: #94a3b8;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 2px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .variant-card-modal.selected .v-opt-badge {
+      background: #84cc16;
+      color: #04070a;
+    }
+    .v-code {
+      font-size: 0.65rem;
+      color: #64748b;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .v-name {
+      font-size: 0.90rem;
+      font-weight: 700;
+      color: #f8fafc;
+      letter-spacing: 0.04em;
+    }
+    .v-geom {
+      font-size: 0.68rem;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.25;
+    }
+    .v-why-box {
+      background: rgba(6, 10, 15, 0.9);
+      border-left: 3px solid #84cc16;
+      padding: 8px 10px;
+      border-radius: 2px;
+      font-size: 0.70rem;
+      color: #cbd5e1;
+      line-height: 1.35;
+    }
+    .v-why-title {
+      color: #84cc16;
+      font-weight: 800;
+      font-size: 0.66rem;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+      letter-spacing: 0.06em;
+    }
+    .v-deploy-box {
+      font-size: 0.68rem;
+      color: #facc15;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.3;
+    }
+    .v-specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      background: #070b10;
+      border: 1px solid #14202c;
+      border-radius: 3px;
+      padding: 7px 9px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.66rem;
+    }
+    .v-spec-lbl {
+      color: #64748b;
+      font-size: 0.58rem;
+      text-transform: uppercase;
+    }
+    .v-spec-val {
+      color: #38bdf8;
+      font-weight: 700;
+      font-size: 0.72rem;
+    }
+    .btn-load-variant {
+      background: #84cc16;
+      color: #04070a;
+      border: none;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 7px 10px;
+      border-radius: 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+      margin-top: auto;
+    }
+    .btn-load-variant:hover {
+      background: #a3e635;
+      transform: translateY(-1px);
+    }
+
+    /* Sidebar Variant Cards */
+    .variant-card-side {
+      background: #0d141e;
+      border: 1px solid #1c2a38;
+      border-left: 3px solid #475569;
+      border-radius: 3px;
+      padding: 7px 9px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .variant-card-side:hover {
+      border-color: #38bdf8;
+      background: #111d2b;
+    }
+    .variant-card-side.active {
+      border-left-color: #84cc16;
+      border-color: #84cc16;
+      background: rgba(132, 204, 22, 0.12);
+    }
+    .v-side-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #f8fafc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .v-side-badge {
+      font-size: 0.62rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: #84cc16;
+    }
+    .v-side-why {
+      font-size: 0.64rem;
+      color: #94a3b8;
+      margin-top: 2px;
+      line-height: 1.25;
+    }
+
     /* Comparison Table */
     .comp-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-family: 'JetBrains Mono', monospace;
     }
     .comp-table th {
       background: #0e1724;
-      padding: 9px 12px;
+      padding: 8px 10px;
       text-align: left;
       color: #94a3b8;
       border-bottom: 2px solid #1e2e40;
     }
     .comp-table td {
-      padding: 9px 12px;
+      padding: 7px 10px;
       border-bottom: 1px solid #141f2d;
-      vertical-align: middle;
+      vertical-align: top;
+      line-height: 1.35;
     }
     .comp-table tr:hover td {
       background: rgba(132, 204, 22, 0.04);
@@ -577,6 +783,14 @@
         <button class="compare-btn-trigger" id="btn-open-compare">
           📊 COMPARE SHELTERS (LIVE WEATHER)
         </button>
+      </div>
+
+      <!-- Shelter Design Variant Quick Selector Bar -->
+      <div class="hud-variant-bar">
+        <span class="cam-label" style="color: #38bdf8;">SHELTER DESIGN:</span>
+        <div id="variant-button-container" style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <!-- Dynamically populated per terrain -->
+        </div>
       </div>
 
       <!-- Terrain-Specific Dynamic Camera Toolbar -->
@@ -642,6 +856,17 @@
             <div class="theatre-desc">Passive breeze-catching Badgir wind scoops &bull; Deep 1.2m solar shade overhangs &bull; High-albedo cool roof &bull; Shaded veranda porch</div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- 1B. Best Shelter Design Options for Terrain (Click to Load in 3D) -->
+    <div class="eng-section">
+      <div class="eng-section-header">
+        <span>1B. Top Shelter Designs (Click to Load in 3D)</span>
+        <span class="sec-tag" id="sidebar-variant-badge">OPTION A</span>
+      </div>
+      <div id="variant-cards-sidebar" style="display: flex; flex-direction: column; gap: 7px;">
+        <!-- Injected dynamically with 3 options, reasons why choose them, and 3D preview trigger -->
       </div>
     </div>
 
@@ -782,17 +1007,17 @@
   </div>
 
   <!-- =====================================================================
-       COMPARISON & LIVE EVALUATOR MODAL
+       COMPARISON & LIVE EVALUATOR MODAL (3 BEST OPTIONS + WHY CHOOSE THEM)
        ===================================================================== -->
   <div id="compare-modal">
     <div class="modal-card">
       <div class="modal-header">
         <div>
           <h3 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; letter-spacing: 0.05em;">
-            DRDO SHELTER COMPARISON &amp; LIVE LOCATION EVALUATOR
+            DRDO SHELTER COMPARISON &amp; ARCHITECTURAL EVALUATOR
           </h3>
           <p style="font-size: 0.70rem; color: #84cc16; font-family: 'JetBrains Mono', monospace;">
-            SIH 26051 // LIVE OPEN-METEO WEATHER VALIDATION &amp; MES SCHEDULE COMPARISON
+            SIH 26051 // BEST SHELTER DESIGN OPTIONS &bull; WHY CHOOSE THEM &bull; 3D SIMULATION &bull; MES SPECIFICATIONS
           </p>
         </div>
         <button id="btn-close-compare" style="background: none; border: 1px solid #334155; color: #94a3b8; padding: 4px 10px; cursor: pointer; border-radius: 2px;">
@@ -827,21 +1052,37 @@
           <div>WIND SPEED: <span id="clim-wind" style="color: #38bdf8;">-- km/h</span></div>
         </div>
 
-        <!-- Side-by-Side Comparison Table -->
-        <table class="comp-table">
-          <thead>
-            <tr>
-              <th style="width: 22%;">ENGINEERING PARAMETER</th>
-              <th style="width: 39%; border-left: 2px solid #334155;">BASELINE STANDARD ARMY SHELTER (CGI Tin / Canvas Tent)</th>
-              <th style="width: 39%; border-left: 2px solid #84cc16; background: rgba(132, 204, 22, 0.06);">
-                RECOMMENDED SPSD-26051 PASSIVE HABITAT (Area-Specific)
-              </th>
-            </tr>
-          </thead>
-          <tbody id="comp-table-body">
-            <!-- Dynamically populated -->
-          </tbody>
-        </table>
+        <!-- 3 BEST SHELTER DESIGN CARDS SIDE-BY-SIDE (WHY CHOOSE THEM & LOAD IN 3D) -->
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 0.78rem; font-weight: 700; color: #84cc16; letter-spacing: 0.05em; text-transform: uppercase;">
+              TOP 3 RECOMMENDED SHELTER DESIGNS (CLICK ANY TO LOAD &amp; INSPECT IN 3D)
+            </span>
+            <span style="font-size: 0.68rem; color: #94a3b8; font-family: 'JetBrains Mono', monospace;">
+              PHYSICALLY SIMULATED IN 3D CAD ENGINE
+            </span>
+          </div>
+          <div class="variant-grid-modal" id="variant-cards-modal">
+            <!-- Dynamically populated with Option A, Option B, Option C -->
+          </div>
+        </div>
+
+        <!-- DETAILED MULTI-OPTION ENGINEERING COMPARISON MATRIX -->
+        <div style="margin-top: 4px;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: #f8fafc; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em;">
+            ENGINEERING SPECIFICATIONS &amp; TACTICAL TRADE-OFF MATRIX
+          </div>
+          <table class="comp-table">
+            <thead>
+              <tr id="comp-table-head-tr">
+                <!-- Dynamically populated headers -->
+              </tr>
+            </thead>
+            <tbody id="comp-table-body">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -854,6 +1095,7 @@
     // State
     const state = {
       theatre: 'siachen',
+      variant: 'alpha', // 'alpha' | 'beta' | 'gamma'
       occupants: 8,
       bays: 2,
       length: 10,
@@ -990,6 +1232,189 @@
           { label: '🏜️ Sand Plinth & Anti-Erosion Skirt', pos: [10, 1.4, 11], target: [0, 0.4, 0] },
           { label: '🚪 Shaded Deorhi Veranda', pos: [length => length * 0.35 + 2.0, 2.4, width => width / 2 + 2.8], target: [length => length * 0.35, 1.6, width => width / 2] }
         ]
+      }
+    };
+
+    // =====================================================================
+    // 3 BEST SHELTER DESIGN OPTIONS PER TERRAIN (SIH 26051)
+    // =====================================================================
+    const SHELTER_VARIANTS = {
+      siachen: {
+        alpha: {
+          code: 'SPSD-SIA-ALPHA',
+          name: 'Aero-Ridge Dual-Solar',
+          badge: 'OPTION A',
+          geomDesc: '55° Gabled Bifacial Solar Roof + VIP Flat-Pack',
+          whyChoose: 'Fastest 4.5h combat erection with 4 engineers. Lightest gross weight (2.1T–4.4T), requiring only 2–4 Mi-17 sorties at 16,000 ft altitude. Dual-slope bifacial solar captures +35% reflected snow albedo on North pitch.',
+          tacticalAdvantage: 'Rapid ridge deployment; 100% man-portable panels (< 22kg); inward blast door prevents snow entrapment.',
+          bestDeployed: 'Forward Glacial Ridge Pickets & Recon Outposts (16,000–19,000 ft)',
+          cd: '0.62',
+          windRating: '198 km/h (55 m/s)',
+          erectionTime: '7.0 Hours (4 men)',
+          mass8Man: '4,400 kg',
+          sorties8Man: '3 to 4 Flights (Mi-17)',
+          rValue: '12.8 m²K/W (VIP + Aerogel)',
+          solarHarvest: '+3,820 W (Direct + Albedo)',
+          estCost: '₹ 18.5 Lakhs',
+          payback: '9.4 Months',
+          hudDesc: '❄️ SIACHEN [OPTION A: AERO-RIDGE]: DUAL-SLOPE 55° SOLAR ROOF + INWARD BLAST DOOR + ICE AUGERS'
+        },
+        beta: {
+          code: 'SPSD-SIA-BETA',
+          name: 'Blizzard-Vault Quonset Arch',
+          badge: 'OPTION B',
+          geomDesc: 'Monolithic Parabolic Barrel-Vault Shell + Contour Solar',
+          whyChoose: 'Lowest aerodynamic drag (Cd = 0.38) and zero roof ridge joints. Easily deflects 225 km/h hurricane blizzard winds. Curved arch geometry naturally sloughs off heavy snow drifts, completely preventing roof collapse.',
+          tacticalAdvantage: 'Hurricane survivability; zero snow load build-up; continuous insulated shell eliminates air infiltration.',
+          bestDeployed: 'Windward Col Saddles, Glacier Wind Chutes & High-Gale Passes',
+          cd: '0.38',
+          windRating: '225 km/h (62 m/s)',
+          erectionTime: '8.5 Hours (4 men)',
+          mass8Man: '4,850 kg',
+          sorties8Man: '4 Flights (Mi-17)',
+          rValue: '13.2 m²K/W (Monolithic Sandwich)',
+          solarHarvest: '+3,450 W (Curved Thin-Film)',
+          estCost: '₹ 20.8 Lakhs',
+          payback: '10.2 Months',
+          hudDesc: '❄️ SIACHEN [OPTION B: QUONSET VAULT]: AERODYNAMIC ARCH (Cd=0.38) + 225 KM/H RATING + GUY-WIRES'
+        },
+        gamma: {
+          code: 'SPSD-SIA-GAMMA',
+          name: 'Arctic-Pod Autonomous Bunker',
+          badge: 'OPTION C',
+          geomDesc: 'Elevated Hex-Pod on 2.0m Cradle + Dual Tracking Solar Mast + 40kWh PCM',
+          whyChoose: 'Supreme self-reliance: 72 hours of zero-fuel thermal autonomy at -45°C powered by 40 kWh Bio-PCM thermal battery. Elevated 2.0m cradle allows 3-meter snowdrifts to sweep harmlessly beneath chassis without entombing troops.',
+          tacticalAdvantage: '72h zero-fuel survival; high-clearance drift immunity; motorized dual solar tracking mast.',
+          bestDeployed: 'Battalion Glacier HQ, Medical Stabilization Bunkers & Critical Comm Posts',
+          cd: '0.55',
+          windRating: '200 km/h (56 m/s)',
+          erectionTime: '11.0 Hours (6 men)',
+          mass8Man: '5,600 kg',
+          sorties8Man: '5 Flights (Mi-17)',
+          rValue: '14.5 m²K/W (Quad-Composite VIP)',
+          solarHarvest: '+4,600 W (Dual Tracking Mast)',
+          estCost: '₹ 24.5 Lakhs',
+          payback: '11.8 Months',
+          hudDesc: '❄️ SIACHEN [OPTION C: ARCTIC-POD]: 72H THERMAL AUTONOMY + 40KWH PCM + DUAL SOLAR MAST'
+        }
+      },
+      ladakh: {
+        alpha: {
+          code: 'SPSD-LAD-ALPHA',
+          name: 'Solaris-Trombe Mass',
+          badge: 'OPTION A',
+          geomDesc: 'South Trombe Glazed Wall + Basalt Rock Bed + 45° Roof PV',
+          whyChoose: 'Proven direct-gain solar heating loop heats interior during sunny sub-zero days, while 300mm local basalt rock bed stores 12 kWh heat for night discharge. Low logistical cost utilizing local mountain rock.',
+          tacticalAdvantage: 'On-site basalt rock storage; zero moving parts; 45° rooftop unistrut rack tuned for 34°N winter sun.',
+          bestDeployed: 'High-Altitude Staging Depots, Valley Patrol Camps & Permanent Bases (11k–14k ft)',
+          cd: '0.65',
+          windRating: '160 km/h (44 m/s)',
+          erectionTime: '72 Hours (Pioneer crew)',
+          mass8Man: '18,800 kg',
+          sorties8Man: '4 ALS 4x4 Truckloads',
+          rValue: '6.5 m²K/W (Basalt Bed + SCEB)',
+          solarHarvest: '+4,200 W (Trombe Glaze + PV)',
+          estCost: '₹ 12.2 Lakhs',
+          payback: '14.0 Months',
+          hudDesc: '🏔️ LADAKH [OPTION A: TROMBE MASS]: SOUTH TROMBE SOLAR WALL + SOLID BASALT ROCK BED'
+        },
+        beta: {
+          code: 'SPSD-LAD-BETA',
+          name: 'Solarium Green-Buffer',
+          badge: 'OPTION B',
+          geomDesc: 'Attached South Greenhouse Sunspace + Double-Envelope Living Core',
+          whyChoose: 'Attached walk-in solar greenhouse provides a +18°C thermal buffer vestibule, preheats ventilation intake air, and supports microgreen production, eliminating hypobaric depression and winter isolation fatigue.',
+          tacticalAdvantage: 'Fresh-air solar preheating; troop wellness / microgreens; double thermal envelope cuts losses by 40%.',
+          bestDeployed: 'Extended Winter Outposts, High-Altitude Acclimatization Camps & Infirmaries',
+          cd: '0.70',
+          windRating: '150 km/h (42 m/s)',
+          erectionTime: '60 Hours',
+          mass8Man: '16,200 kg',
+          sorties8Man: '4 ALS 4x4 Truckloads',
+          rValue: '7.8 m²K/W (Double Thermal Envelope)',
+          solarHarvest: '+5,100 W (Solarium Greenhouse + PV)',
+          estCost: '₹ 14.8 Lakhs',
+          payback: '16.0 Months',
+          hudDesc: '🏔️ LADAKH [OPTION B: SOLARIUM BUFFER]: EXTENDED GREENHOUSE AIRLOCK + DOUBLE ENVELOPE'
+        },
+        gamma: {
+          code: 'SPSD-LAD-GAMMA',
+          name: 'Rammed-Basalt SCEB Fortress',
+          badge: 'OPTION C',
+          geomDesc: '350mm Earth Blocks + Earthen Turf Roof + Steel Ballistic Shutters',
+          whyChoose: 'Supreme thermal flywheel inertia (zero indoor temp fluctuation across 40°C day-night swing) combined with STANAG Level-III ballistic fragment protection. Turf earthen roof camouflages thermal signature.',
+          tacticalAdvantage: 'Ballistic shrapnel defense; massive thermal inertia; earthen roof eliminates satellite thermal IR footprint.',
+          bestDeployed: 'Forward Line-of-Control (LoC) Bunkers, Munitions Depots & Strategic Ridge Bunkers',
+          cd: '0.50 (Bermed)',
+          windRating: '210 km/h (58 m/s)',
+          erectionTime: '120 Hours (Engineers)',
+          mass8Man: '34,000 kg (mostly on-site soil)',
+          sorties8Man: '3 ALS Truckloads (frames/shutters)',
+          rValue: '8.2 m²K/W (Earth-Bermed Mass)',
+          solarHarvest: '+3,600 W (Flush Low-Profile PV)',
+          estCost: '₹ 16.5 Lakhs',
+          payback: '18.0 Months',
+          hudDesc: '🏔️ LADAKH [OPTION C: SCEB FORTRESS]: 350MM BALLISTIC WALLS + EARTH ROOF + STEEL SHUTTERS'
+        }
+      },
+      thar: {
+        alpha: {
+          code: 'SPSD-THA-ALPHA',
+          name: 'Badgir Wind-Master',
+          badge: 'OPTION A',
+          geomDesc: 'Dual Passive Wind-Towers + Deep 1.2m Chhajja Overhangs + Deorhi',
+          whyChoose: '100% zero-power passive cooling: dual Badgir towers capture ambient desert breezes and draw cool air across floor vents via thermal stack effect; 1.2m deep Chhajjas provide 100% solar shading against 48°C sun.',
+          tacticalAdvantage: 'Zero-power natural draft cooling (0.8 m/s); 100% window shading; double-door dust trap.',
+          bestDeployed: 'Remote BSF Border Outposts, Sand Dune Checkposts & Forward Patrol Bases',
+          cd: '0.72',
+          windRating: '140 km/h Sandstorms',
+          erectionTime: '36 Hours',
+          mass8Man: '9,800 kg',
+          sorties8Man: '2 Tatra 6x6 Truckloads',
+          rValue: '5.2 m²K/W (AAC + Cool Roof SRI ≥ 105)',
+          solarHarvest: 'Zero Heat Infiltration (100% Shaded)',
+          estCost: '₹ 11.4 Lakhs',
+          payback: '12.0 Months',
+          hudDesc: '🏜️ THAR [OPTION A: BADGIR WIND-MASTER]: DUAL PASSIVE WIND-TOWERS + 1.2M CHHAJJA OVERHANG'
+        },
+        beta: {
+          code: 'SPSD-THA-BETA',
+          name: 'Earth-Air Geothermal Qanat',
+          badge: 'OPTION B',
+          geomDesc: 'Subterranean 3m Sand Cooling Loop + Solar Thermal Chimney + Sand Berm',
+          whyChoose: 'Delivers continuous 24°C fresh air without air conditioners by routing air through 3-meter deep subterranean sand pipes (sand stays 24°C year-round); solar thermal chimney powers airflow with zero electricity.',
+          tacticalAdvantage: 'Constant 24°C geothermal air supply; unaffected by 50°C heat spikes; solar extraction chimney.',
+          bestDeployed: 'Border Radar Posts, Medical Dispensaries & Heat-Sensitive Electronics Shelters',
+          cd: '0.58',
+          windRating: '150 km/h Sandstorms',
+          erectionTime: '48 Hours',
+          mass8Man: '11,200 kg',
+          sorties8Man: '2 Tatra 6x6 Truckloads + Trenching Kit',
+          rValue: '6.8 m²K/W (Sand Bermed Base)',
+          solarHarvest: 'Zero Heat Infiltration (Cool Earth Loop)',
+          estCost: '₹ 13.9 Lakhs',
+          payback: '13.0 Months',
+          hudDesc: '🏜️ THAR [OPTION B: GEOTHERMAL QANAT]: SUBTERRANEAN 24°C EARTH-AIR LOOP + SOLAR CHIMNEY'
+        },
+        gamma: {
+          code: 'SPSD-THA-GAMMA',
+          name: 'Kinetic PV Canopy Shield',
+          badge: 'OPTION C',
+          geomDesc: 'Double-Skin Floating Solar Parasol Roof + Ventilated Cavity Colonnade',
+          whyChoose: 'Floating secondary PV solar canopy absorbs 100% of scorching solar radiation and produces 6.5 kW clean power, while open ventilated air gap carries heat away before warming ceiling; cuts cooling load by 65%.',
+          tacticalAdvantage: 'Generates 6.5 kW solar power; 100% shaded roof umbrella; natural breeze cavity cools ceiling.',
+          bestDeployed: 'BSF Battalion HQ, Border Surveillance Hubs & Tactical Command Centers',
+          cd: '0.60',
+          windRating: '160 km/h Sandstorms',
+          erectionTime: '40 Hours',
+          mass8Man: '10,500 kg',
+          sorties8Man: '2 Tatra 6x6 Truckloads',
+          rValue: '7.5 m²K/W (Ventilated Double-Skin Roof)',
+          solarHarvest: '6.5 kW Clean Solar Generation',
+          estCost: '₹ 15.6 Lakhs',
+          payback: '11.0 Months',
+          hudDesc: '🏜️ THAR [OPTION C: PV CANOPY SHIELD]: DOUBLE-SKIN FLOATING SOLAR PARASOL + 6.5KW POWER'
+        }
       }
     };
 
@@ -1214,7 +1639,7 @@
         shelterGroup.remove(obj);
       }
 
-      const { length, width, height, orientation, windowArea, theatre, bays } = state;
+      const { length, width, height, orientation, windowArea, theatre, bays, variant } = state;
       const wallTex = textures.corrugated[theatre];
       const panelMat = new THREE.MeshStandardMaterial({ map: wallTex, roughness: 0.65, metalness: 0.2 });
       const trimMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.85 });
@@ -1223,155 +1648,363 @@
       const darkSteelMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.8, roughness: 0.4 });
       const solarMat = new THREE.MeshStandardMaterial({ map: textures.solar, roughness: 0.12, metalness: 0.85 });
 
-      // 1. SIACHEN GLACIER: DUAL-SLOPE SOLAR ROOF (BOTH SIDES) + INWARD DOOR
+      // -------------------------------------------------------------------
+      // 1. SIACHEN GLACIER (ARCTIC)
+      // -------------------------------------------------------------------
       if (theatre === 'siachen') {
-        const pylonHeight = 1.4;
-        const nPylonsX = Math.max(3, bays + 2);
-        const nPylonsZ = 3;
+        if (variant === 'alpha') {
+          // Option A: Aero-Ridge Dual-Solar (55° Gabled Bifacial Solar Roof + Inward Door)
+          const pylonHeight = 1.4;
+          const nPylonsX = Math.max(3, bays + 2);
+          const nPylonsZ = 3;
 
-        for (let ix = 0; ix <= nPylonsX; ix++) {
-          for (let iz = 0; iz < nPylonsZ; iz++) {
-            const px = -length / 2 + (ix * length) / nPylonsX;
-            const pz = -width / 2 + (iz * width) / (nPylonsZ - 1);
+          for (let ix = 0; ix <= nPylonsX; ix++) {
+            for (let iz = 0; iz < nPylonsZ; iz++) {
+              const px = -length / 2 + (ix * length) / nPylonsX;
+              const pz = -width / 2 + (iz * width) / (nPylonsZ - 1);
 
-            const pylon = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.18, pylonHeight, 8), steelMat);
-            pylon.position.set(px, pylonHeight / 2, pz);
-            pylon.castShadow = true;
-            shelterGroup.add(pylon);
+              const pylon = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.18, pylonHeight, 8), steelMat);
+              pylon.position.set(px, pylonHeight / 2, pz);
+              pylon.castShadow = true;
+              shelterGroup.add(pylon);
 
-            const shoe = new THREE.Mesh(
-              new THREE.CylinderGeometry(0.55, 0.60, 0.14, 8),
-              new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.85, roughness: 0.3 })
-            );
-            shoe.position.set(px, 0.07, pz);
-            shoe.receiveShadow = true;
-            shelterGroup.add(shoe);
+              const shoe = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.55, 0.60, 0.14, 8),
+                new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.85, roughness: 0.3 })
+              );
+              shoe.position.set(px, 0.07, pz);
+              shoe.receiveShadow = true;
+              shelterGroup.add(shoe);
 
-            const auger = new THREE.Mesh(
-              new THREE.CylinderGeometry(0.04, 0.01, 0.6, 6),
-              new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 })
-            );
-            auger.position.set(px, -0.25, pz);
-            shelterGroup.add(auger);
+              const auger = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.04, 0.01, 0.6, 6),
+                new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 })
+              );
+              auger.position.set(px, -0.25, pz);
+              shelterGroup.add(auger);
+            }
           }
-        }
 
-        // X-Braces
-        for (let ix = 0; ix < nPylonsX; ix++) {
-          const x1 = -length / 2 + (ix * length) / nPylonsX;
-          const x2 = -length / 2 + ((ix + 1) * length) / nPylonsX;
-          const pz = width / 2;
-          const diagLen = Math.hypot(x2 - x1, pylonHeight);
-          const braceMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.8 });
+          // X-Braces
+          for (let ix = 0; ix < nPylonsX; ix++) {
+            const x1 = -length / 2 + (ix * length) / nPylonsX;
+            const x2 = -length / 2 + ((ix + 1) * length) / nPylonsX;
+            const pz = width / 2;
+            const diagLen = Math.hypot(x2 - x1, pylonHeight);
+            const braceMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.8 });
 
-          const b1 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, diagLen, 6), braceMat);
-          b1.position.set((x1 + x2) / 2, pylonHeight / 2, pz);
-          b1.rotation.z = Math.atan2(pylonHeight, x2 - x1);
-          shelterGroup.add(b1);
+            const b1 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, diagLen, 6), braceMat);
+            b1.position.set((x1 + x2) / 2, pylonHeight / 2, pz);
+            b1.rotation.z = Math.atan2(pylonHeight, x2 - x1);
+            shelterGroup.add(b1);
 
-          const b2 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, diagLen, 6), braceMat);
-          b2.position.set((x1 + x2) / 2, pylonHeight / 2, pz);
-          b2.rotation.z = -Math.atan2(pylonHeight, x2 - x1);
-          shelterGroup.add(b2);
-        }
-
-        const chassis = new THREE.Mesh(new THREE.BoxGeometry(length + 0.8, 0.25, width + 0.8), darkSteelMat);
-        chassis.position.set(0, pylonHeight + 0.125, 0);
-        chassis.castShadow = true;
-        shelterGroup.add(chassis);
-
-        const deck = new THREE.Mesh(
-          new THREE.BoxGeometry(length + 1.2, 0.18, width + 1.2),
-          new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.85 })
-        );
-        deck.position.set(0, pylonHeight + 0.25 + 0.09, 0);
-        deck.castShadow = true;
-        deck.receiveShadow = true;
-        shelterGroup.add(deck);
-
-        const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
-        walls.position.set(0, pylonHeight + 0.35 + height / 2, 0);
-        walls.castShadow = true;
-        walls.receiveShadow = true;
-        shelterGroup.add(walls);
-
-        const roofPeakH = 2.0;
-        const roofGeom = createGableRoofGeometry(length + 0.6, width + 0.8, roofPeakH);
-        const roof = new THREE.Mesh(roofGeom, panelMat);
-        roof.position.set(0, pylonHeight + 0.35 + height + roofPeakH / 2, 0);
-        roof.castShadow = true;
-        shelterGroup.add(roof);
-
-        // Ridge Cap
-        const ridgeCap = new THREE.Mesh(new THREE.BoxGeometry(length + 0.7, 0.12, 0.3), trimMat);
-        ridgeCap.position.set(0, pylonHeight + 0.35 + height + roofPeakH + 0.05, 0);
-        shelterGroup.add(ridgeCap);
-
-        // Dual-Slope Solar (Both Sides)
-        const slopeHalfW = (width + 0.8) / 2;
-        const slantHypot = Math.hypot(slopeHalfW, roofPeakH);
-        const slantAngle = Math.atan2(roofPeakH, slopeHalfW);
-        const nSolarCols = Math.max(4, bays * 2);
-        const modWidth = (length * 0.92) / nSolarCols;
-        const modHeight = slantHypot * 0.44;
-
-        const solarGroup = new THREE.Group();
-        for (let row = 0; row < 2; row++) {
-          const tFactor = (row === 0) ? 0.30 : 0.74;
-          const py = roofPeakH * (1 - tFactor) + 0.08;
-          const pzSouth = slopeHalfW * tFactor + 0.04;
-          const pzNorth = -(slopeHalfW * tFactor + 0.04);
-
-          for (let col = 0; col < nSolarCols; col++) {
-            const px = -length * 0.46 + (col + 0.5) * modWidth;
-            // South Slope (+Z)
-            const modS = createDetailedSolarModule(modWidth * 0.90, modHeight * 0.92, solarMat, aluMat);
-            modS.position.set(px, py, pzSouth);
-            modS.rotation.x = slantAngle;
-            solarGroup.add(modS);
-
-            // North Slope (-Z) (Snow albedo reflection)
-            const modN = createDetailedSolarModule(modWidth * 0.90, modHeight * 0.92, solarMat, aluMat);
-            modN.position.set(px, py, pzNorth);
-            modN.rotation.x = -slantAngle;
-            solarGroup.add(modN);
+            const b2 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, diagLen, 6), braceMat);
+            b2.position.set((x1 + x2) / 2, pylonHeight / 2, pz);
+            b2.rotation.z = -Math.atan2(pylonHeight, x2 - x1);
+            shelterGroup.add(b2);
           }
-        }
-        solarGroup.position.set(0, pylonHeight + 0.35 + height, 0);
-        shelterGroup.add(solarGroup);
 
-        // Inward Door Vestibule
-        const alW = 1.8;
-        const alH = 2.3;
-        const alD = 1.3;
-        const alMesh = new THREE.Mesh(new THREE.BoxGeometry(alW, alH, alD), panelMat);
-        alMesh.position.set(length * 0.35, pylonHeight + 0.35 + alH / 2, width / 2 + alD / 2);
-        alMesh.castShadow = true;
-        shelterGroup.add(alMesh);
+          const chassis = new THREE.Mesh(new THREE.BoxGeometry(length + 0.8, 0.25, width + 0.8), darkSteelMat);
+          chassis.position.set(0, pylonHeight + 0.125, 0);
+          chassis.castShadow = true;
+          shelterGroup.add(chassis);
 
-        const snowCanopy = new THREE.Mesh(new THREE.BoxGeometry(alW + 0.3, 0.08, alD + 0.4), trimMat);
-        snowCanopy.position.set(length * 0.35, pylonHeight + 0.35 + alH + 0.05, width / 2 + alD / 2 + 0.1);
-        snowCanopy.rotation.x = 0.22;
-        shelterGroup.add(snowCanopy);
+          const deck = new THREE.Mesh(
+            new THREE.BoxGeometry(length + 1.2, 0.18, width + 1.2),
+            new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.85 })
+          );
+          deck.position.set(0, pylonHeight + 0.25 + 0.09, 0);
+          deck.castShadow = true;
+          deck.receiveShadow = true;
+          shelterGroup.add(deck);
 
-        const doorLeaf = new THREE.Mesh(
-          new THREE.BoxGeometry(1.0, 1.95, 0.06),
-          new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.8, roughness: 0.3 })
-        );
-        doorLeaf.position.set(length * 0.35 - 0.15, pylonHeight + 0.35 + 1.0, width / 2 + alD - 0.25);
-        doorLeaf.rotation.y = THREE.MathUtils.degToRad(35);
-        shelterGroup.add(doorLeaf);
+          const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+          walls.position.set(0, pylonHeight + 0.35 + height / 2, 0);
+          walls.castShadow = true;
+          walls.receiveShadow = true;
+          shelterGroup.add(walls);
 
-        const nSteps = 6;
-        for (let s = 0; s < nSteps; s++) {
-          const step = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.12, 0.32), steelMat);
-          step.position.set(length * 0.35, (s + 0.5) * ((pylonHeight + 0.35) / nSteps), width / 2 + alD + 0.25 + (nSteps - s) * 0.32);
-          step.castShadow = true;
-          shelterGroup.add(step);
+          const roofPeakH = 2.0;
+          const roofGeom = createGableRoofGeometry(length + 0.6, width + 0.8, roofPeakH);
+          const roof = new THREE.Mesh(roofGeom, panelMat);
+          roof.position.set(0, pylonHeight + 0.35 + height + roofPeakH / 2, 0);
+          roof.castShadow = true;
+          shelterGroup.add(roof);
+
+          const ridgeCap = new THREE.Mesh(new THREE.BoxGeometry(length + 0.7, 0.12, 0.3), trimMat);
+          ridgeCap.position.set(0, pylonHeight + 0.35 + height + roofPeakH + 0.05, 0);
+          shelterGroup.add(ridgeCap);
+
+          // Dual-Slope Solar (Both Sides)
+          const slopeHalfW = (width + 0.8) / 2;
+          const slantHypot = Math.hypot(slopeHalfW, roofPeakH);
+          const slantAngle = Math.atan2(roofPeakH, slopeHalfW);
+          const nSolarCols = Math.max(4, bays * 2);
+          const modWidth = (length * 0.92) / nSolarCols;
+          const modHeight = slantHypot * 0.44;
+
+          const solarGroup = new THREE.Group();
+          for (let row = 0; row < 2; row++) {
+            const tFactor = (row === 0) ? 0.30 : 0.74;
+            const py = roofPeakH * (1 - tFactor) + 0.08;
+            const pzSouth = slopeHalfW * tFactor + 0.04;
+            const pzNorth = -(slopeHalfW * tFactor + 0.04);
+
+            for (let col = 0; col < nSolarCols; col++) {
+              const px = -length * 0.46 + (col + 0.5) * modWidth;
+              // South Slope (+Z)
+              const modS = createDetailedSolarModule(modWidth * 0.90, modHeight * 0.92, solarMat, aluMat);
+              modS.position.set(px, py, pzSouth);
+              modS.rotation.x = slantAngle;
+              solarGroup.add(modS);
+
+              // North Slope (-Z)
+              const modN = createDetailedSolarModule(modWidth * 0.90, modHeight * 0.92, solarMat, aluMat);
+              modN.position.set(px, py, pzNorth);
+              modN.rotation.x = -slantAngle;
+              solarGroup.add(modN);
+            }
+          }
+          solarGroup.position.set(0, pylonHeight + 0.35 + height, 0);
+          shelterGroup.add(solarGroup);
+
+          // Inward Door Vestibule
+          const alW = 1.8;
+          const alH = 2.3;
+          const alD = 1.3;
+          const alMesh = new THREE.Mesh(new THREE.BoxGeometry(alW, alH, alD), panelMat);
+          alMesh.position.set(length * 0.35, pylonHeight + 0.35 + alH / 2, width / 2 + alD / 2);
+          alMesh.castShadow = true;
+          shelterGroup.add(alMesh);
+
+          const snowCanopy = new THREE.Mesh(new THREE.BoxGeometry(alW + 0.3, 0.08, alD + 0.4), trimMat);
+          snowCanopy.position.set(length * 0.35, pylonHeight + 0.35 + alH + 0.05, width / 2 + alD / 2 + 0.1);
+          snowCanopy.rotation.x = 0.22;
+          shelterGroup.add(snowCanopy);
+
+          const doorLeaf = new THREE.Mesh(
+            new THREE.BoxGeometry(1.0, 1.95, 0.06),
+            new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.8, roughness: 0.3 })
+          );
+          doorLeaf.position.set(length * 0.35 - 0.15, pylonHeight + 0.35 + 1.0, width / 2 + alD - 0.25);
+          doorLeaf.rotation.y = THREE.MathUtils.degToRad(35);
+          shelterGroup.add(doorLeaf);
+
+          const nSteps = 6;
+          for (let s = 0; s < nSteps; s++) {
+            const step = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.12, 0.32), steelMat);
+            step.position.set(length * 0.35, (s + 0.5) * ((pylonHeight + 0.35) / nSteps), width / 2 + alD + 0.25 + (nSteps - s) * 0.32);
+            step.castShadow = true;
+            shelterGroup.add(step);
+          }
+
+        } else if (variant === 'beta') {
+          // Option B: Blizzard-Vault Quonset Arch (Aerodynamic Barrel-Vault Shell + Curved Thin-Film PV)
+          const archR = width / 2;
+          const skidH = 0.35;
+
+          const skid = new THREE.Mesh(
+            new THREE.BoxGeometry(length + 0.6, skidH, width + 0.6),
+            new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.4 })
+          );
+          skid.position.set(0, skidH / 2, 0);
+          skid.castShadow = true;
+          skid.receiveShadow = true;
+          shelterGroup.add(skid);
+
+          for (let ix = -1; ix <= 1; ix++) {
+            [-width / 2 - 0.2, width / 2 + 0.2].forEach(pz => {
+              const aug = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.01, 0.7, 6), new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 }));
+              aug.position.set(ix * (length * 0.4), -0.2, pz);
+              shelterGroup.add(aug);
+            });
+          }
+
+          const archGeom = new THREE.CylinderGeometry(archR, archR, length, 40, 1, false, 0, Math.PI);
+          archGeom.rotateZ(Math.PI / 2);
+          archGeom.rotateY(Math.PI / 2);
+          const archMesh = new THREE.Mesh(archGeom, panelMat);
+          archMesh.position.set(0, skidH, 0);
+          archMesh.castShadow = true;
+          archMesh.receiveShadow = true;
+          shelterGroup.add(archMesh);
+
+          [-length / 2, length / 2].forEach((px, idx) => {
+            const endGeom = new THREE.CircleGeometry(archR, 36, 0, Math.PI);
+            endGeom.rotateY(idx === 0 ? -Math.PI / 2 : Math.PI / 2);
+            const endMesh = new THREE.Mesh(endGeom, panelMat);
+            endMesh.position.set(px, skidH, 0);
+            endMesh.castShadow = true;
+            shelterGroup.add(endMesh);
+          });
+
+          const nArchSolar = Math.max(4, bays * 2);
+          const archSegW = (length * 0.88) / nArchSolar;
+          [-0.38, 0, 0.38].forEach(angOffset => {
+            const currAngle = Math.PI / 2 + angOffset;
+            const rSolar = archR + 0.04;
+            const py = skidH + rSolar * Math.sin(currAngle);
+            const pz = rSolar * Math.cos(currAngle);
+
+            for (let i = 0; i < nArchSolar; i++) {
+              const px = -length * 0.44 + (i + 0.5) * archSegW;
+              const sMod = createDetailedSolarModule(archSegW * 0.88, 1.2, solarMat, aluMat);
+              sMod.position.set(px, py, pz);
+              sMod.rotation.x = -(currAngle - Math.PI / 2);
+              shelterGroup.add(sMod);
+            }
+          });
+
+          // Submarine Hatch Door
+          const hatchFrame = new THREE.Mesh(
+            new THREE.TorusGeometry(0.70, 0.08, 12, 32),
+            new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.9, roughness: 0.3 })
+          );
+          hatchFrame.position.set(length / 2 + 0.04, skidH + 1.1, 0);
+          hatchFrame.rotation.y = Math.PI / 2;
+          shelterGroup.add(hatchFrame);
+
+          const hatchDoor = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.68, 0.68, 0.08, 24),
+            new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.3 })
+          );
+          hatchDoor.position.set(length / 2 + 0.02, skidH + 1.1, 0);
+          hatchDoor.rotation.z = Math.PI / 2;
+          shelterGroup.add(hatchDoor);
+
+          const wheel = new THREE.Mesh(
+            new THREE.TorusGeometry(0.24, 0.03, 8, 16),
+            new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 })
+          );
+          wheel.position.set(length / 2 + 0.08, skidH + 1.1, 0);
+          wheel.rotation.y = Math.PI / 2;
+          shelterGroup.add(wheel);
+
+          // Aerodynamic Guy-Wires
+          for (let ix = -1; ix <= 1; ix += 2) {
+            [-width / 2 - 1.8, width / 2 + 1.8].forEach(pz => {
+              const topY = skidH + archR * 0.85;
+              const topZ = (pz > 0 ? 1 : -1) * (width * 0.42);
+              const px = ix * (length * 0.35);
+
+              const cableLen = Math.hypot(pz - topZ, topY);
+              const cable = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, cableLen, 6), steelMat);
+              cable.position.set(px, topY / 2, (topZ + pz) / 2);
+              cable.rotation.x = Math.atan2(pz - topZ, topY);
+              shelterGroup.add(cable);
+
+              const anchor = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.15, 0.25, 8), new THREE.MeshStandardMaterial({ color: 0x84cc16 }));
+              anchor.position.set(px, 0.1, pz);
+              shelterGroup.add(anchor);
+            });
+          }
+
+        } else if (variant === 'gamma') {
+          // Option C: Arctic-Pod Autonomous Bunker (Elevated 2.0m Cradle + Dual Tracking Mast + 40kWh PCM)
+          const pylonH = 2.0;
+          const nPylonsX = Math.max(3, bays + 2);
+
+          for (let ix = 0; ix <= nPylonsX; ix++) {
+            [-width / 2, width / 2].forEach(pz => {
+              const px = -length / 2 + (ix * length) / nPylonsX;
+              const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.20, 0.24, pylonH, 8), steelMat);
+              leg.position.set(px, pylonH / 2, pz);
+              leg.castShadow = true;
+              shelterGroup.add(leg);
+
+              const hexFoot = new THREE.Mesh(new THREE.CylinderGeometry(0.65, 0.72, 0.18, 6), darkSteelMat);
+              hexFoot.position.set(px, 0.09, pz);
+              shelterGroup.add(hexFoot);
+
+              const auger = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.01, 0.8, 6), new THREE.MeshStandardMaterial({ color: 0x84cc16 }));
+              auger.position.set(px, -0.3, pz);
+              shelterGroup.add(auger);
+            });
+          }
+
+          const cradleChassis = new THREE.Mesh(new THREE.BoxGeometry(length + 1.0, 0.35, width + 1.0), darkSteelMat);
+          cradleChassis.position.set(0, pylonH + 0.175, 0);
+          cradleChassis.castShadow = true;
+          shelterGroup.add(cradleChassis);
+
+          // 40kWh Bio-PCM Latent Heat Batteries
+          [-length * 0.22, length * 0.22].forEach(bx => {
+            const pcmBox = new THREE.Mesh(
+              new THREE.BoxGeometry(1.8, 0.45, width * 0.65),
+              new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.5, metalness: 0.8 })
+            );
+            pcmBox.position.set(bx, pylonH - 0.25, 0);
+            pcmBox.castShadow = true;
+            shelterGroup.add(pcmBox);
+
+            const ledBar = new THREE.Mesh(
+              new THREE.BoxGeometry(0.8, 0.08, 0.05),
+              new THREE.MeshStandardMaterial({ color: 0x84cc16, emissive: 0x84cc16, emissiveIntensity: 0.9 })
+            );
+            ledBar.position.set(bx, pylonH - 0.25, width * 0.325 + 0.03);
+            shelterGroup.add(ledBar);
+          });
+
+          const podBody = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+          podBody.position.set(0, pylonH + 0.35 + height / 2, 0);
+          podBody.castShadow = true;
+          shelterGroup.add(podBody);
+
+          const podRoof = new THREE.Mesh(
+            new THREE.BoxGeometry(length + 0.4, 0.25, width + 0.4),
+            new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.6 })
+          );
+          podRoof.position.set(0, pylonH + 0.35 + height + 0.125, 0);
+          podRoof.castShadow = true;
+          shelterGroup.add(podRoof);
+
+          // Portholes
+          [-length * 0.25, 0, length * 0.25].forEach(wx => {
+            const pFrame = new THREE.Mesh(new THREE.TorusGeometry(0.35, 0.05, 8, 24), new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.9 }));
+            pFrame.position.set(wx, pylonH + 0.35 + height * 0.6, width / 2 + 0.02);
+            shelterGroup.add(pFrame);
+
+            const pGlass = new THREE.Mesh(new THREE.CircleGeometry(0.32, 24), new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.8, roughness: 0.1 }));
+            pGlass.position.set(wx, pylonH + 0.35 + height * 0.6, width / 2 + 0.03);
+            shelterGroup.add(pGlass);
+          });
+
+          // Central Dual-Axis Solar Tracking Mast
+          const mastH = 2.6;
+          const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.16, mastH, 8), aluMat);
+          mast.position.set(0, pylonH + 0.35 + height + mastH / 2, 0);
+          mast.castShadow = true;
+          shelterGroup.add(mast);
+
+          const gimbal = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.3, 0.4), darkSteelMat);
+          gimbal.position.set(0, pylonH + 0.35 + height + mastH, 0);
+          shelterGroup.add(gimbal);
+
+          [-1.3, 1.3].forEach(px => {
+            const tPanel = createDetailedSolarModule(2.2, 1.4, solarMat, aluMat);
+            tPanel.position.set(px, pylonH + 0.35 + height + mastH + 0.2, 0);
+            tPanel.rotation.x = -Math.PI / 3.5;
+            shelterGroup.add(tPanel);
+          });
+
+          const airlock = new THREE.Mesh(new THREE.BoxGeometry(1.9, 2.4, 1.4), panelMat);
+          airlock.position.set(length * 0.36, pylonH + 0.35 + 1.2, width / 2 + 0.7);
+          airlock.castShadow = true;
+          shelterGroup.add(airlock);
+
+          const stepCount = 8;
+          for (let s = 0; s < stepCount; s++) {
+            const stp = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.12, 0.30), steelMat);
+            stp.position.set(length * 0.36, (s + 0.5) * ((pylonH + 0.35) / stepCount), width / 2 + 1.4 + (stepCount - s) * 0.30);
+            stp.castShadow = true;
+            shelterGroup.add(stp);
+          }
         }
       }
 
-      // 2. LADAKH: BASALT BED + SOUTH TROMBE WALL + RECESSED PORTAL
+      // -------------------------------------------------------------------
+      // 2. LADAKH HIGH-ALTITUDE MOUNTAIN
+      // -------------------------------------------------------------------
       else if (theatre === 'ladakh') {
         const bedHeight = 0.5;
         const stoneBed = new THREE.Mesh(
@@ -1383,65 +2016,180 @@
         stoneBed.receiveShadow = true;
         shelterGroup.add(stoneBed);
 
-        const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
-        walls.position.set(0, bedHeight + height / 2, 0);
-        walls.castShadow = true;
-        walls.receiveShadow = true;
-        shelterGroup.add(walls);
+        if (variant === 'alpha') {
+          // Option A: Solaris-Trombe Mass
+          const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+          walls.position.set(0, bedHeight + height / 2, 0);
+          walls.castShadow = true;
+          shelterGroup.add(walls);
 
-        const roofPeakH = 1.4;
-        const roofGeom = createGableRoofGeometry(length + 0.4, width + 0.6, roofPeakH);
-        const roof = new THREE.Mesh(roofGeom, panelMat);
-        roof.position.set(0, bedHeight + height + roofPeakH / 2, 0);
-        roof.castShadow = true;
-        shelterGroup.add(roof);
+          const roofPeakH = 1.4;
+          const roofGeom = createGableRoofGeometry(length + 0.4, width + 0.6, roofPeakH);
+          const roof = new THREE.Mesh(roofGeom, panelMat);
+          roof.position.set(0, bedHeight + height + roofPeakH / 2, 0);
+          roof.castShadow = true;
+          shelterGroup.add(roof);
 
-        // Rooftop 45° Solar PV Rack
-        const nPanels = Math.max(4, bays * 2);
-        const rackGroup = new THREE.Group();
-        const pW = (length * 0.85) / nPanels;
-        for (let i = 0; i < nPanels; i++) {
-          const p = createDetailedSolarModule(pW * 0.9, 1.6, solarMat, aluMat);
-          p.position.set(-length * 0.4 + (i + 0.5) * pW, 0.8, 0);
-          p.rotation.x = -Math.PI / 4;
-          rackGroup.add(p);
+          const nPanels = Math.max(4, bays * 2);
+          const rackGroup = new THREE.Group();
+          const pW = (length * 0.85) / nPanels;
+          for (let i = 0; i < nPanels; i++) {
+            const p = createDetailedSolarModule(pW * 0.9, 1.6, solarMat, aluMat);
+            p.position.set(-length * 0.4 + (i + 0.5) * pW, 0.8, 0);
+            p.rotation.x = -Math.PI / 4;
+            rackGroup.add(p);
+          }
+          rackGroup.position.set(0, bedHeight + height + 0.3, width * 0.15);
+          shelterGroup.add(rackGroup);
+
+          // South Trombe Glazing
+          const winW = Math.min(length * 0.55, Math.sqrt(windowArea) * 1.3);
+          const winH = Math.min(height * 0.75, windowArea / Math.max(winW, 0.1));
+
+          const tRock = new THREE.Mesh(
+            new THREE.BoxGeometry(winW * 0.96, winH * 0.96, 0.3),
+            new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.95 })
+          );
+          tRock.position.set(-length * 0.12, bedHeight + height / 2, width / 2 - 0.16);
+          shelterGroup.add(tRock);
+
+          const win = new THREE.Mesh(
+            new THREE.PlaneGeometry(winW, winH),
+            new THREE.MeshStandardMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.75, roughness: 0.1, metalness: 0.95 })
+          );
+          win.position.set(-length * 0.12, bedHeight + height / 2, width / 2 + 0.02);
+          shelterGroup.add(win);
+
+          const portalFrame = new THREE.Mesh(new THREE.BoxGeometry(1.4, 2.2, 0.2), trimMat);
+          portalFrame.position.set(length * 0.32, bedHeight + 1.1, width / 2 + 0.05);
+          shelterGroup.add(portalFrame);
+
+          const door = new THREE.Mesh(
+            new THREE.BoxGeometry(1.0, 1.95, 0.06),
+            new THREE.MeshStandardMaterial({ color: 0x27382b, roughness: 0.7 })
+          );
+          door.position.set(length * 0.32 - 0.15, bedHeight + 1.0, width / 2 - 0.15);
+          door.rotation.y = THREE.MathUtils.degToRad(30);
+          shelterGroup.add(door);
+
+        } else if (variant === 'beta') {
+          // Option B: Solarium Green-Buffer (Attached Greenhouse Sunspace)
+          const solariumDepth = 1.8;
+          const mainWidth = width - solariumDepth * 0.5;
+
+          const mainWalls = new THREE.Mesh(new THREE.BoxGeometry(length, height, mainWidth), panelMat);
+          mainWalls.position.set(0, bedHeight + height / 2, -solariumDepth * 0.25);
+          mainWalls.castShadow = true;
+          shelterGroup.add(mainWalls);
+
+          const roofPeakH = 1.2;
+          const roofGeom = createGableRoofGeometry(length + 0.4, mainWidth + 0.4, roofPeakH);
+          const roof = new THREE.Mesh(roofGeom, panelMat);
+          roof.position.set(0, bedHeight + height + roofPeakH / 2, -solariumDepth * 0.25);
+          roof.castShadow = true;
+          shelterGroup.add(roof);
+
+          const nPanels = Math.max(4, bays * 2);
+          const rackGroup = new THREE.Group();
+          const pW = (length * 0.85) / nPanels;
+          for (let i = 0; i < nPanels; i++) {
+            const p = createDetailedSolarModule(pW * 0.9, 1.4, solarMat, aluMat);
+            p.position.set(-length * 0.4 + (i + 0.5) * pW, 0.7, 0);
+            p.rotation.x = -Math.PI / 4;
+            rackGroup.add(p);
+          }
+          rackGroup.position.set(0, bedHeight + height + 0.25, 0);
+          shelterGroup.add(rackGroup);
+
+          const solariumMat = new THREE.MeshStandardMaterial({
+            color: 0x93c5fd,
+            transparent: true,
+            opacity: 0.62,
+            roughness: 0.12,
+            metalness: 0.8
+          });
+
+          const solariumFront = new THREE.Mesh(new THREE.PlaneGeometry(length * 0.75, height * 0.9), solariumMat);
+          solariumFront.position.set(-length * 0.08, bedHeight + height * 0.48, mainWidth / 2 + solariumDepth - 0.25);
+          shelterGroup.add(solariumFront);
+
+          const sRoofGeom = new THREE.PlaneGeometry(length * 0.75, Math.hypot(solariumDepth, height * 0.45));
+          sRoofGeom.rotateX(Math.PI / 4);
+          const sRoof = new THREE.Mesh(sRoofGeom, solariumMat);
+          sRoof.position.set(-length * 0.08, bedHeight + height * 0.82, mainWidth / 2 + solariumDepth / 2 - 0.25);
+          shelterGroup.add(sRoof);
+
+          for (let pi = -1; pi <= 1; pi++) {
+            const planter = new THREE.Mesh(
+              new THREE.BoxGeometry(length * 0.2, 0.4, 0.55),
+              new THREE.MeshStandardMaterial({ color: 0x166534, roughness: 0.8 })
+            );
+            planter.position.set(pi * (length * 0.22) - length * 0.08, bedHeight + 0.2, mainWidth / 2 + solariumDepth * 0.45);
+            shelterGroup.add(planter);
+          }
+
+          const airlockDoor = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.1, 0.1), trimMat);
+          airlockDoor.position.set(length * 0.35, bedHeight + 1.05, mainWidth / 2 + solariumDepth - 0.25);
+          shelterGroup.add(airlockDoor);
+
+        } else if (variant === 'gamma') {
+          // Option C: Rammed-Basalt SCEB Fortress (350mm Earth Blocks + Turf Roof)
+          const fortressMat = new THREE.MeshStandardMaterial({ color: 0x3d352b, roughness: 0.95 });
+
+          const walls = new THREE.Mesh(new THREE.BoxGeometry(length + 0.4, height, width + 0.4), fortressMat);
+          walls.position.set(0, bedHeight + height / 2, 0);
+          walls.castShadow = true;
+          shelterGroup.add(walls);
+
+          [-length / 2 - 0.2, length / 2 + 0.2].forEach(bx => {
+            [-width / 2 - 0.2, width / 2 + 0.2].forEach(bz => {
+              const buttress = new THREE.Mesh(new THREE.BoxGeometry(0.6, height + 0.2, 0.6), fortressMat);
+              buttress.position.set(bx, bedHeight + height / 2, bz);
+              buttress.castShadow = true;
+              shelterGroup.add(buttress);
+            });
+          });
+
+          const earthRoof = new THREE.Mesh(
+            new THREE.BoxGeometry(length + 0.6, 0.4, width + 0.6),
+            new THREE.MeshStandardMaterial({ color: 0x2e3820, roughness: 0.9 })
+          );
+          earthRoof.position.set(0, bedHeight + height + 0.2, 0);
+          earthRoof.castShadow = true;
+          shelterGroup.add(earthRoof);
+
+          const parapet = new THREE.Mesh(
+            new THREE.BoxGeometry(length + 0.7, 0.45, 0.3),
+            trimMat
+          );
+          parapet.position.set(0, bedHeight + height + 0.4, width / 2 + 0.2);
+          shelterGroup.add(parapet);
+
+          [-length * 0.25, 0].forEach(sx => {
+            const slit = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.9, 0.08), new THREE.MeshStandardMaterial({ color: 0x0f172a }));
+            slit.position.set(sx, bedHeight + height * 0.6, width / 2 + 0.22);
+            shelterGroup.add(slit);
+
+            const shutter = new THREE.Mesh(new THREE.BoxGeometry(0.44, 0.94, 0.05), steelMat);
+            shutter.position.set(sx + 0.25, bedHeight + height * 0.6, width / 2 + 0.25);
+            shutter.rotation.y = 0.5;
+            shelterGroup.add(shutter);
+          });
+
+          const flushPv = createDetailedSolarModule(length * 0.7, width * 0.6, solarMat, aluMat);
+          flushPv.position.set(0, bedHeight + height + 0.45, -width * 0.1);
+          flushPv.rotation.x = -0.15;
+          shelterGroup.add(flushPv);
+
+          const blastPortal = new THREE.Mesh(new THREE.BoxGeometry(1.5, 2.2, 0.4), darkSteelMat);
+          blastPortal.position.set(length * 0.32, bedHeight + 1.1, width / 2 + 0.3);
+          shelterGroup.add(blastPortal);
         }
-        rackGroup.position.set(0, bedHeight + height + 0.3, width * 0.15);
-        shelterGroup.add(rackGroup);
-
-        // South Trombe Glazing
-        const winW = Math.min(length * 0.55, Math.sqrt(windowArea) * 1.3);
-        const winH = Math.min(height * 0.75, windowArea / Math.max(winW, 0.1));
-
-        const tRock = new THREE.Mesh(
-          new THREE.BoxGeometry(winW * 0.96, winH * 0.96, 0.3),
-          new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.95 })
-        );
-        tRock.position.set(-length * 0.12, bedHeight + height / 2, width / 2 - 0.16);
-        shelterGroup.add(tRock);
-
-        const win = new THREE.Mesh(
-          new THREE.PlaneGeometry(winW, winH),
-          new THREE.MeshStandardMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.75, roughness: 0.1, metalness: 0.95 })
-        );
-        win.position.set(-length * 0.12, bedHeight + height / 2, width / 2 + 0.02);
-        shelterGroup.add(win);
-
-        // Recessed Mountain Portal
-        const portalFrame = new THREE.Mesh(new THREE.BoxGeometry(1.4, 2.2, 0.2), trimMat);
-        portalFrame.position.set(length * 0.32, bedHeight + 1.1, width / 2 + 0.05);
-        shelterGroup.add(portalFrame);
-
-        const door = new THREE.Mesh(
-          new THREE.BoxGeometry(1.0, 1.95, 0.06),
-          new THREE.MeshStandardMaterial({ color: 0x27382b, roughness: 0.7 })
-        );
-        door.position.set(length * 0.32 - 0.15, bedHeight + 1.0, width / 2 - 0.15);
-        door.rotation.y = THREE.MathUtils.degToRad(30);
-        shelterGroup.add(door);
       }
 
-      // 3. THAR DESERT: DUAL BADGIR WIND-TOWERS + DEEP CHHAJJA + DEORHI
+      // -------------------------------------------------------------------
+      // 3. THAR DESERT (BSF)
+      // -------------------------------------------------------------------
       else if (theatre === 'thar') {
         const plinthH = 0.3;
         const plinth = new THREE.Mesh(
@@ -1450,60 +2198,157 @@
         );
         plinth.position.set(0, plinthH / 2, 0);
         plinth.castShadow = true;
+        plinth.receiveShadow = true;
         shelterGroup.add(plinth);
 
-        const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
-        walls.position.set(0, plinthH + height / 2, 0);
-        walls.castShadow = true;
-        walls.receiveShadow = true;
-        shelterGroup.add(walls);
+        if (variant === 'alpha') {
+          // Option A: Badgir Wind-Master
+          const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+          walls.position.set(0, plinthH + height / 2, 0);
+          walls.castShadow = true;
+          shelterGroup.add(walls);
 
-        const roof = new THREE.Mesh(
-          new THREE.BoxGeometry(length + 0.6, 0.25, width + 0.6),
-          new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.25, metalness: 0.1 })
-        );
-        roof.position.set(0, plinthH + height + 0.125, 0);
-        roof.castShadow = true;
-        shelterGroup.add(roof);
+          const roof = new THREE.Mesh(
+            new THREE.BoxGeometry(length + 0.6, 0.25, width + 0.6),
+            new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.25, metalness: 0.1 })
+          );
+          roof.position.set(0, plinthH + height + 0.125, 0);
+          roof.castShadow = true;
+          shelterGroup.add(roof);
 
-        // Dual Badgir Wind Towers
-        const tW = 1.3;
-        const tH = 2.0;
-        [-length * 0.28, length * 0.28].forEach(tx => {
-          const tower = new THREE.Mesh(new THREE.BoxGeometry(tW, tH, tW), panelMat);
-          tower.position.set(tx, plinthH + height + tH / 2, 0);
-          tower.castShadow = true;
-          shelterGroup.add(tower);
+          const tW = 1.3;
+          const tH = 2.0;
+          [-length * 0.28, length * 0.28].forEach(tx => {
+            const tower = new THREE.Mesh(new THREE.BoxGeometry(tW, tH, tW), panelMat);
+            tower.position.set(tx, plinthH + height + tH / 2, 0);
+            tower.castShadow = true;
+            shelterGroup.add(tower);
 
-          const louver = new THREE.Mesh(new THREE.BoxGeometry(tW * 0.82, 0.5, 0.06), steelMat);
-          louver.position.set(tx, plinthH + height + tH * 0.78, tW / 2 + 0.03);
-          shelterGroup.add(louver);
-        });
+            const louver = new THREE.Mesh(new THREE.BoxGeometry(tW * 0.82, 0.5, 0.06), steelMat);
+            louver.position.set(tx, plinthH + height + tH * 0.78, tW / 2 + 0.03);
+            shelterGroup.add(louver);
+          });
 
-        // Deep 1.2m Chhajja Overhang
-        const chhajja = new THREE.Mesh(
-          new THREE.BoxGeometry(length * 0.9, 0.08, 1.3),
-          new THREE.MeshStandardMaterial({ color: 0x9a3412, roughness: 0.8 })
-        );
-        chhajja.position.set(0, plinthH + height * 0.88, width / 2 + 0.65);
-        chhajja.rotation.x = 0.18;
-        chhajja.castShadow = true;
-        shelterGroup.add(chhajja);
+          const chhajja = new THREE.Mesh(
+            new THREE.BoxGeometry(length * 0.9, 0.08, 1.3),
+            new THREE.MeshStandardMaterial({ color: 0x9a3412, roughness: 0.8 })
+          );
+          chhajja.position.set(0, plinthH + height * 0.88, width / 2 + 0.65);
+          chhajja.rotation.x = 0.18;
+          chhajja.castShadow = true;
+          shelterGroup.add(chhajja);
 
-        // Shaded Deorhi Double Doors
-        const deorhiFrame = new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.2, 0.1), new THREE.MeshStandardMaterial({ color: 0x451a03 }));
-        deorhiFrame.position.set(length * 0.32, plinthH + 1.1, width / 2 + 0.04);
-        shelterGroup.add(deorhiFrame);
+          const deorhiFrame = new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.2, 0.1), new THREE.MeshStandardMaterial({ color: 0x451a03 }));
+          deorhiFrame.position.set(length * 0.32, plinthH + 1.1, width / 2 + 0.04);
+          shelterGroup.add(deorhiFrame);
 
-        const dLeft = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.95, 0.05), new THREE.MeshStandardMaterial({ color: 0x3e1805 }));
-        dLeft.position.set(length * 0.32 - 0.3, plinthH + 1.0, width / 2 - 0.15);
-        dLeft.rotation.y = THREE.MathUtils.degToRad(35);
-        shelterGroup.add(dLeft);
+          const dLeft = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.95, 0.05), new THREE.MeshStandardMaterial({ color: 0x3e1805 }));
+          dLeft.position.set(length * 0.32 - 0.3, plinthH + 1.0, width / 2 - 0.15);
+          dLeft.rotation.y = THREE.MathUtils.degToRad(35);
+          shelterGroup.add(dLeft);
 
-        const dRight = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.95, 0.05), new THREE.MeshStandardMaterial({ color: 0x3e1805 }));
-        dRight.position.set(length * 0.32 + 0.3, plinthH + 1.0, width / 2 - 0.15);
-        dRight.rotation.y = THREE.MathUtils.degToRad(-35);
-        shelterGroup.add(dRight);
+          const dRight = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.95, 0.05), new THREE.MeshStandardMaterial({ color: 0x3e1805 }));
+          dRight.position.set(length * 0.32 + 0.3, plinthH + 1.0, width / 2 - 0.15);
+          dRight.rotation.y = THREE.MathUtils.degToRad(-35);
+          shelterGroup.add(dRight);
+
+        } else if (variant === 'beta') {
+          // Option B: Earth-Air Geothermal Qanat
+          const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+          walls.position.set(0, plinthH + height / 2, 0);
+          walls.castShadow = true;
+          shelterGroup.add(walls);
+
+          const berm = new THREE.Mesh(
+            new THREE.BoxGeometry(length + 2.0, plinthH + 0.8, width + 2.0),
+            new THREE.MeshStandardMaterial({ color: 0x9b7643, roughness: 0.98 })
+          );
+          berm.position.set(0, (plinthH + 0.8) / 2, 0);
+          berm.receiveShadow = true;
+          shelterGroup.add(berm);
+
+          const roof = new THREE.Mesh(
+            new THREE.BoxGeometry(length + 0.5, 0.25, width + 0.5),
+            new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0.1 })
+          );
+          roof.position.set(0, plinthH + height + 0.125, 0);
+          roof.castShadow = true;
+          shelterGroup.add(roof);
+
+          const chimney = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.45, 0.55, 3.2, 16),
+            new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.95 })
+          );
+          chimney.position.set(0, plinthH + height + 1.6, -width * 0.35);
+          chimney.castShadow = true;
+          shelterGroup.add(chimney);
+
+          const chimneyCap = new THREE.Mesh(new THREE.ConeGeometry(0.7, 0.35, 16), darkSteelMat);
+          chimneyCap.position.set(0, plinthH + height + 3.35, -width * 0.35);
+          shelterGroup.add(chimneyCap);
+
+          [-length * 0.35, length * 0.35].forEach(px => {
+            const pipe = new THREE.Mesh(
+              new THREE.CylinderGeometry(0.22, 0.22, 1.1, 16),
+              new THREE.MeshStandardMaterial({ color: 0xd97706, metalness: 0.8 })
+            );
+            pipe.position.set(px, 0.55, width / 2 + 1.2);
+            pipe.castShadow = true;
+            shelterGroup.add(pipe);
+
+            const cowl = new THREE.Mesh(new THREE.ConeGeometry(0.35, 0.2, 16), steelMat);
+            cowl.position.set(px, 1.2, width / 2 + 1.2);
+            shelterGroup.add(cowl);
+          });
+
+          const door = new THREE.Mesh(new THREE.BoxGeometry(1.1, 2.0, 0.08), trimMat);
+          door.position.set(length * 0.32, plinthH + 1.0, width / 2 + 0.05);
+          shelterGroup.add(door);
+
+        } else if (variant === 'gamma') {
+          // Option C: Kinetic PV Canopy Shield
+          const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+          walls.position.set(0, plinthH + height / 2, 0);
+          walls.castShadow = true;
+          shelterGroup.add(walls);
+
+          const innerCeiling = new THREE.Mesh(
+            new THREE.BoxGeometry(length + 0.2, 0.20, width + 0.2),
+            new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 })
+          );
+          innerCeiling.position.set(0, plinthH + height + 0.1, 0);
+          shelterGroup.add(innerCeiling);
+
+          const canopyGap = 0.7;
+          const canopyW = width + 1.6;
+          const canopyL = length + 1.4;
+
+          for (let tx = -length / 2; tx <= length / 2; tx += length / 2) {
+            [-width / 2, width / 2].forEach(tz => {
+              const truss = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, canopyGap, 6), steelMat);
+              truss.position.set(tx, plinthH + height + 0.2 + canopyGap / 2, tz);
+              shelterGroup.add(truss);
+            });
+          }
+
+          const canopyRoof = createDetailedSolarModule(canopyL, canopyW, solarMat, aluMat);
+          canopyRoof.position.set(0, plinthH + height + 0.2 + canopyGap, 0);
+          canopyRoof.rotation.x = -0.06;
+          shelterGroup.add(canopyRoof);
+
+          for (let jx = -length * 0.3; jx <= length * 0.1; jx += length * 0.2) {
+            const jali = new THREE.Mesh(
+              new THREE.BoxGeometry(length * 0.16, height * 0.75, 0.05),
+              new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.85 })
+            );
+            jali.position.set(jx, plinthH + height * 0.45, width / 2 + 0.5);
+            shelterGroup.add(jali);
+          }
+
+          const vDoor = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.0, 0.08), trimMat);
+          vDoor.position.set(length * 0.35, plinthH + 1.0, width / 2 + 0.05);
+          shelterGroup.add(vDoor);
+        }
       }
 
       const azimuthAngle = THREE.MathUtils.degToRad(180 - orientation);
@@ -1514,7 +2359,7 @@
 
     // --- THERMODYNAMICS & LOGISTICS CALCULATION ---
     function updateThermodynamics() {
-      const { length, width, height, orientation, windowArea, occupants, theatre } = state;
+      const { length, width, height, orientation, windowArea, occupants, theatre, variant } = state;
       const wallArea = 2 * (length + width) * height;
       const metabolicWatts = occupants * 80;
 
@@ -1547,6 +2392,14 @@
       document.getElementById('log-door').textContent = logSpec.foundation;
       document.getElementById('log-door-desc').textContent = logSpec.fDesc;
       document.getElementById('top-base').textContent = logSpec.transportVal;
+
+      // Update active variant indicators
+      const vSpec = SHELTER_VARIANTS[theatre][variant];
+      if (vSpec) {
+        document.getElementById('hud-feature-desc').textContent = vSpec.hudDesc;
+        document.getElementById('top-solar').textContent = vSpec.name.toUpperCase();
+        document.getElementById('sidebar-variant-badge').textContent = vSpec.badge;
+      }
     }
 
     function renderMaterialTable(theatreKey) {
@@ -1587,6 +2440,123 @@
           controls.target.set(tx, ty, tz);
         });
         container.appendChild(btn);
+      });
+    }
+
+    // =====================================================================
+    // RENDER SHELTER DESIGN VARIANT SELECTORS (HUD + SIDEBAR + MODAL)
+    // =====================================================================
+    function selectVariant(vKey) {
+      state.variant = vKey;
+      renderVariantSelectors();
+      buildRealisticCAD();
+      if (modal.classList.contains('active')) {
+        renderVariantCardsModal();
+      }
+    }
+
+    function renderVariantSelectors() {
+      const currentVariants = SHELTER_VARIANTS[state.theatre];
+
+      // 1. HUD Header Quick Buttons
+      const hudContainer = document.getElementById('variant-button-container');
+      hudContainer.innerHTML = '';
+      ['alpha', 'beta', 'gamma'].forEach(vKey => {
+        const v = currentVariants[vKey];
+        const btn = document.createElement('button');
+        btn.className = `variant-btn ${state.variant === vKey ? 'active' : ''}`;
+        btn.innerHTML = `<strong>${v.badge}:</strong> ${v.name}`;
+        btn.addEventListener('click', () => selectVariant(vKey));
+        hudContainer.appendChild(btn);
+      });
+
+      // 2. Sidebar Section 1B Cards
+      const sideContainer = document.getElementById('variant-cards-sidebar');
+      sideContainer.innerHTML = '';
+      ['alpha', 'beta', 'gamma'].forEach(vKey => {
+        const v = currentVariants[vKey];
+        const card = document.createElement('div');
+        card.className = `variant-card-side ${state.variant === vKey ? 'active' : ''}`;
+        card.innerHTML = `
+          <div class="v-side-title">
+            <span>${v.badge}: ${v.name}</span>
+            <span class="v-side-badge">Cd ${v.cd} &bull; ${v.windRating.split(' ')[0]} km/h</span>
+          </div>
+          <div class="v-side-why">${v.whyChoose.split('.')[0]}.</div>
+        `;
+        card.addEventListener('click', () => selectVariant(vKey));
+        sideContainer.appendChild(card);
+      });
+
+      document.getElementById('sidebar-variant-badge').textContent = currentVariants[state.variant].badge;
+    }
+
+    function renderVariantCardsModal() {
+      const currentVariants = SHELTER_VARIANTS[state.theatre];
+      const grid = document.getElementById('variant-cards-modal');
+      grid.innerHTML = '';
+
+      ['alpha', 'beta', 'gamma'].forEach(vKey => {
+        const v = currentVariants[vKey];
+        const isSel = state.variant === vKey;
+        const card = document.createElement('div');
+        card.className = `variant-card-modal ${isSel ? 'selected' : ''}`;
+        card.innerHTML = `
+          <div class="v-badge-row">
+            <span class="v-opt-badge">${v.badge} ${isSel ? '★ ACTIVE IN 3D' : ''}</span>
+            <span class="v-code">${v.code}</span>
+          </div>
+          <div class="v-name">${v.name}</div>
+          <div class="v-geom">${v.geomDesc}</div>
+
+          <div class="v-why-box">
+            <div class="v-why-title">WHY CHOOSE THIS DESIGN:</div>
+            <div>${v.whyChoose}</div>
+          </div>
+
+          <div class="v-deploy-box">
+            <span style="color: #64748b;">BEST DEPLOYED AT:</span><br />
+            <strong>${v.bestDeployed}</strong>
+          </div>
+
+          <div class="v-specs-grid">
+            <div class="v-spec-item">
+              <span class="v-spec-lbl">Gross Mass</span>
+              <span class="v-spec-val">${v.mass8Man}</span>
+            </div>
+            <div class="v-spec-item">
+              <span class="v-spec-lbl">Transport Sorties</span>
+              <span class="v-spec-val">${v.sorties8Man}</span>
+            </div>
+            <div class="v-spec-item">
+              <span class="v-spec-lbl">Field Erection</span>
+              <span class="v-spec-val">${v.erectionTime}</span>
+            </div>
+            <div class="v-spec-item">
+              <span class="v-spec-lbl">Wind Drag / Rating</span>
+              <span class="v-spec-val">Cd ${v.cd} &bull; ${v.windRating.split(' ')[0]} km/h</span>
+            </div>
+            <div class="v-spec-item">
+              <span class="v-spec-lbl">Thermal R-Value</span>
+              <span class="v-spec-val">${v.rValue.split(' ')[0]}</span>
+            </div>
+            <div class="v-spec-item">
+              <span class="v-spec-lbl">Est. Capital Cost</span>
+              <span class="v-spec-val" style="color: #facc15;">${v.estCost}</span>
+            </div>
+          </div>
+
+          <button class="btn-load-variant" data-vkey="${vKey}">
+            ${isSel ? '✓ CURRENTLY LOADED IN 3D' : '🚀 LOAD & INSPECT DESIGN IN 3D'}
+          </button>
+        `;
+
+        card.querySelector('.btn-load-variant').addEventListener('click', () => {
+          selectVariant(vKey);
+          modal.classList.remove('active');
+        });
+
+        grid.appendChild(card);
       });
     }
 
@@ -1659,6 +2629,7 @@
 
     function selectTheatre(key, cardEl) {
       state.theatre = key;
+      state.variant = 'alpha'; // Reset to primary option
       const spec = THEATRES[key];
 
       document.querySelectorAll('.theatre-card').forEach(c => c.classList.remove('active'));
@@ -1681,6 +2652,7 @@
 
       renderCameraPresets(key);
       renderMaterialTable(key);
+      renderVariantSelectors();
       buildRealisticCAD();
     }
 
@@ -1696,6 +2668,7 @@
 
     renderMaterialTable('siachen');
     renderCameraPresets('siachen');
+    renderVariantSelectors();
     buildRealisticCAD();
 
     function animate() {
@@ -1711,6 +2684,7 @@
     const modal = document.getElementById('compare-modal');
     document.getElementById('btn-open-compare').addEventListener('click', () => {
       modal.classList.add('active');
+      renderVariantCardsModal();
       evaluateLiveShelterComparison();
     });
     document.getElementById('btn-close-compare').addEventListener('click', () => {
@@ -1729,10 +2703,17 @@
         const p = LOC_PRESETS[val];
         document.getElementById('inp-lat').value = p.lat;
         document.getElementById('inp-lon').value = p.lon;
+        if (state.theatre !== p.theatre) {
+          const cardEl = document.getElementById(`card-${p.theatre}`);
+          if (cardEl) selectTheatre(p.theatre, cardEl);
+        }
       }
     });
 
-    document.getElementById('btn-eval-weather').addEventListener('click', evaluateLiveShelterComparison);
+    document.getElementById('btn-eval-weather').addEventListener('click', () => {
+      renderVariantCardsModal();
+      evaluateLiveShelterComparison();
+    });
 
     async function evaluateLiveShelterComparison() {
       const lat = parseFloat(document.getElementById('inp-lat').value);
@@ -1767,82 +2748,87 @@
     }
 
     function renderComparisonMatrix(lat, lon) {
+      const headTr = document.getElementById('comp-table-head-tr');
       const tbody = document.getElementById('comp-table-body');
       tbody.innerHTML = '';
 
-      // Determine appropriate terrain profile
+      // Determine active terrain variants
       const isSiachen = lat >= 35.0;
       const isLadakh = lat >= 31.0 && lat < 35.0;
-      const isThar = lat < 31.0;
+      const theatreKey = isSiachen ? 'siachen' : (isLadakh ? 'ladakh' : 'thar');
+      const v = SHELTER_VARIANTS[theatreKey];
+
+      // 5 Column Headers
+      headTr.innerHTML = `
+        <th style="width: 18%;">ENGINEERING PARAMETER</th>
+        <th style="width: 22%; border-left: 2px solid #38bdf8; background: rgba(56, 189, 248, 0.05);">
+          OPTION A: ${v.alpha.name.toUpperCase()}
+        </th>
+        <th style="width: 22%; border-left: 2px solid #84cc16; background: rgba(132, 204, 22, 0.05);">
+          OPTION B: ${v.beta.name.toUpperCase()}
+        </th>
+        <th style="width: 22%; border-left: 2px solid #facc15; background: rgba(250, 204, 21, 0.05);">
+          OPTION C: ${v.gamma.name.toUpperCase()}
+        </th>
+        <th style="width: 16%; border-left: 2px solid #ef4444;">LEGACY BASELINE (TENT/TIN)</th>
+      `;
 
       const compData = [
         {
-          param: '1. Thermal Envelope & Insulation',
-          baseline: 'Single-layer CGI corrugated tin sheets / Canvas GP Tent (U = 5.8 W/m²K). Severe thermal bridge, ceiling condensation.',
-          opt: isSiachen
-            ? 'Vacuum Insulation Panels (VIP) + Silica Aerogel Core (U = 0.078 W/m²K, R ≥ 12.8 m²K/W). 68% lighter than conventional PUF foam.'
-            : (isLadakh
-              ? 'Dense Basalt Rock Thermal Mass (300mm) + Stabilized Compressed Earth Block (SCEB) + Aerogel wool wrap (U = 0.38 W/m²K).'
-              : 'Autoclaved Aerated Concrete (AAC, 200mm) + Titanium Dioxide Cool Roof coating (SRI ≥ 105, U = 0.40 W/m²K).')
+          param: '1. Architectural Profile & Geometry',
+          a: `<strong>${v.alpha.geomDesc}</strong>`,
+          b: `<strong>${v.beta.geomDesc}</strong>`,
+          c: `<strong>${v.gamma.geomDesc}</strong>`,
+          legacy: '<span class="tag-baseline">CGI Tin Shed / GP Canvas Tent (Flaps flap and leak heat)</span>'
         },
         {
-          param: '2. Solar & Passive Energy Harvesting',
-          baseline: 'Zero passive harvesting. 100% reliant on burning kerosene in army bukhari stoves or electric blowers.',
-          opt: isSiachen
-            ? 'Dual-Slope 55° Monocrystalline Solar PV Array (South direct + North 85% snow albedo bounce) + Bio-PCM thermal battery (14.4 kWh night heat).'
-            : (isLadakh
-              ? 'Direct-Gain South Trombe Glazing with convective thermo-siphon air loop + 45° rooftop unistrut PV rack.'
-              : 'Dual Badgir Wind-Towers (natural stack ventilation without power) + Deep 1.2m Chhajja solar overhang eaves.')
+          param: '2. Why Choose This Design',
+          a: `<span style="color: #38bdf8;">${v.alpha.whyChoose}</span>`,
+          b: `<span style="color: #84cc16;">${v.beta.whyChoose}</span>`,
+          c: `<span style="color: #facc15;">${v.gamma.whyChoose}</span>`,
+          legacy: '<span class="tag-baseline">High-risk carbon monoxide poisoning from kerosene bukhari stoves; frequent collapses under snow/wind.</span>'
         },
         {
-          param: '3. Daily Heating/Cooling Energy Requirement',
-          baseline: isSiachen ? '82.0 kWh / day (Requires 28.5 Liters of Kerosene/Diesel)' : (isLadakh ? '48.0 kWh / day' : '65.0 kWh cooling / day'),
-          opt: isSiachen ? '12.4 kWh / day (Passive solar & PCM meets 85% of load)' : (isLadakh ? '6.2 kWh / day' : '8.5 kWh / day (Badgir zero-power cooling)')
+          param: '3. Best Deployed At',
+          a: `<strong>${v.alpha.bestDeployed}</strong>`,
+          b: `<strong>${v.beta.bestDeployed}</strong>`,
+          c: `<strong>${v.gamma.bestDeployed}</strong>`,
+          legacy: 'Rear valley bases only (strictly unsuited for high-altitude forward posts).'
         },
         {
-          param: '4. Daily Fuel Saved & Annual Operational Savings',
-          baseline: 'Zero savings. Burn rate: 25 to 35 Liters diesel/day per shelter in winter.',
-          opt: isSiachen
-            ? '<strong style="color: #84cc16;">24.2 Liters Saved / Day</strong><br />Annual Savings: <strong style="color: #38bdf8;">₹ 23.8 Lakhs / year</strong> (accounting for ₹180/L helicopter air-drop logistics cost to forward posts).'
-            : (isLadakh
-              ? '<strong style="color: #84cc16;">14.5 Liters Saved / Day</strong><br />Annual Savings: <strong style="color: #38bdf8;">₹ 5.2 Lakhs / year</strong>.'
-              : '<strong style="color: #84cc16;">18.0 Liters / Day equivalent cooling energy saved</strong>.')
+          param: '4. Aerodynamic Drag & Wind Rating',
+          a: `Cd = ${v.alpha.cd}<br />Rated for <strong>${v.alpha.windRating}</strong>`,
+          b: `Cd = <strong>${v.beta.cd}</strong> (Super-Streamlined)<br />Rated for <strong>${v.beta.windRating}</strong>`,
+          c: `Cd = ${v.gamma.cd}<br />Rated for <strong>${v.gamma.windRating}</strong>`,
+          legacy: 'Cd = 1.15 (Extreme drag, blows off or collapses at 80 km/h gusts).'
         },
         {
-          param: '5. Total Structural Weight & Logistics',
-          baseline: 'Tin sheets + steel pipes + bulky foam: 3,800 kg. High transport bulk volume.',
-          opt: isSiachen
-            ? '<strong>4,400 kg</strong> total structural weight.<br />Logistics: <strong style="color: #84cc16;">3 to 4 IAF Mi-17 Flights</strong> (at 16,000 ft forward post derating of 1,200 kg/sortie). 100% man-portable panels (< 22 kg).'
-            : (isLadakh
-              ? '<strong>18,800 kg</strong> (dense basalt rock on-site).<br />Logistics: <strong style="color: #84cc16;">4 Truckloads</strong> (Ashok Leyland Stallion 4x4 convoys over Zojila pass).'
-              : '<strong>9,800 kg</strong>.<br />Logistics: <strong style="color: #84cc16;">2 Tatra 6x6 Truckloads</strong> over sand tracks.')
+          param: '5. Total Mass & Transport Logistics (8-man)',
+          a: `<strong>${v.alpha.mass8Man}</strong><br />Logistics: <span style="color: #38bdf8;">${v.alpha.sorties8Man}</span>`,
+          b: `<strong>${v.beta.mass8Man}</strong><br />Logistics: <span style="color: #84cc16;">${v.beta.sorties8Man}</span>`,
+          c: `<strong>${v.gamma.mass8Man}</strong><br />Logistics: <span style="color: #facc15;">${v.gamma.sorties8Man}</span>`,
+          legacy: '3,800 kg bulky corrugated tin + heavy loose structural timber (Bulky, high flight cube volume).'
         },
         {
           param: '6. Field Erection Time & Crew',
-          baseline: '18 to 24 Hours. Requires cutting, welding, and field sealing.',
-          opt: isSiachen
-            ? '<strong style="color: #84cc16;">7.0 Hours</strong> by 4 combat engineers using only an 8mm Allen key (Cam-lock quick latches). Zero wet cement, zero field welding.'
-            : (isLadakh ? '72 Hours dry-stack stone masonry by pioneer platoon.' : '36 Hours interlocking dry-joint AAC assembly.')
+          a: `<strong style="color: #38bdf8;">${v.alpha.erectionTime}</strong><br />Cam-lock fasteners, zero cement, zero welding.`,
+          b: `<strong style="color: #84cc16;">${v.beta.erectionTime}</strong><br />Interlocking arch segments + tension turnbuckles.`,
+          c: `<strong style="color: #facc15;">${v.gamma.erectionTime}</strong><br />Prefab cradle drop + pod coupling pins.`,
+          legacy: '24 to 36 Hours (Manual cutting, drilling, and sandbagging).'
         },
         {
-          param: '7. Aerodynamics & Wind Load Rating (IS 875 Part 3)',
-          baseline: 'Flat roof / canvas tent (Drag coefficient Cd = 1.15). Risk of canvas tearing or tin roof blow-off at 80 km/h winds.',
-          opt: 'Gabled aerodynamic profile (Cd = 0.62). Rated for <strong style="color: #84cc16;">55 m/s (198 km/h)</strong> blizzard hurricane winds with steel cross-bracing.'
+          param: '7. Thermal Insulation & Passive Solar',
+          a: `R = ${v.alpha.rValue}<br />Solar: ${v.alpha.solarHarvest}`,
+          b: `R = ${v.beta.rValue}<br />Solar: ${v.beta.solarHarvest}`,
+          c: `R = ${v.gamma.rValue}<br />Solar: ${v.gamma.solarHarvest}`,
+          legacy: 'R = 0.18 m²K/W (Severe conductive thermal bridges, ceiling ice formation).'
         },
         {
-          param: '8. Camouflage Paint & Signature Reduction',
-          baseline: 'Standard commercial enamel paint. Flashes stark thermal signature on enemy night-vision FLIR optics.',
-          opt: '<strong style="color: #84cc16;">NIR-Reflective Polyurethane Camouflage</strong> complying with DEF-STAN 80-208 / MIL-PRF specifications. Eliminates thermal IR footprint.'
-        },
-        {
-          param: '9. Estimated Unit Capital Cost (MES Schedule of Rates)',
-          baseline: '₹ 8.5 to 11.0 Lakhs (low initial cost, but massive recurring diesel fuel expenditure: ₹24 Lakhs/yr!).',
-          opt: '<strong style="color: #38bdf8;">₹ 18.5 to 22.0 Lakhs</strong>.<br /><strong style="color: #84cc16;">Payback Period: Under 11 Months</strong> purely from diesel logistics cost savings!'
-        },
-        {
-          param: '10. Engineering Recommendation',
-          baseline: '<span class="tag-baseline">NOT RECOMMENDED FOR HIGH-ALTITUDE</span> (High carbon monoxide hazard, extreme frostbite risk).',
-          opt: '<span class="tag-opt">APPROVED DRDO PREFABRICATED DESIGN</span> — Meets SIH 26051 Thermal Comfort Standards (18°C–22°C passive internal temperature).'
+          param: '8. Estimated Cost & Fuel Payback',
+          a: `<strong style="color: #38bdf8;">${v.alpha.estCost}</strong><br />Payback: <strong>${v.alpha.payback}</strong>`,
+          b: `<strong style="color: #84cc16;">${v.beta.estCost}</strong><br />Payback: <strong>${v.beta.payback}</strong>`,
+          c: `<strong style="color: #facc15;">${v.gamma.estCost}</strong><br />Payback: <strong>${v.gamma.payback}</strong>`,
+          legacy: '₹ 8.5 to 11.0 Lakhs unit cost, but burns ₹24 Lakhs/yr in diesel air-drops!'
         }
       ];
 
@@ -1850,8 +2836,10 @@
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td style="color: #f1f5f9; font-weight: 700;">${row.param}</td>
-          <td style="color: #94a3b8; border-left: 2px solid #334155;">${row.baseline}</td>
-          <td style="color: #f8fafc; border-left: 2px solid #84cc16; background: rgba(132, 204, 22, 0.03);">${row.opt}</td>
+          <td style="color: #e2e8f0; border-left: 2px solid #38bdf8; background: rgba(56, 189, 248, 0.02);">${row.a}</td>
+          <td style="color: #e2e8f0; border-left: 2px solid #84cc16; background: rgba(132, 204, 22, 0.02);">${row.b}</td>
+          <td style="color: #e2e8f0; border-left: 2px solid #facc15; background: rgba(250, 204, 21, 0.02);">${row.c}</td>
+          <td style="color: #94a3b8; border-left: 2px solid #ef4444;">${row.legacy}</td>
         `;
         tbody.appendChild(tr);
       });
