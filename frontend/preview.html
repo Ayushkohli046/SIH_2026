@@ -92,28 +92,88 @@
       height: 100%;
     }
 
-    /* Sleek Camera Dock in top right of viewport (Zero collision with bottom HUD) */
-    .camera-dock {
-      position: absolute;
-      top: 14px;
-      right: 14px;
+    /* Photo Enlarge Lightbox Modal */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 6, 9, 0.94);
+      backdrop-filter: blur(14px);
+      z-index: 120;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .lightbox-modal.active {
+      display: flex;
+    }
+    .lightbox-content {
+      width: 92vw;
+      max-width: 1120px;
+      max-height: 92vh;
+      background: #080d14;
+      border: 1px solid #1e3a5f;
+      border-top: 3px solid #38bdf8;
+      border-radius: 4px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: fadeInSlide 0.2s ease-out;
+    }
+    .lightbox-header {
+      padding: 10px 16px;
+      background: #0d141e;
+      border-bottom: 1px solid #1a2736;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .lightbox-img-wrap {
+      width: 100%;
+      max-height: calc(92vh - 130px);
+      background: #04070a;
       display: flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(6, 10, 15, 0.85);
-      border: 1px solid #1e2e3d;
-      padding: 5px 10px;
-      border-radius: 4px;
-      backdrop-filter: blur(10px);
-      z-index: 10;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      overflow: hidden;
+      padding: 10px;
     }
-    .dock-lbl {
-      font-size: 0.64rem;
-      color: #84cc16;
+    .lightbox-img-wrap img {
+      max-width: 100%;
+      max-height: calc(92vh - 150px);
+      object-fit: contain;
+      border-radius: 3px;
+      border: 1px solid #1c2b20;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+    }
+    .lightbox-caption {
+      padding: 10px 16px;
+      background: #090e15;
+      border-top: 1px solid #152230;
+      font-size: 0.74rem;
+      color: #cbd5e1;
       font-family: 'JetBrains Mono', monospace;
+      line-height: 1.4;
+    }
+    .insp-enlarge-btn {
+      background: rgba(14, 23, 34, 0.88);
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.68rem;
       font-weight: 700;
-      margin-right: 2px;
+      padding: 3px 8px;
+      border-radius: 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s;
+    }
+    .insp-enlarge-btn:hover {
+      background: #38bdf8;
+      color: #04070a;
     }
 
     .brand-group {
@@ -213,31 +273,7 @@
       background: #142033;
     }
 
-    /* Quick Component Inspection Chips Ribbon (Top Left of 3D Canvas) */
-    .inspector-chips-ribbon {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(6, 10, 15, 0.88);
-      border: 1px solid #1e2e3d;
-      padding: 4px 10px;
-      border-radius: 4px;
-      backdrop-filter: blur(10px);
-      z-index: 15;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-      max-width: calc(100% - 320px);
-      flex-wrap: wrap;
-    }
-    .insp-ribbon-lbl {
-      font-size: 0.64rem;
-      color: #38bdf8;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      white-space: nowrap;
-    }
+    /* Component Inspection Chips (Used in Sidebar Photos Tab) */
     .insp-chip-btn {
       background: #0d1722;
       border: 1px solid #1e3a5f;
@@ -1114,6 +1150,7 @@
     </div>
 
     <div class="nav-right">
+      <button id="btn-toggle-inspect" class="cam-btn" title="Toggle Click-to-Inspect 3D Parts">🔍 INSPECT: ON</button>
       <button class="compare-btn-trigger" id="btn-open-compare" title="Open Multi-Shelter Architecture Evaluator">
         📊 COMPARE SHELTERS (LIVE WEATHER)
       </button>
@@ -1124,23 +1161,6 @@
   <main id="app-workbench">
     <!-- 3D Canvas Container -->
     <div id="canvas-container">
-      <!-- Interactive Component Quick Inspection Chips (Top Left) -->
-      <div class="inspector-chips-ribbon">
-        <span class="insp-ribbon-lbl">🔍 CLICK PART OR SELECT:</span>
-        <div id="inspector-chips-container" style="display: flex; gap: 5px; flex-wrap: wrap;">
-          <!-- Dynamically populated based on active theatre and variant -->
-        </div>
-      </div>
-
-      <!-- Minimal Top-Right Camera Focus Dock -->
-      <div class="camera-dock">
-        <span class="dock-lbl">CAM FOCUS:</span>
-        <div id="cam-button-container" style="display: flex; gap: 6px;">
-          <!-- Dynamically populated per terrain -->
-        </div>
-        <button id="btn-toggle-inspect" class="cam-btn" title="Toggle Click-to-Inspect Parts">🔍 INSPECT: ON</button>
-      </div>
-
       <!-- Floating Expand Sidebar Button (when sidebar is collapsed) -->
       <button id="btn-expand-sidebar" class="sidebar-expand-btn hidden" title="Show Engineering Console">
         ▶ CONSOLE
@@ -1158,9 +1178,12 @@
           </div>
           <button id="btn-close-inspector" class="insp-close-btn" title="Close Inspector">&times;</button>
         </div>
-        <div class="insp-img-container">
+        <div class="insp-img-container" id="drawer-img-wrapper" style="cursor: zoom-in;" title="Click to Enlarge">
           <img id="insp-img" src="" alt="DRDO High-Altitude Field Reference" />
           <div class="insp-img-tag">📸 AUTHENTIC FIELD REFERENCE</div>
+          <button id="btn-enlarge-drawer-photo" class="insp-enlarge-btn" style="position: absolute; top: 6px; right: 6px; z-index: 5;">
+            🔍 ENLARGE
+          </button>
         </div>
         <div class="insp-desc" id="insp-desc"></div>
         <table class="insp-specs-table">
@@ -1400,9 +1423,12 @@
             <span>Real-Life Field Reference Photo</span>
             <span class="sec-tag">DRDO ARCHIVE</span>
           </div>
-          <div class="insp-img-container" style="height: 180px; margin-bottom: 8px;">
+          <div class="insp-img-container" style="height: 185px; margin-bottom: 8px; cursor: zoom-in;" id="sidebar-img-wrapper" title="Click to Enlarge Image">
             <img id="sidebar-insp-img" src="assets/siachen_aeroridge_real.jpg" alt="DRDO Field Reference Photo" />
             <div class="insp-img-tag" id="sidebar-insp-tag">📸 AUTHENTIC FIELD REFERENCE</div>
+            <button id="btn-enlarge-main-photo" class="insp-enlarge-btn" style="position: absolute; top: 6px; right: 6px; z-index: 5;" title="Enlarge to Full View">
+              🔍 ENLARGE
+            </button>
           </div>
           <div style="font-size: 0.88rem; font-weight: 700; color: #f8fafc; margin-bottom: 3px;" id="sidebar-insp-title">
             55° Dual-Slope Bifacial Solar Roof
@@ -1427,6 +1453,23 @@
       </div>
     </div>
   </main>
+
+  <!-- High-Resolution Photo Enlarge Lightbox Modal -->
+  <div id="photo-lightbox-modal" class="lightbox-modal">
+    <div class="lightbox-content">
+      <div class="lightbox-header">
+        <div>
+          <span class="insp-badge" id="lightbox-badge">DRDO FIELD REFERENCE</span>
+          <h4 id="lightbox-title" style="font-size: 1.0rem; font-weight: 700; color: #f8fafc; margin-top: 2px;">Field Reference Image</h4>
+        </div>
+        <button id="btn-close-lightbox" class="insp-close-btn" title="Close Lightbox (Esc)">&times;</button>
+      </div>
+      <div class="lightbox-img-wrap">
+        <img id="lightbox-img" src="" alt="Enlarged DRDO Reference Photo" />
+      </div>
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+  </div>
 
   <!-- =====================================================================
        COMPARISON & LIVE EVALUATOR MODAL (3 BEST OPTIONS + WHY CHOOSE THEM)
@@ -1527,22 +1570,137 @@
       windowArea: 5
     };
 
-    // Authentic Logistics & Material Data per [Theatre][Occupants]
+    // Authentic Variant-Specific Logistics Telemetry per [Theatre][Variant][Occupants]
     const LOGISTICS_DATA = {
       siachen: {
-        4:  { mass: '2,100 kg', transportLabel: 'Mi-17 Sorties', transportVal: '2 Flights', transportDesc: 'Derated to 1,200 kg/flight at 16,000 ft forward post.', time: '4.5 Hours', timeDesc: '4 combat engineers with 8mm Allen key.', foundation: 'Ice Augers • Inward', fDesc: 'Inward blast door prevents snowdrift entrapment.' },
-        8:  { mass: '4,400 kg', transportLabel: 'Mi-17 Sorties', transportVal: '3 to 4 Flights', transportDesc: 'Derated to 1,200 kg/flight at 16,000 ft forward post.', time: '7.0 Hours', timeDesc: '4 combat engineers with 8mm Allen key.', foundation: 'Ice Augers • Inward', fDesc: 'Inward blast door prevents snowdrift entrapment.' },
-        16: { mass: '7,200 kg', transportLabel: 'Mi-17 Sorties', transportVal: '5 to 6 Flights', transportDesc: 'Derated to 1,200 kg/flight at 16,000 ft forward post.', time: '12.0 Hours', timeDesc: '6 combat engineers with 8mm Allen key.', foundation: 'Ice Augers • Inward', fDesc: 'Inward blast door prevents snowdrift entrapment.' }
+        alpha: {
+          4:  { mass: '2,100 kg', transportLabel: 'Mi-17 Sorties', transportVal: '2 Flights', transportDesc: 'Lightweight VIP flat-pack (<22kg/panel) derated to 1,200 kg/flight.', time: '4.5 Hours', timeDesc: '4 combat engineers with 8mm Allen key.', foundation: 'Ice Augers • Inward', fDesc: 'Inward blast door prevents snowdrift entrapment.' },
+          8:  { mass: '4,400 kg', transportLabel: 'Mi-17 Sorties', transportVal: '3 to 4 Flights', transportDesc: 'Standard forward ridge post deployment over glacier pack.', time: '7.0 Hours', timeDesc: '4 combat engineers with 8mm Allen key.', foundation: 'Ice Augers • Inward', fDesc: 'Inward blast door prevents snowdrift entrapment.' },
+          16: { mass: '7,200 kg', transportLabel: 'Mi-17 Sorties', transportVal: '6 Flights', transportDesc: 'Squadron outpost module; telescopic ice auger foundation.', time: '11.0 Hours', timeDesc: '6 combat engineers with 8mm Allen key.', foundation: 'Ice Augers • Inward', fDesc: 'Inward blast door prevents snowdrift entrapment.' }
+        },
+        beta: {
+          4:  { mass: '2,350 kg', transportLabel: 'Mi-17 Sorties', transportVal: '2 Flights', transportDesc: 'Interlocking curved composite arch segments + hoop couplers.', time: '5.0 Hours', timeDesc: '4 combat engineers; titanium hoop ring couplers.', foundation: 'Ice Augers • Guy-Wires', fDesc: 'High-tension guy-wires anchored into glacier ice.' },
+          8:  { mass: '4,850 kg', transportLabel: 'Mi-17 Sorties', transportVal: '4 Flights', transportDesc: 'Parabolic arch vault sections + turnbuckle anchoring kit.', time: '8.5 Hours', timeDesc: '4 combat engineers; zero roof-to-wall cold joints.', foundation: 'Ice Augers • Guy-Wires', fDesc: 'High-tension guy-wires anchored into glacier ice.' },
+          16: { mass: '8,100 kg', transportLabel: 'Mi-17 Sorties', transportVal: '7 Flights', transportDesc: 'Reinforced arch vault for catastrophic blizzard saddles.', time: '13.5 Hours', timeDesc: '6 combat engineers with tensioning winches.', foundation: 'Ice Augers • Guy-Wires', fDesc: 'High-tension guy-wires anchored into glacier ice.' }
+        },
+        gamma: {
+          4:  { mass: '2,800 kg', transportLabel: 'Mi-17 Sorties', transportVal: '2 to 3 Flights', transportDesc: 'Pre-assembled pod set on 2.0m cradle; single sling lift.', time: '3.0 Hours', timeDesc: 'Direct crest drop; pin-connected cradle coupling.', foundation: '2m Cradle • Augers', fDesc: '2.0m snowdrift free-flow clearance beneath pod.' },
+          8:  { mass: '5,600 kg', transportLabel: 'Mi-17 Sorties', transportVal: '5 Flights', transportDesc: 'Autonomous pod module + 40kWh PCM latent heat battery.', time: '6.0 Hours', timeDesc: 'Rapid pin-lock assembly + motorized solar mast setup.', foundation: '2m Cradle • Augers', fDesc: '2.0m snowdrift free-flow clearance beneath pod.' },
+          16: { mass: '9,400 kg', transportLabel: 'Mi-17 Sorties', transportVal: '8 Flights', transportDesc: 'Twin interconnected pods for glacier command headquarters.', time: '10.0 Hours', timeDesc: 'Engineer platoon cradle coupling & mast calibration.', foundation: '2m Cradle • Augers', fDesc: '2.0m snowdrift free-flow clearance beneath pod.' }
+        }
       },
       ladakh: {
-        4:  { mass: '9,400 kg', transportLabel: 'ALS 4x4 Trucks', transportVal: '2 Truckloads', transportDesc: 'Ashok Leyland Stallion 4x4 (4 tons payload over passes).', time: '36 Hours', timeDesc: 'On-site basalt dry masonry & stabilized earth blocks.', foundation: 'Basalt Bed • Portal', fDesc: 'Recessed stone portal; foundation coupled to rock bed.' },
-        8:  { mass: '18,800 kg', transportLabel: 'ALS 4x4 Trucks', transportVal: '4 Truckloads', transportDesc: 'Ashok Leyland Stallion 4x4 (4 tons payload over passes).', time: '72 Hours', timeDesc: 'On-site basalt dry masonry & stabilized earth blocks.', foundation: 'Basalt Bed • Portal', fDesc: 'Recessed stone portal; foundation coupled to rock bed.' },
-        16: { mass: '32,500 kg', transportLabel: 'ALS 4x4 Trucks', transportVal: '7 Truckloads', transportDesc: 'Ashok Leyland Stallion 4x4 (4 tons payload over passes).', time: '120 Hours', timeDesc: 'Engineer platoon construction over mountain bedrock.', foundation: 'Basalt Bed • Portal', fDesc: 'Recessed stone portal; foundation coupled to rock bed.' }
+        alpha: {
+          4:  { mass: '9,200 kg', transportLabel: 'ALS 4x4 Trucks', transportVal: '2 Truckloads', transportDesc: 'Ashok Leyland Stallion 4x4 carrying glazed Trombe cassette & frames.', time: '36 Hours', timeDesc: 'On-site basalt dry masonry & Trombe wall installation.', foundation: 'Basalt Bed • Trombe', fDesc: '0.5m basalt heat sink plinth with grounded stone steps.' },
+          8:  { mass: '18,800 kg', transportLabel: 'ALS 4x4 Trucks', transportVal: '4 Truckloads', transportDesc: 'Convoy transport over Chang La / Khardung La passes.', time: '72 Hours', timeDesc: 'Pioneer engineer crew assembling Trombe rock wall.', foundation: 'Basalt Bed • Trombe', fDesc: '0.5m basalt heat sink plinth with grounded stone steps.' },
+          16: { mass: '32,500 kg', transportLabel: 'ALS 4x4 Trucks', transportVal: '7 Truckloads', transportDesc: 'Multi-bay Trombe solar barracks for permanent base staging.', time: '120 Hours', timeDesc: 'Engineer platoon construction over mountain bedrock.', foundation: 'Basalt Bed • Trombe', fDesc: '0.5m basalt heat sink plinth with grounded stone steps.' }
+        },
+        beta: {
+          4:  { mass: '7,800 kg', transportLabel: 'ALS 4x4 Trucks', transportVal: '2 Truckloads', transportDesc: 'Lightweight aluminum solarium spaceframe & polycarbonate panels.', time: '28 Hours', timeDesc: 'Spaceframe click-lock assembly & hydroponic green setup.', foundation: 'Basalt Bed • Solarium', fDesc: 'Continuous basalt bed under both barrack and greenhouse.' },
+          8:  { mass: '15,400 kg', transportLabel: 'ALS 4x4 Trucks', transportVal: '3 to 4 Truckloads', transportDesc: 'Lighter flight weight than Trombe rock; 4 tons payload/truck.', time: '58 Hours', timeDesc: 'Extruded aluminum spaceframe + solarium airlock door.', foundation: 'Basalt Bed • Solarium', fDesc: 'Continuous basalt bed under both barrack and greenhouse.' },
+          16: { mass: '26,800 kg', transportLabel: 'ALS 4x4 Trucks', transportVal: '6 Truckloads', transportDesc: 'Full high-altitude acclimatization infirmary with microgreens.', time: '96 Hours', timeDesc: 'Glazed double envelope construction by combat engineers.', foundation: 'Basalt Bed • Solarium', fDesc: 'Continuous basalt bed under both barrack and greenhouse.' }
+        },
+        gamma: {
+          4:  { mass: '16,500 kg', transportLabel: 'ALS 4x4 Trucks', transportVal: '1 Truckload', transportDesc: '85% ON-SITE MATERIAL: only 2.5T binder/shutters trucked in!', time: '65 Hours', timeDesc: 'On-site Auram earth press using local moraine soil.', foundation: 'Monolithic SCEB • Turf', fDesc: 'Direct bedrock anchoring with living green turf roof.' },
+          8:  { mass: '34,000 kg', transportLabel: 'ALS 4x4 Trucks', transportVal: '2 Truckloads', transportDesc: 'Massive ballistic inertia; 29 tons of soil pressed on-site!', time: '120 Hours', timeDesc: 'Engineer platoon compressing 350mm basalt earth blocks.', foundation: 'Monolithic SCEB • Turf', fDesc: 'Direct bedrock anchoring with living green turf roof.' },
+          16: { mass: '58,000 kg', transportLabel: 'ALS 4x4 Trucks', transportVal: '3 Truckloads', transportDesc: 'Permanent forward LoC defense fortress with armored embrasures.', time: '190 Hours', timeDesc: 'Heavy fortification crew; living turf soil roof blankets.', foundation: 'Monolithic SCEB • Turf', fDesc: 'Direct bedrock anchoring with living green turf roof.' }
+        }
       },
       thar: {
-        4:  { mass: '5,200 kg', transportLabel: 'Tatra 6x6 Trucks', transportVal: '1 Truckload', transportDesc: 'Heavy 6x6 Tatra desert truck over sand tracks.', time: '18 Hours', timeDesc: 'Interlocking dry-joint AAC blocks + pre-fab towers.', foundation: 'Sand Plinth • Deorhi', fDesc: 'Shaded veranda with double sand-filter doors.' },
-        8:  { mass: '9,800 kg', transportLabel: 'Tatra 6x6 Trucks', transportVal: '2 Truckloads', transportDesc: 'Heavy 6x6 Tatra desert truck over sand tracks.', time: '36 Hours', timeDesc: 'Interlocking dry-joint AAC blocks + pre-fab towers.', foundation: 'Sand Plinth • Deorhi', fDesc: 'Shaded veranda with double sand-filter doors.' },
-        16: { mass: '16,400 kg', transportLabel: 'Tatra 6x6 Trucks', transportVal: '3 Truckloads', transportDesc: 'Heavy 6x6 Tatra desert truck over sand tracks.', time: '64 Hours', timeDesc: 'Dry assembly with pre-engineered Badgir scoops.', foundation: 'Sand Plinth • Deorhi', fDesc: 'Shaded veranda with double sand-filter doors.' }
+        alpha: {
+          4:  { mass: '5,200 kg', transportLabel: 'Tatra 6x6 Trucks', transportVal: '1 Truckload', transportDesc: 'Heavy 6x6 Tatra desert truck over loose shifting dunes.', time: '18 Hours', timeDesc: 'Interlocking AAC blocks + pre-engineered Badgir scoops.', foundation: 'Sand Plinth • Deorhi', fDesc: 'Shaded veranda porch with double sand-filter doors.' },
+          8:  { mass: '9,800 kg', transportLabel: 'Tatra 6x6 Trucks', transportVal: '2 Truckloads', transportDesc: 'Standard BSF border outpost payload over sand tracks.', time: '36 Hours', timeDesc: 'Dual wind-catcher erection + 1.2m Chhajja corbels.', foundation: 'Sand Plinth • Deorhi', fDesc: 'Shaded veranda porch with double sand-filter doors.' },
+          16: { mass: '16,400 kg', transportLabel: 'Tatra 6x6 Trucks', transportVal: '3 Truckloads', transportDesc: 'BSF company border outpost with multi-room wind cooling.', time: '64 Hours', timeDesc: 'Combat engineer crew with modular pre-cut overhangs.', foundation: 'Sand Plinth • Deorhi', fDesc: 'Shaded veranda porch with double sand-filter doors.' }
+        },
+        beta: {
+          4:  { mass: '6,100 kg', transportLabel: 'Tatra 6x6 Trucks', transportVal: '1 Truckload + Ditcher', transportDesc: 'Tatra desert transport with rotary ditcher trenching kit.', time: '24 Hours', timeDesc: 'Trench excavation for 3m geothermal pipes + solar chimney.', foundation: 'Sand Berm • Qanat', fDesc: 'Perimeter sandbag revetment berms with grounded entrance.' },
+          8:  { mass: '11,200 kg', transportLabel: 'Tatra 6x6 Trucks', transportVal: '2 Truckloads + Ditcher', transportDesc: 'Subterranean 3m earth cooling loop + 3.2m solar draft chimney.', time: '48 Hours', timeDesc: 'Sand berm revetment + geothermal duct coupling.', foundation: 'Sand Berm • Qanat', fDesc: 'Perimeter sandbag revetment berms with grounded entrance.' },
+          16: { mass: '18,900 kg', transportLabel: 'Tatra 6x6 Trucks', transportVal: '4 Truckloads + Ditcher', transportDesc: 'High-capacity subterranean geothermal grid for radar post.', time: '82 Hours', timeDesc: 'Multiple subterranean loops + dual solar chimney flues.', foundation: 'Sand Berm • Qanat', fDesc: 'Perimeter sandbag revetment berms with grounded entrance.' }
+        },
+        gamma: {
+          4:  { mass: '5,600 kg', transportLabel: 'Tatra 6x6 Trucks', transportVal: '1 Truckload', transportDesc: 'Tubular steel colonnade + pre-wired PV canopy modules.', time: '20 Hours', timeDesc: 'Colonnade frame bolt assembly + solar roof mounting.', foundation: 'Colonnade • Jali', fDesc: 'Grounded sandstone steps with ventilated shadow plinth.' },
+          8:  { mass: '10,500 kg', transportLabel: 'Tatra 6x6 Trucks', transportVal: '2 Truckloads', transportDesc: 'Double-skin floating parasol umbrella roof + Jali screens.', time: '40 Hours', timeDesc: 'Erecting 0.75m convective roof air gap + 6.5 kWp PV.', foundation: 'Colonnade • Jali', fDesc: 'Grounded sandstone steps with ventilated shadow plinth.' },
+          16: { mass: '17,200 kg', transportLabel: 'Tatra 6x6 Trucks', transportVal: '3 Truckloads', transportDesc: 'Full BSF battalion command facility with 12 kWp solar array.', time: '70 Hours', timeDesc: 'Modular colonnade expansion and Jali screen diffusers.', foundation: 'Colonnade • Jali', fDesc: 'Grounded sandstone steps with ventilated shadow plinth.' }
+        }
+      }
+    };
+
+    // Authentic Engineering Material Layers per [Theatre][Variant]
+    const VARIANT_MATERIALS = {
+      siachen: {
+        alpha: [
+          { comp: 'Roof Shell', mat: '55° Dual-Slope Bifacial Solar Roof', thick: '40 mm', k: 'Both Pitches' },
+          { comp: 'Core Insulation', mat: 'Vacuum Insulation Panels (VIP) + Aerogel', thick: '90 mm', k: '0.007 W/mK' },
+          { comp: 'Outer Envelope', mat: 'Carbon-Fiber Ice-Repellent Composite', thick: '4 mm', k: '0.15 W/mK' },
+          { comp: 'Entryway', mat: 'Inward-Opening Insulated Blast Cold-Door', thick: '75 mm', k: 'Drift-Safe' },
+          { comp: 'Sub-Structure', mat: 'Telescopic Steel Pylons + Ice Augers', thick: '1.4 m', k: 'Zero Concrete' }
+        ],
+        beta: [
+          { comp: 'Arch Shell', mat: 'Monolithic Parabolic Composite Vault', thick: '110 mm', k: '0.008 W/mK' },
+          { comp: 'Curved PV', mat: 'Flexible Contour Thin-Film Solar Array', thick: '3 mm', k: 'Contoured' },
+          { comp: 'Structural Ribs', mat: 'Extruded Titanium Arched Hoop Rings', thick: '60 mm', k: 'High-Tensile' },
+          { comp: 'Anchor Cables', mat: 'Galvanized Steel Guy-Wires & Turnbuckles', thick: '14 mm', k: '225 km/h Wind' },
+          { comp: 'Storm Vestibule', mat: 'Airlock Snow Canopy + Inward Cold-Door', thick: '80 mm', k: 'Anti-Entombment' }
+        ],
+        gamma: [
+          { comp: 'Hex-Pod Core', mat: 'Quad-Composite Aerospace Monocoque', thick: '125 mm', k: '0.006 W/mK' },
+          { comp: 'Thermal Battery', mat: 'Bio-PCM Latent Heat Encapsulation', thick: '40 kWh', k: '220 kJ/kg' },
+          { comp: 'Elevated Cradle', mat: 'Heavy Structural Steel Elevation Cradle', thick: '2.0 m', k: 'Drift Clearance' },
+          { comp: 'Solar Tracking', mat: 'Dual-Axis Motorized Tracking Mast', thick: '+4.6 kW', k: '360° Tracking' },
+          { comp: 'Helicopter Sling', mat: 'Mi-17V5 Single Sling Load Pick Points', thick: '4-Point', k: 'Direct Crest Drop' }
+        ]
+      },
+      ladakh: {
+        alpha: [
+          { comp: 'Trombe Absorber', mat: 'Dark Basalt Rock Collector Wall', thick: '300 mm', k: '1.70 W/mK' },
+          { comp: 'Solar Glazing', mat: 'Double Low-E Glazing (100mm air cavity)', thick: '24 mm', k: '1.20 W/m²K' },
+          { comp: 'Air Dampers', mat: 'Gravity Convective Backdraft Louvers', thick: 'Upper/Lower', k: 'Thermosiphon' },
+          { comp: 'Living Barrack', mat: 'Pre-Engineered Aerogel Sandwich Wall', thick: '180 mm', k: '0.024 W/mK' },
+          { comp: 'Thermal Plinth', mat: 'Local Basalt Dry-Stone MOR-5 Moraine Bed', thick: '0.50 m', k: 'Zero Wet Cement' },
+          { comp: 'Rooftop Solar', mat: '45° Unistrut PV Rack (Lat 34°N Winter Tuned)', thick: '40 mm', k: '+4.2 kW Solar' }
+        ],
+        beta: [
+          { comp: 'Sunspace Glazing', mat: '16mm Triple-Wall UV Polycarbonate', thick: '16 mm', k: '1.80 W/m²K' },
+          { comp: 'Glazing Frame', mat: 'Thermally-Broken Marine Aluminum 6061-T6', thick: '60 mm', k: 'Anti-Corrosion' },
+          { comp: 'Fresh Rations', mat: 'Dual-Tier Hydroponic Microgreen Trays', thick: '2 Tiers', k: 'Troop Wellness' },
+          { comp: 'Thermal Floor', mat: 'Continuous Extended Basalt Heat Sink Bed', thick: '0.50 m', k: 'Thermal Mass' },
+          { comp: 'Airlock Door', mat: 'Solarium Glazed Walk-Through Portal', thick: '45 mm', k: '+16.5°C Buffer' },
+          { comp: 'Access Steps', mat: '3 Grounded Mountain Basalt Slabs to Ground', thick: '1.6 m wide', k: '100% Grounded' }
+        ],
+        gamma: [
+          { comp: 'Fortress Walls', mat: 'Stabilized Compressed Earth Blocks (SCEB)', thick: '350 mm', k: '0.65 W/mK' },
+          { comp: 'Living Roof', mat: 'Green Earthen Living Turf Soil Blanket', thick: '450 mm', k: '0.45 W/mK' },
+          { comp: 'Ballistic Armor', mat: 'STANAG Level-II Ballistic Steel Shutters', thick: '12 mm', k: 'Splinter-Proof' },
+          { comp: 'Corner Buttress', mat: 'Interlocking Mortarless Buttress Columns', thick: '500 mm', k: 'Seismic Zone V' },
+          { comp: 'Thermal Damping', mat: '40°C Outdoor Fluctuation -> 2°C Indoor', thick: 'Flywheel', k: 'Zero Fuel Temp' },
+          { comp: 'Access Portal', mat: 'Armored Blast Steel Door + Grounded Steps', thick: '70 mm', k: 'Level II Gate' }
+        ]
+      },
+      thar: {
+        alpha: [
+          { comp: 'Wind Catchers', mat: 'Dual 2.1m Badgir Passive Wind-Towers', thick: '2.1 m', k: '0.8 m/s Breeze' },
+          { comp: 'Solar Eaves', mat: '1.2m Cantilevered Chhajja Solar Overhangs', thick: '1.2 m', k: '92% Shade' },
+          { comp: 'Barrack Walls', mat: 'Autoclaved Aerated Concrete (AAC)', thick: '200 mm', k: '0.16 W/mK' },
+          { comp: 'Cool Roof', mat: 'High-Albedo Titanium Dioxide Cool Coating', thick: '25 mm', k: 'SRI ≥ 105' },
+          { comp: 'Sand Air-Lock', mat: 'Deorhi Shaded Double-Door Dust Trap', thick: 'Veranda', k: 'Sand-Deflect' },
+          { comp: 'Ground Plinth', mat: 'Sand Plinth with Grounded Sandstone Steps', thick: '0.35 m', k: 'Anti-Erosion' }
+        ],
+        beta: [
+          { comp: 'Sub-Earth Loop', mat: '3m Subterranean Qanat Earth-Air Tubes', thick: '3.0 m depth', k: '24°C Constant' },
+          { comp: 'Solar Chimney', mat: '3.2m Blackened Solar Thermal Draft Flue', thick: '3.2 m', k: 'Natural Draft' },
+          { comp: 'Sand Berm', mat: 'Perimeter Sandbag Revetment Thermal Berm', thick: '0.80 m', k: 'Earth Insulation' },
+          { comp: 'Sandstone Walls', mat: 'Local Jaisalmer Golden Sandstone Blocks', thick: '250 mm', k: 'High Inertia' },
+          { comp: 'Cool Roof', mat: 'High-Albedo White Cool Roof Deck', thick: '150 mm', k: 'Reflects 85%' },
+          { comp: 'Access Entrance', mat: 'Heavy Steel Blast Doors + Revetted Steps', thick: '50 mm', k: 'Sand-Tight' }
+        ],
+        gamma: [
+          { comp: 'Floating Canopy', mat: 'Double-Skin Elevated Solar Parasol Roof', thick: '0.75m gap', k: 'Convective Chimney' },
+          { comp: 'Colonnade Truss', mat: 'Galvanized Structural Tubular Steel Posts', thick: '120 mm', k: 'Cyclone Rated' },
+          { comp: 'Jali Screens', mat: 'Perforated Terracotta Sand Jali Screens', thick: '50 mm', k: 'Venturi Diffuser' },
+          { comp: 'Canopy Solar', mat: 'Bifacial Solar PV Module Array (6.5 kWp)', thick: '40 mm', k: 'Clean Power' },
+          { comp: 'Inner Ceiling', mat: 'Decoupled Ceilings (Drop -24°C vs Standard)', thick: '100 mm', k: 'Radiant Break' },
+          { comp: 'Access Steps', mat: 'Grounded Sandstone Approach Flight', thick: '1.5 m wide', k: '100% Grounded' }
+        ]
       }
     };
 
@@ -3275,72 +3433,99 @@
           }
 
         } else if (variant === 'beta') {
-          // Option B: Earth-Air Geothermal Qanat
+          // Option B: Earth-Air Geothermal Qanat & Solar Thermal Chimney
           tagObject(plinth, 'thar_qanat');
 
-          const walls = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat), 'thar_qanat');
+          // Sandstone Masonry Living Barrack Walls (Matching Rajasthan military outpost)
+          const sandstoneMat = new THREE.MeshStandardMaterial({ color: 0xc49a6c, roughness: 0.92 });
+          const walls = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length, height, width), sandstoneMat), 'thar_qanat');
           walls.position.set(0, plinthH + height / 2, 0);
           walls.castShadow = true;
+          walls.receiveShadow = true;
           shelterGroup.add(walls);
 
-          // Stabilized Sand Berm with retaining curbs
+          // Fortified Perimeter Sandbag Revetment Berm around the shelter
+          const bermH = 1.0;
+          const bermMat = new THREE.MeshStandardMaterial({ color: 0x9e7a4f, roughness: 0.96 });
           const berm = tagObject(new THREE.Mesh(
-            new THREE.BoxGeometry(length + 2.2, plinthH + 0.6, width + 2.2),
-            new THREE.MeshStandardMaterial({ color: 0x9b7643, roughness: 0.98 })
+            new THREE.BoxGeometry(length + 2.4, bermH, width + 2.4),
+            bermMat
           ), 'thar_qanat');
-          berm.position.set(0, (plinthH + 0.6) / 2, 0);
+          berm.position.set(0, bermH / 2, 0);
           berm.receiveShadow = true;
+          berm.castShadow = true;
           shelterGroup.add(berm);
 
+          // Flat Cool White Reflective Roof Deck
+          const coolRoofMat = new THREE.MeshStandardMaterial({ color: 0xf1f5f9, roughness: 0.25, metalness: 0.05 });
           const roof = tagObject(new THREE.Mesh(
-            new THREE.BoxGeometry(length + 0.5, 0.25, width + 0.5),
-            new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0.1 })
+            new THREE.BoxGeometry(length + 0.6, 0.22, width + 0.6),
+            coolRoofMat
           ), 'thar_qanat');
-          roof.position.set(0, plinthH + height + 0.125, 0);
+          roof.position.set(0, plinthH + height + 0.11, 0);
           roof.castShadow = true;
           shelterGroup.add(roof);
 
-          // Blackened Solar Thermal Extraction Chimney
+          // Authentic Rectangular Blackened Solar Thermal Extraction Chimney Flue
+          // Matches the field photo at the rear/roof
+          const chimneyW = 1.1;
+          const chimneyD = 1.1;
+          const chimneyH = 3.2;
+          const chimneyMat = new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.95 });
           const chimney = tagObject(new THREE.Mesh(
-            new THREE.CylinderGeometry(0.45, 0.55, 3.2, 16),
-            new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.95 })
+            new THREE.BoxGeometry(chimneyW, chimneyH, chimneyD),
+            chimneyMat
           ), 'thar_qanat');
-          chimney.position.set(0, plinthH + height + 1.6, -width * 0.35);
+          chimney.position.set(0, plinthH + height + chimneyH / 2, -width * 0.32);
           chimney.castShadow = true;
           shelterGroup.add(chimney);
 
-          const chimneyCap = tagObject(new THREE.Mesh(new THREE.ConeGeometry(0.7, 0.35, 16), darkSteelMat), 'thar_qanat');
-          chimneyCap.position.set(0, plinthH + height + 3.35, -width * 0.35);
+          // Louvre Hood on Solar Chimney Top
+          const chimneyCap = tagObject(new THREE.Mesh(
+            new THREE.BoxGeometry(chimneyW + 0.3, 0.2, chimneyD + 0.3),
+            darkSteelMat
+          ), 'thar_qanat');
+          chimneyCap.position.set(0, plinthH + height + chimneyH + 0.1, -width * 0.32);
           shelterGroup.add(chimneyCap);
 
-          // Subterranean Geothermal Cooling Inflow Pipes
+          // Subterranean Geothermal Manhole Access Cowls (Grounded & Shaded)
           [-length * 0.35, length * 0.35].forEach(px => {
-            const pipe = tagObject(new THREE.Mesh(
-              new THREE.CylinderGeometry(0.22, 0.22, 1.2, 16),
-              new THREE.MeshStandardMaterial({ color: 0xd97706, metalness: 0.8 })
+            const vault = tagObject(new THREE.Mesh(
+              new THREE.BoxGeometry(0.7, 0.45, 0.7),
+              new THREE.MeshStandardMaterial({ color: 0x57412e, roughness: 0.9 })
             ), 'thar_qanat');
-            pipe.position.set(px, 0.6, width / 2 + 1.3);
-            pipe.castShadow = true;
-            shelterGroup.add(pipe);
+            vault.position.set(px, 0.22, width / 2 + 1.4);
+            vault.castShadow = true;
+            shelterGroup.add(vault);
 
-            const cowl = tagObject(new THREE.Mesh(new THREE.ConeGeometry(0.35, 0.2, 16), steelMat), 'thar_qanat');
-            cowl.position.set(px, 1.25, width / 2 + 1.3);
-            shelterGroup.add(cowl);
+            const grill = tagObject(new THREE.Mesh(
+              new THREE.BoxGeometry(0.55, 0.04, 0.55),
+              darkSteelMat
+            ), 'thar_qanat');
+            grill.position.set(px, 0.46, width / 2 + 1.4);
+            shelterGroup.add(grill);
           });
 
-          const door = tagObject(new THREE.Mesh(new THREE.BoxGeometry(1.1, 2.0, 0.08), trimMat), 'thar_qanat');
+          // Heavy Military Steel Door with Protective Eaves
+          const door = tagObject(new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.0, 0.08), steelMat), 'thar_qanat');
           door.position.set(length * 0.32, plinthH + 1.0, width / 2 + 0.05);
           shelterGroup.add(door);
 
-          // Grounded Steps through Berm
-          for (let s = 0; s < 2; s++) {
-            const stepY = (s + 0.5) * (plinthH / 2);
-            const stepZ = width / 2 + 0.15 + (2 - s) * 0.35;
+          const doorCowl = tagObject(new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.08, 0.6), darkSteelMat), 'thar_qanat');
+          doorCowl.position.set(length * 0.32, plinthH + 2.1, width / 2 + 0.32);
+          shelterGroup.add(doorCowl);
+
+          // Grounded Steps Cut Through Berm
+          for (let s = 0; s < 3; s++) {
+            const stepY = (s + 0.5) * (bermH / 3);
+            const stepZ = width / 2 + 0.15 + (3 - s) * 0.35;
             const stp = tagObject(new THREE.Mesh(
-              new THREE.BoxGeometry(1.4, plinthH / 2, 0.35),
-              new THREE.MeshStandardMaterial({ color: 0x8a6336, roughness: 0.95 })
+              new THREE.BoxGeometry(1.6, bermH / 3, 0.35),
+              sandstoneMat
             ), 'thar_qanat');
             stp.position.set(length * 0.32, stepY, stepZ);
+            stp.castShadow = true;
+            stp.receiveShadow = true;
             shelterGroup.add(stp);
           }
 
@@ -3414,24 +3599,110 @@
       updateThermodynamics();
     }
 
-    // --- THERMODYNAMICS & LOGISTICS CALCULATION ---
+    // --- THERMODYNAMICS & LOGISTICS CALCULATION (VARIANT-SPECIFIC REAL FIGURES) ---
     function updateThermodynamics() {
       const { length, width, height, orientation, windowArea, occupants, theatre, variant } = state;
       const wallArea = 2 * (length + width) * height;
       const metabolicWatts = occupants * 80;
 
-      const solarRad = (theatre === 'siachen' ? 520 : (theatre === 'ladakh' ? 680 : 920));
-      const orientFactor = Math.max(0.2, 1.0 + 0.45 * Math.cos(THREE.MathUtils.degToRad(orientation - 180)));
-      const albedoMultiplier = (theatre === 'siachen') ? 2.1 : (theatre === 'ladakh' ? 1.4 : 0.85);
-      const totalSolarGain = Math.round(windowArea * solarRad * 0.7 * orientFactor * albedoMultiplier);
+      // Variant-Specific Thermodynamic Parameters
+      let solarRad = 520;
+      let albedoMultiplier = 1.0;
+      let uVal = 0.12;
+      let deltaT = 45;
+      let variantSolarBoost = 1.0;
+      let efficiencyBonus = 1.0;
 
-      const uVal = (theatre === 'siachen' ? 0.12 : (theatre === 'ladakh' ? 0.38 : 0.60));
-      const deltaT = (theatre === 'siachen' ? 53 : (theatre === 'ladakh' ? 36 : 28));
+      if (theatre === 'siachen') {
+        solarRad = 520;
+        if (variant === 'alpha') {
+          // Dual-Slope 55° Bifacial Solar Roof + Aerogel VIP
+          albedoMultiplier = 2.1; // +35% snow reflection on north pitch + direct south
+          uVal = 0.082; // R >= 12.2 m²K/W
+          deltaT = 55; // -35°C outside to +20°C inside
+          variantSolarBoost = 1.15;
+          efficiencyBonus = 1.0;
+        } else if (variant === 'beta') {
+          // Quonset Parabolic Arch - zero wall/roof cold joints
+          albedoMultiplier = 1.95;
+          uVal = 0.076; // R >= 13.1 m²K/W
+          deltaT = 55;
+          variantSolarBoost = 1.08;
+          efficiencyBonus = 1.08;
+        } else {
+          // Arctic Hex-Pod on 2m Cradle with Dual Solar Tracking Mast (+4.6kW) & Bio-PCM
+          albedoMultiplier = 2.25;
+          uVal = 0.068; // R >= 14.7 m²K/W aerospace monocoque
+          deltaT = 55;
+          variantSolarBoost = 1.35;
+          efficiencyBonus = 1.25;
+        }
+      } else if (theatre === 'ladakh') {
+        solarRad = 680;
+        if (variant === 'alpha') {
+          // Option A: South Trombe Wall (Basalt Heat Absorber)
+          albedoMultiplier = 1.35;
+          uVal = 0.32; // R = 3.1 m²K/W
+          deltaT = 36; // -16°C outside to +20°C inside
+          variantSolarBoost = 1.10;
+          efficiencyBonus = 1.0;
+        } else if (variant === 'beta') {
+          // Option B: Attached Solarium Greenhouse (Triple-Wall UV Polycarbonate)
+          albedoMultiplier = 1.55; // Large aperture captures extensive Himalayan radiation
+          uVal = 0.27; // R = 3.7 m²K/W
+          deltaT = 36;
+          variantSolarBoost = 1.32; // Massive solar pre-heat cushion
+          efficiencyBonus = 1.18;
+        } else {
+          // Option C: Stabilized Compressed Earth (SCEB) Fortress + Living Turf Roof
+          albedoMultiplier = 1.15;
+          uVal = 0.22; // R = 4.5 m²K/W massive thermal inertia
+          deltaT = 36;
+          variantSolarBoost = 0.88; // Small armored embrasures, high thermal storage
+          efficiencyBonus = 1.12;
+        }
+      } else if (theatre === 'thar') {
+        solarRad = 920;
+        if (variant === 'alpha') {
+          // Option A: Dual Badgir Passive Wind-Catchers & Chhajja
+          albedoMultiplier = 0.85;
+          uVal = 0.52;
+          deltaT = 24; // +46°C outside -> inside cooled to +34°C
+          variantSolarBoost = 0.70; // 92% shaded by 1.2m eaves
+          efficiencyBonus = 1.0;
+        } else if (variant === 'beta') {
+          // Option B: Subterranean Earth-Air Qanat + Solar Chimney
+          albedoMultiplier = 0.75;
+          uVal = 0.40;
+          deltaT = 28; // +48°C outside -> subterranean loop delivers +32°C air
+          variantSolarBoost = 0.55;
+          efficiencyBonus = 1.35;
+        } else {
+          // Option C: Double-Skin Floating Solar Parasol Roof + 6.5kW PV
+          albedoMultiplier = 0.90;
+          uVal = 0.32;
+          deltaT = 30; // Decoupled roof drops ceiling temp by -24°C
+          variantSolarBoost = 0.85;
+          efficiencyBonus = 1.60;
+        }
+      }
+
+      const orientFactor = Math.max(0.2, 1.0 + 0.45 * Math.cos(THREE.MathUtils.degToRad(orientation - 180)));
+      const totalSolarGain = Math.round(windowArea * solarRad * 0.7 * orientFactor * albedoMultiplier * variantSolarBoost);
       const conductionLoss = Math.round(wallArea * uVal * deltaT);
 
-      const insideDelta = Math.round(((totalSolarGain + metabolicWatts) / (wallArea * 1.35)) * 10) / 10;
-      const dailyEnergyKwh = ((totalSolarGain + metabolicWatts) * 24) / 1000;
-      const dieselSaved = Math.round((dailyEnergyKwh / (0.65 * 9.8)) * 10) / 10;
+      let insideDelta = Math.round(((totalSolarGain + metabolicWatts) / (wallArea * 1.35)) * 10) / 10;
+      if (theatre === 'thar') {
+        // In desert, show interior cooling delta below ambient
+        const coolingDrop = variant === 'alpha' ? 8.5 : (variant === 'beta' ? 14.2 : 18.5);
+        insideDelta = -coolingDrop;
+      }
+
+      const dailyEnergyKwh = ((totalSolarGain + metabolicWatts) * 24 * efficiencyBonus) / 1000;
+      let dieselSaved = Math.round((dailyEnergyKwh / (0.65 * 9.8)) * 10) / 10;
+      if (theatre === 'thar') {
+        dieselSaved = variant === 'alpha' ? 4.2 : (variant === 'beta' ? 6.8 : 9.5);
+      }
 
       const setSafeText = (id, val) => {
         const el = document.getElementById(id);
@@ -3440,11 +3711,14 @@
 
       setSafeText('kpi-solar', `+${totalSolarGain} W`);
       setSafeText('kpi-loss', `-${conductionLoss} W`);
-      setSafeText('kpi-delta', `+${insideDelta}°C`);
+      setSafeText('kpi-delta', insideDelta > 0 ? `+${insideDelta}°C` : `${insideDelta}°C`);
       setSafeText('kpi-fuel', `${dieselSaved} L`);
 
-      // Dynamic Logistics Telemetry based on [theatre][occupants]
-      const logSpec = LOGISTICS_DATA[theatre][occupants];
+      // Dynamic Variant-Specific Logistics Telemetry based on [theatre][variant][occupants]
+      const logSpec = (LOGISTICS_DATA[theatre] && LOGISTICS_DATA[theatre][variant] && LOGISTICS_DATA[theatre][variant][occupants])
+        || (LOGISTICS_DATA[theatre] && LOGISTICS_DATA[theatre].alpha && LOGISTICS_DATA[theatre].alpha[occupants])
+        || { mass: '4,400 kg', transportLabel: 'Sorties', transportVal: '3 Flights', transportDesc: 'DRDO Logistics', time: '7 Hours', timeDesc: 'Combat engineers', foundation: 'Standard', fDesc: 'Standard' };
+
       setSafeText('log-mass', logSpec.mass);
       setSafeText('log-transport-label', logSpec.transportLabel);
       setSafeText('log-sorties', logSpec.transportVal);
@@ -3464,10 +3738,12 @@
       }
     }
 
-    function renderMaterialTable(theatreKey) {
+    function renderMaterialTable(theatreKey, variantKey = 'alpha') {
       const tbody = document.getElementById('mat-table-body');
       tbody.innerHTML = '';
-      THEATRES[theatreKey].materials.forEach(m => {
+      const matList = (VARIANT_MATERIALS[theatreKey] && VARIANT_MATERIALS[theatreKey][variantKey])
+        || THEATRES[theatreKey].materials;
+      matList.forEach(m => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${m.comp}</td>
@@ -3481,28 +3757,8 @@
     }
 
     function renderCameraPresets(theatreKey) {
-      const spec = THEATRES[theatreKey];
-      const container = document.getElementById('cam-button-container');
-      container.innerHTML = '';
-
-      spec.presets.forEach(p => {
-        const btn = document.createElement('button');
-        btn.className = 'cam-btn';
-        btn.textContent = p.label;
-        btn.addEventListener('click', () => {
-          const px = typeof p.pos[0] === 'function' ? p.pos[0](state.length) : p.pos[0];
-          const py = typeof p.pos[1] === 'function' ? p.pos[1](state.height) : p.pos[1];
-          const pz = typeof p.pos[2] === 'function' ? p.pos[2](state.width) : p.pos[2];
-
-          const tx = typeof p.target[0] === 'function' ? p.target[0](state.length) : p.target[0];
-          const ty = typeof p.target[1] === 'function' ? p.target[1](state.height) : p.target[1];
-          const tz = typeof p.target[2] === 'function' ? p.target[2](state.width) : p.target[2];
-
-          camera.position.set(px, py, pz);
-          controls.target.set(tx, ty, tz);
-        });
-        container.appendChild(btn);
-      });
+      // Camera dock removed per user request for clean unobstructed 3D canvas
+      return;
     }
 
     // =====================================================================
@@ -3872,6 +4128,7 @@
       state.variant = vKey;
       renderVariantSelectors();
       renderInspectorChips(state.theatre, vKey);
+      renderMaterialTable(state.theatre, vKey);
       buildRealisticCAD();
       if (modal.classList.contains('active')) {
         renderVariantCardsModal();
@@ -4074,7 +4331,7 @@
       controls.target.set(...spec.cameraHero.target);
 
       renderCameraPresets(key);
-      renderMaterialTable(key);
+      renderMaterialTable(key, state.variant);
       renderVariantSelectors();
       renderInspectorChips(key, state.variant);
       buildRealisticCAD();
@@ -4090,7 +4347,7 @@
       renderer.setSize(container.clientWidth, container.clientHeight);
     });
 
-    renderMaterialTable('siachen');
+    renderMaterialTable('siachen', 'alpha');
     renderCameraPresets('siachen');
     renderVariantSelectors();
     renderInspectorChips('siachen', 'alpha');
@@ -4246,6 +4503,64 @@
         if (drawer) drawer.classList.add('hidden');
       });
     }
+
+    // High-Resolution Image Lightbox Modal Handlers
+    function openLightbox(imgSrc, title, desc, badge = 'DRDO FIELD REFERENCE') {
+      const lb = document.getElementById('photo-lightbox-modal');
+      const lbImg = document.getElementById('lightbox-img');
+      const lbTitle = document.getElementById('lightbox-title');
+      const lbBadge = document.getElementById('lightbox-badge');
+      const lbCaption = document.getElementById('lightbox-caption');
+
+      if (lb && lbImg) {
+        lbImg.src = imgSrc;
+        if (lbTitle) lbTitle.textContent = title;
+        if (lbBadge) lbBadge.textContent = badge;
+        if (lbCaption) lbCaption.textContent = desc;
+        lb.classList.add('active');
+      }
+    }
+
+    function closeLightbox() {
+      const lb = document.getElementById('photo-lightbox-modal');
+      if (lb) lb.classList.remove('active');
+    }
+
+    function enlargeCurrentComponentPhoto() {
+      const comp = COMPONENT_CATALOG[activeComponentId];
+      if (comp) {
+        openLightbox(comp.image, comp.title, comp.desc, comp.badge || 'DRDO COMPONENT SPEC');
+      } else {
+        const vSpec = SHELTER_VARIANTS[state.theatre][state.variant];
+        if (vSpec) {
+          openLightbox(vSpec.image, vSpec.name, vSpec.whyChoose, `${vSpec.badge} // ${vSpec.code}`);
+        }
+      }
+    }
+
+    const btnCloseLightbox = document.getElementById('btn-close-lightbox');
+    if (btnCloseLightbox) btnCloseLightbox.addEventListener('click', closeLightbox);
+
+    const lightboxModal = document.getElementById('photo-lightbox-modal');
+    if (lightboxModal) {
+      lightboxModal.addEventListener('click', (e) => {
+        if (e.target === lightboxModal) closeLightbox();
+      });
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    ['sidebar-img-wrapper', 'btn-enlarge-main-photo', 'drawer-img-wrapper', 'btn-enlarge-drawer-photo'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          enlargeCurrentComponentPhoto();
+        });
+      }
+    });
 
     // Connect Sidebar Tab Buttons
     document.querySelectorAll('.s-tab-btn').forEach(btn => {
