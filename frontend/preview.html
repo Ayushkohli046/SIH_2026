@@ -213,6 +213,205 @@
       background: #142033;
     }
 
+    /* Quick Component Inspection Chips Ribbon (Top Left of 3D Canvas) */
+    .inspector-chips-ribbon {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(6, 10, 15, 0.88);
+      border: 1px solid #1e2e3d;
+      padding: 5px 10px;
+      border-radius: 4px;
+      backdrop-filter: blur(10px);
+      z-index: 15;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      max-width: calc(100% - 460px);
+      flex-wrap: wrap;
+    }
+    .insp-ribbon-lbl {
+      font-size: 0.64rem;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .insp-chip-btn {
+      background: #0d1722;
+      border: 1px solid #1e3a5f;
+      color: #94a3b8;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .insp-chip-btn:hover, .insp-chip-btn.active {
+      background: #1e3a5f;
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    /* 3D Hover Tooltip */
+    #cad-hover-label {
+      position: absolute;
+      display: none;
+      background: rgba(6, 10, 15, 0.94);
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 3px;
+      pointer-events: none;
+      z-index: 25;
+      transform: translate(-50%, -130%);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.8);
+      white-space: nowrap;
+    }
+
+    /* DRDO Interactive Component Inspector Drawer (Real-Life Photos & Technical Specs) */
+    .cad-inspector-drawer {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      width: 380px;
+      max-width: 90vw;
+      background: rgba(6, 10, 15, 0.96);
+      border: 1px solid #1e3a5f;
+      border-top: 3px solid #38bdf8;
+      border-radius: 4px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.95);
+      z-index: 30;
+      backdrop-filter: blur(14px);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      animation: fadeInSlide 0.2s ease-out;
+    }
+    .cad-inspector-drawer.hidden {
+      display: none;
+    }
+    .insp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      border-bottom: 1px solid #1c2e3d;
+      padding-bottom: 6px;
+    }
+    .insp-badge {
+      display: inline-block;
+      background: #0f2338;
+      border: 1px solid #1e3a5f;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 2px;
+      margin-bottom: 3px;
+    }
+    .insp-title {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #f8fafc;
+      letter-spacing: 0.04em;
+    }
+    .insp-close-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.2rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .insp-close-btn:hover {
+      color: #ef4444;
+    }
+    .insp-img-container {
+      position: relative;
+      width: 100%;
+      height: 160px;
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid #1c2b20;
+      background: #0a0f16;
+    }
+    .insp-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .insp-img-tag {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      background: rgba(0, 0, 0, 0.85);
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      font-size: 0.60rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+    .insp-desc {
+      font-size: 0.72rem;
+      color: #cbd5e1;
+      line-height: 1.38;
+    }
+    .insp-specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .insp-specs-table td {
+      padding: 3px 5px;
+      border-bottom: 1px solid #16222d;
+    }
+    .insp-spec-key {
+      color: #64748b;
+      font-weight: 600;
+      width: 42%;
+    }
+    .insp-spec-val {
+      color: #84cc16;
+      font-weight: 700;
+      text-align: right;
+    }
+    .insp-zoom-btn {
+      background: #1e3a5f;
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 2px;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .insp-zoom-btn:hover {
+      background: #38bdf8;
+      color: #04070a;
+    }
+
     /* Compass & Solar HUD */
     .hud-compass {
       position: absolute;
@@ -229,6 +428,7 @@
       backdrop-filter: blur(8px);
       z-index: 10;
       line-height: 1.4;
+      max-width: 460px;
     }
     .hud-compass strong {
       color: #84cc16;
@@ -819,12 +1019,45 @@
   <main id="app-workbench">
     <!-- 3D Canvas Container -->
     <div id="canvas-container">
-      <!-- Minimal Bottom-Right Camera Dock -->
+      <!-- Interactive Component Quick Inspection Chips (Top Left) -->
+      <div class="inspector-chips-ribbon">
+        <span class="insp-ribbon-lbl">🔍 CLICK PART OR SELECT:</span>
+        <div id="inspector-chips-container" style="display: flex; gap: 5px; flex-wrap: wrap;">
+          <!-- Dynamically populated based on active theatre and variant -->
+        </div>
+      </div>
+
+      <!-- Minimal Top-Right Camera Focus Dock -->
       <div class="camera-dock">
         <span class="dock-lbl">CAM FOCUS:</span>
         <div id="cam-button-container" style="display: flex; gap: 6px;">
           <!-- Dynamically populated per terrain -->
         </div>
+      </div>
+
+      <!-- 3D Raycasting Hover Label -->
+      <div id="cad-hover-label">COMPONENT</div>
+
+      <!-- Interactive Component Inspector Drawer (Real-Life Photos & Technical Specs) -->
+      <div id="cad-inspector-drawer" class="cad-inspector-drawer hidden">
+        <div class="insp-header">
+          <div>
+            <span class="insp-badge" id="insp-badge">DRDO COMPONENT SPEC</span>
+            <div class="insp-title" id="insp-title">Solarium Green-Buffer</div>
+          </div>
+          <button id="btn-close-inspector" class="insp-close-btn" title="Close Inspector">&times;</button>
+        </div>
+        <div class="insp-img-container">
+          <img id="insp-img" src="" alt="DRDO High-Altitude Field Reference" />
+          <div class="insp-img-tag">📸 AUTHENTIC FIELD REFERENCE</div>
+        </div>
+        <div class="insp-desc" id="insp-desc"></div>
+        <table class="insp-specs-table">
+          <tbody id="insp-specs-tbody"></tbody>
+        </table>
+        <button id="btn-zoom-component" class="insp-zoom-btn">
+          ⭐ ZOOM CAMERA TO COMPONENT
+        </button>
       </div>
 
       <!-- Minimal Bottom-Left Compass & Orientation HUD -->
@@ -834,7 +1067,7 @@
           ❄️ SIACHEN: DUAL-SLOPE 55° SOLAR ROOF + INWARD-OPENING DRIFT-SAFE DOOR + ICE-AUGERS
         </div>
         <div style="font-size: 0.68rem; color: #64748b; margin-top: 2px;">
-          &bull; RED ARROW = TRUE NORTH &bull; DRAG TO ORBIT &bull; SCROLL TO ZOOM
+          &bull; CLICK ANY PART TO INSPECT &bull; RED ARROW = TRUE NORTH &bull; DRAG TO ORBIT &bull; SCROLL TO ZOOM
         </div>
       </div>
     </div>
@@ -1796,6 +2029,19 @@
       return g;
     }
 
+    function tagObject(obj, compId) {
+      if (!obj) return obj;
+      obj.userData = obj.userData || {};
+      obj.userData.componentId = compId;
+      obj.traverse(child => {
+        if (child.isMesh) {
+          child.userData = child.userData || {};
+          child.userData.componentId = compId;
+        }
+      });
+      return obj;
+    }
+
     function buildRealisticCAD() {
       while (shelterGroup.children.length > 0) {
         const obj = shelterGroup.children[0];
@@ -1827,23 +2073,23 @@
               const px = -length / 2 + (ix * length) / nPylonsX;
               const pz = -width / 2 + (iz * width) / (nPylonsZ - 1);
 
-              const pylon = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.18, pylonHeight, 8), steelMat);
+              const pylon = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.18, pylonHeight, 8), steelMat), 'siachen_pylons');
               pylon.position.set(px, pylonHeight / 2, pz);
               pylon.castShadow = true;
               shelterGroup.add(pylon);
 
-              const shoe = new THREE.Mesh(
+              const shoe = tagObject(new THREE.Mesh(
                 new THREE.CylinderGeometry(0.55, 0.60, 0.14, 8),
                 new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.85, roughness: 0.3 })
-              );
+              ), 'siachen_pylons');
               shoe.position.set(px, 0.07, pz);
               shoe.receiveShadow = true;
               shelterGroup.add(shoe);
 
-              const auger = new THREE.Mesh(
+              const auger = tagObject(new THREE.Mesh(
                 new THREE.CylinderGeometry(0.04, 0.01, 0.6, 6),
                 new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9 })
-              );
+              ), 'siachen_pylons');
               auger.position.set(px, -0.25, pz);
               shelterGroup.add(auger);
             }
@@ -1857,32 +2103,32 @@
             const diagLen = Math.hypot(x2 - x1, pylonHeight);
             const braceMat = new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.8 });
 
-            const b1 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, diagLen, 6), braceMat);
+            const b1 = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, diagLen, 6), braceMat), 'siachen_pylons');
             b1.position.set((x1 + x2) / 2, pylonHeight / 2, pz);
             b1.rotation.z = Math.atan2(pylonHeight, x2 - x1);
             shelterGroup.add(b1);
 
-            const b2 = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, diagLen, 6), braceMat);
+            const b2 = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, diagLen, 6), braceMat), 'siachen_pylons');
             b2.position.set((x1 + x2) / 2, pylonHeight / 2, pz);
             b2.rotation.z = -Math.atan2(pylonHeight, x2 - x1);
             shelterGroup.add(b2);
           }
 
-          const chassis = new THREE.Mesh(new THREE.BoxGeometry(length + 0.8, 0.25, width + 0.8), darkSteelMat);
+          const chassis = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length + 0.8, 0.25, width + 0.8), darkSteelMat), 'siachen_pylons');
           chassis.position.set(0, pylonHeight + 0.125, 0);
           chassis.castShadow = true;
           shelterGroup.add(chassis);
 
-          const deck = new THREE.Mesh(
+          const deck = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(length + 1.2, 0.18, width + 1.2),
             new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.85 })
-          );
+          ), 'siachen_pylons');
           deck.position.set(0, pylonHeight + 0.25 + 0.09, 0);
           deck.castShadow = true;
           deck.receiveShadow = true;
           shelterGroup.add(deck);
 
-          const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+          const walls = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat), 'siachen_aeroridge');
           walls.position.set(0, pylonHeight + 0.35 + height / 2, 0);
           walls.castShadow = true;
           walls.receiveShadow = true;
@@ -1890,33 +2136,33 @@
 
           const roofPeakH = 2.0;
           const roofGeom = createGableRoofGeometry(length + 0.6, width + 0.8, roofPeakH);
-          const roof = new THREE.Mesh(roofGeom, panelMat);
+          const roof = tagObject(new THREE.Mesh(roofGeom, panelMat), 'siachen_aeroridge');
           roof.position.set(0, pylonHeight + 0.35 + height + roofPeakH / 2, 0);
           roof.castShadow = true;
           shelterGroup.add(roof);
 
-          const ridgeCap = new THREE.Mesh(new THREE.BoxGeometry(length + 0.7, 0.12, 0.3), trimMat);
+          const ridgeCap = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length + 0.7, 0.12, 0.3), trimMat), 'siachen_aeroridge');
           ridgeCap.position.set(0, pylonHeight + 0.35 + height + roofPeakH + 0.05, 0);
           shelterGroup.add(ridgeCap);
 
           // Roof Ridge Anti-Freeze Ventilator Cowl
-          const ventPipe = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.55, 8), steelMat);
+          const ventPipe = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.55, 8), steelMat), 'siachen_aeroridge');
           ventPipe.position.set(-length * 0.28, pylonHeight + 0.35 + height + roofPeakH + 0.30, 0);
           shelterGroup.add(ventPipe);
 
-          const ventCowl = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.18, 12), darkSteelMat);
+          const ventCowl = tagObject(new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.18, 12), darkSteelMat), 'siachen_aeroridge');
           ventCowl.position.set(-length * 0.28, pylonHeight + 0.35 + height + roofPeakH + 0.60, 0);
           shelterGroup.add(ventCowl);
 
           // Amber Whiteout Hazard Beacon on Ridge
-          const beaconBase = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.10, 0.12, 8), darkSteelMat);
+          const beaconBase = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.10, 0.12, 8), darkSteelMat), 'siachen_aeroridge');
           beaconBase.position.set(0, pylonHeight + 0.35 + height + roofPeakH + 0.12, 0);
           shelterGroup.add(beaconBase);
 
-          const beaconLens = new THREE.Mesh(
+          const beaconLens = tagObject(new THREE.Mesh(
             new THREE.CylinderGeometry(0.06, 0.06, 0.12, 8),
             new THREE.MeshStandardMaterial({ color: 0xf59e0b, emissive: 0xf59e0b, emissiveIntensity: 0.9 })
-          );
+          ), 'siachen_aeroridge');
           beaconLens.position.set(0, pylonHeight + 0.35 + height + roofPeakH + 0.24, 0);
           shelterGroup.add(beaconLens);
 
@@ -1951,11 +2197,12 @@
             }
           }
           solarGroup.position.set(0, pylonHeight + 0.35 + height, 0);
+          tagObject(solarGroup, 'siachen_aeroridge');
           shelterGroup.add(solarGroup);
 
           // Snow-Stop Battens along eaves
           [-slopeHalfW - 0.04, slopeHalfW + 0.04].forEach(ez => {
-            const snowStop = new THREE.Mesh(new THREE.BoxGeometry(length + 0.6, 0.08, 0.08), steelMat);
+            const snowStop = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length + 0.6, 0.08, 0.08), steelMat), 'siachen_aeroridge');
             snowStop.position.set(0, pylonHeight + 0.35 + height + 0.08, ez);
             shelterGroup.add(snowStop);
           });
@@ -1964,20 +2211,20 @@
           const alW = 1.8;
           const alH = 2.3;
           const alD = 1.3;
-          const alMesh = new THREE.Mesh(new THREE.BoxGeometry(alW, alH, alD), panelMat);
+          const alMesh = tagObject(new THREE.Mesh(new THREE.BoxGeometry(alW, alH, alD), panelMat), 'siachen_vestibule');
           alMesh.position.set(length * 0.35, pylonHeight + 0.35 + alH / 2, width / 2 + alD / 2);
           alMesh.castShadow = true;
           shelterGroup.add(alMesh);
 
-          const snowCanopy = new THREE.Mesh(new THREE.BoxGeometry(alW + 0.3, 0.08, alD + 0.4), trimMat);
+          const snowCanopy = tagObject(new THREE.Mesh(new THREE.BoxGeometry(alW + 0.3, 0.08, alD + 0.4), trimMat), 'siachen_vestibule');
           snowCanopy.position.set(length * 0.35, pylonHeight + 0.35 + alH + 0.05, width / 2 + alD / 2 + 0.1);
           snowCanopy.rotation.x = 0.22;
           shelterGroup.add(snowCanopy);
 
-          const doorLeaf = new THREE.Mesh(
+          const doorLeaf = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(1.0, 1.95, 0.06),
             new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.8, roughness: 0.3 })
-          );
+          ), 'siachen_vestibule');
           doorLeaf.position.set(length * 0.35 - 0.15, pylonHeight + 0.35 + 1.0, width / 2 + alD - 0.25);
           doorLeaf.rotation.y = THREE.MathUtils.degToRad(35);
           shelterGroup.add(doorLeaf);
@@ -1989,22 +2236,22 @@
           const landZ = width / 2 + alD + landD / 2;
           const landX = length * 0.35;
 
-          const landing = new THREE.Mesh(
+          const landing = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(landW, 0.12, landD),
             new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.8, roughness: 0.4 })
-          );
+          ), 'siachen_stairs');
           landing.position.set(landX, landY - 0.06, landZ);
           landing.castShadow = true;
           shelterGroup.add(landing);
 
           // Vertical ground support posts under landing (connecting Y=1.75m down to ground Y=0)
           [-landW / 2 + 0.12, landW / 2 - 0.12].forEach(lx => {
-            const lPost = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, landY, 8), steelMat);
+            const lPost = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, landY, 8), steelMat), 'siachen_stairs');
             lPost.position.set(landX + lx, landY / 2, landZ + landD / 2 - 0.1);
             lPost.castShadow = true;
             shelterGroup.add(lPost);
 
-            const lShoe = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.22, 0.08, 8), darkSteelMat);
+            const lShoe = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.22, 0.08, 8), darkSteelMat), 'siachen_stairs');
             lShoe.position.set(landX + lx, 0.04, landZ + landD / 2 - 0.1);
             shelterGroup.add(lShoe);
           });
@@ -2015,11 +2262,11 @@
           const stairEndX = landX;
           const stairEndZ = stairStartZ + 2.4;
 
-          const stairsA = createGroundedMilitaryStairs(
+          const stairsA = tagObject(createGroundedMilitaryStairs(
             stairStartX, landY, stairStartZ,
             stairEndX, stairEndZ,
             1.2, 6, steelMat, steelMat
-          );
+          ), 'siachen_stairs');
           shelterGroup.add(stairsA);
 
         } else if (variant === 'beta') {
@@ -2028,10 +2275,10 @@
           const skidH = 0.35;
 
           // Heavy-Duty Arctic Skid Platform
-          const skid = new THREE.Mesh(
+          const skid = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(length + 0.8, skidH, width + 0.8),
             new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.4 })
-          );
+          ), 'siachen_quonset');
           skid.position.set(0, skidH / 2, 0);
           skid.castShadow = true;
           skid.receiveShadow = true;
@@ -2041,11 +2288,11 @@
           const augerMat = new THREE.MeshStandardMaterial({ color: 0x84cc16, metalness: 0.9, roughness: 0.2 });
           for (let ix = -1; ix <= 1; ix++) {
             [-width / 2 - 0.3, width / 2 + 0.3].forEach(pz => {
-              const aug = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.01, 0.75, 6), augerMat);
+              const aug = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.01, 0.75, 6), augerMat), 'siachen_quonset');
               aug.position.set(ix * (length * 0.42), -0.25, pz);
               shelterGroup.add(aug);
 
-              const shoe = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.30, 0.12, 8), darkSteelMat);
+              const shoe = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.30, 0.12, 8), darkSteelMat), 'siachen_quonset');
               shoe.position.set(ix * (length * 0.42), 0.06, pz);
               shelterGroup.add(shoe);
             });
@@ -2053,7 +2300,7 @@
 
           // Aerodynamic Quonset Arch Shell (Watertight Extrusion)
           const archGeom = createQuonsetArchGeometry(length, width, archHeight);
-          const archMesh = new THREE.Mesh(archGeom, panelMat);
+          const archMesh = tagObject(new THREE.Mesh(archGeom, panelMat), 'siachen_quonset');
           archMesh.position.set(0, skidH + archHeight / 2, 0);
           archMesh.castShadow = true;
           archMesh.receiveShadow = true;
@@ -2064,18 +2311,18 @@
           const nRibs = Math.max(5, bays * 2 + 2);
           for (let i = 0; i <= nRibs; i++) {
             const rx = -length / 2 + (i * length) / nRibs;
-            const rib = new THREE.Mesh(ribGeom, steelMat);
+            const rib = tagObject(new THREE.Mesh(ribGeom, steelMat), 'siachen_quonset');
             rib.position.set(rx, skidH + (archHeight + 0.06) / 2, 0);
             rib.castShadow = true;
             shelterGroup.add(rib);
           }
 
           // Ridge Ventilator with Anti-Freeze Thermal Cowl
-          const ventPipe = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.65, 8), steelMat);
+          const ventPipe = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.65, 8), steelMat), 'siachen_quonset');
           ventPipe.position.set(-length * 0.25, skidH + archHeight + 0.30, 0);
           shelterGroup.add(ventPipe);
 
-          const ventCowl = new THREE.Mesh(new THREE.ConeGeometry(0.32, 0.22, 12), darkSteelMat);
+          const ventCowl = tagObject(new THREE.Mesh(new THREE.ConeGeometry(0.32, 0.22, 12), darkSteelMat), 'siachen_quonset');
           ventCowl.position.set(-length * 0.25, skidH + archHeight + 0.65, 0);
           shelterGroup.add(ventCowl);
 
@@ -2096,7 +2343,7 @@
 
             for (let c = 0; c < nSolarCols; c++) {
               const px = -length * 0.43 + (c + 0.5) * modWidth;
-              const sMod = createDetailedSolarModule(modWidth * 0.88, 0.95, solarMat, aluMat);
+              const sMod = tagObject(createDetailedSolarModule(modWidth * 0.88, 0.95, solarMat, aluMat), 'siachen_quonset');
               sMod.position.set(px, py, pz);
               sMod.rotation.x = rotX;
               shelterGroup.add(sMod);
@@ -2114,20 +2361,20 @@
           const vestY = skidH + vestH / 2;
 
           // 1. Insulated Weather-Airlock Vestibule Box (Prevents blizzard wind infiltration)
-          const vestMesh = new THREE.Mesh(
+          const vestMesh = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(vestD, vestH, vestW),
             panelMat
-          );
+          ), 'siachen_vestibule');
           vestMesh.position.set(vestX, vestY, 0);
           vestMesh.castShadow = true;
           vestMesh.receiveShadow = true;
           shelterGroup.add(vestMesh);
 
           // Sloped snow-deflector roof canopy over vestibule
-          const canopy = new THREE.Mesh(
+          const canopy = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(vestD + 0.25, 0.08, vestW + 0.2),
             trimMat
-          );
+          ), 'siachen_vestibule');
           canopy.position.set(vestX + 0.05, skidH + vestH + 0.04, 0);
           canopy.rotation.z = -0.12;
           canopy.castShadow = true;
@@ -2140,35 +2387,35 @@
           const doorX = length / 2 + vestD + doorThick / 2;
           const doorY = skidH + doorH / 2 + 0.05;
 
-          const doorFrame = new THREE.Mesh(
+          const doorFrame = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(0.06, doorH + 0.1, doorW + 0.12),
             darkSteelMat
-          );
+          ), 'siachen_vestibule');
           doorFrame.position.set(doorX - 0.02, doorY, 0);
           doorFrame.castShadow = true;
           shelterGroup.add(doorFrame);
 
-          const doorPanel = new THREE.Mesh(
+          const doorPanel = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(doorThick, doorH, doorW),
             new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.75, roughness: 0.35 })
-          );
+          ), 'siachen_vestibule');
           doorPanel.position.set(doorX, doorY, 0);
           doorPanel.castShadow = true;
           shelterGroup.add(doorPanel);
 
           // Industrial Heavy Lever Latch Handle
-          const latchHandle = new THREE.Mesh(
+          const latchHandle = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(0.12, 0.04, 0.22),
             aluMat
-          );
+          ), 'siachen_vestibule');
           latchHandle.position.set(doorX + doorThick / 2 + 0.04, skidH + 1.05, 0.32);
           shelterGroup.add(latchHandle);
 
           // Freeze-proof Heated Observation Viewport (Triple-Glazed)
-          const windowGlass = new THREE.Mesh(
+          const windowGlass = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(doorThick + 0.02, 0.40, 0.32),
             new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.85, metalness: 0.9 })
-          );
+          ), 'siachen_vestibule');
           windowGlass.position.set(doorX, skidH + 1.45, 0);
           shelterGroup.add(windowGlass);
 
@@ -2179,10 +2426,10 @@
           const landX = length / 2 + vestD + landD / 2;
 
           // Main horizontal landing platform outside door
-          const platform = new THREE.Mesh(
+          const platform = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(landD, 0.06, landW),
             new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.4 })
-          );
+          ), 'siachen_stairs');
           platform.position.set(landX, landY - 0.03, 0);
           platform.castShadow = true;
           platform.receiveShadow = true;
@@ -2190,34 +2437,34 @@
 
           // Vertical structural posts under platform connecting down to ice (Y=0)
           [-landW / 2 + 0.12, landW / 2 - 0.12].forEach(pz => {
-            const pPost = new THREE.Mesh(new THREE.BoxGeometry(0.08, landY, 0.08), steelMat);
+            const pPost = tagObject(new THREE.Mesh(new THREE.BoxGeometry(0.08, landY, 0.08), steelMat), 'siachen_stairs');
             pPost.position.set(landX + landD / 2 - 0.1, landY / 2, pz);
             pPost.castShadow = true;
             shelterGroup.add(pPost);
 
-            const pFoot = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.16, 0.06, 8), darkSteelMat);
+            const pFoot = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.16, 0.06, 8), darkSteelMat), 'siachen_stairs');
             pFoot.position.set(landX + landD / 2 - 0.1, 0.03, pz);
             pFoot.receiveShadow = true;
             shelterGroup.add(pFoot);
 
-            const pAuger = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.01, 0.4, 6), augerMat);
+            const pAuger = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.01, 0.4, 6), augerMat), 'siachen_stairs');
             pAuger.position.set(landX + landD / 2 - 0.1, -0.15, pz);
             shelterGroup.add(pAuger);
           });
 
           // Ground Base Footer Plate on ice surface (Y = 0.02)
           const groundPlateX = landX + landD / 2 + 0.65;
-          const groundFooter = new THREE.Mesh(
+          const groundFooter = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(0.55, 0.04, landW),
             new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.4 })
-          );
+          ), 'siachen_stairs');
           groundFooter.position.set(groundPlateX, 0.02, 0);
           groundFooter.receiveShadow = true;
           shelterGroup.add(groundFooter);
 
           // Ice augers securing ground footer into ice
           [-landW / 2 + 0.2, landW / 2 - 0.2].forEach(pz => {
-            const gAug = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.01, 0.4, 6), augerMat);
+            const gAug = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.01, 0.4, 6), augerMat), 'siachen_stairs');
             gAug.position.set(groundPlateX, -0.15, pz);
             shelterGroup.add(gAug);
           });
@@ -2225,10 +2472,10 @@
           // Intermediate Step Tread (Diamond-plate steel)
           const step1X = landX + landD / 2 + 0.30;
           const step1Y = landY * 0.5; // 0.175m
-          const step1 = new THREE.Mesh(
+          const step1 = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(0.32, 0.04, landW - 0.04),
             new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.8, roughness: 0.35 })
-          );
+          ), 'siachen_stairs');
           step1.position.set(step1X, step1Y, 0);
           step1.castShadow = true;
           shelterGroup.add(step1);
@@ -2237,19 +2484,19 @@
           [-landW / 2, landW / 2].forEach(pz => {
             const stringerLen = Math.hypot(0.65, landY);
             const strPitch = Math.atan2(landY, 0.65);
-            const stringer = new THREE.Mesh(new THREE.BoxGeometry(stringerLen, 0.12, 0.05), steelMat);
+            const stringer = tagObject(new THREE.Mesh(new THREE.BoxGeometry(stringerLen, 0.12, 0.05), steelMat), 'siachen_stairs');
             stringer.position.set(landX + landD / 2 + 0.32, landY / 2, pz);
             stringer.rotation.z = -strPitch;
             stringer.castShadow = true;
             shelterGroup.add(stringer);
 
             // Handrail vertical stanchion posts (Platform end + Ground end)
-            const postHigh = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.95, 8), aluMat);
+            const postHigh = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.95, 8), aluMat), 'siachen_stairs');
             postHigh.position.set(landX, landY + 0.475, pz);
             postHigh.castShadow = true;
             shelterGroup.add(postHigh);
 
-            const postLow = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.95, 8), aluMat);
+            const postLow = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.95, 8), aluMat), 'siachen_stairs');
             postLow.position.set(groundPlateX, 0.475, pz);
             postLow.castShadow = true;
             shelterGroup.add(postLow);
@@ -2257,7 +2504,7 @@
             // Diagonal top handrail
             const railLen = Math.hypot(groundPlateX - landX, landY);
             const railPitch = Math.atan2(landY, groundPlateX - landX);
-            const rail = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, railLen, 8), aluMat);
+            const rail = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, railLen, 8), aluMat), 'siachen_stairs');
             rail.position.set((landX + groundPlateX) / 2, landY / 2 + 0.95, pz);
             rail.rotation.z = -railPitch;
             rail.rotation.y = Math.PI / 2;
@@ -2272,24 +2519,24 @@
               const px = ix * (length * 0.35);
 
               const cableLen = Math.hypot(pz - topZ, topY);
-              const cable = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, cableLen, 6), steelMat);
+              const cable = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, cableLen, 6), steelMat), 'siachen_quonset');
               cable.position.set(px, topY / 2, (topZ + pz) / 2);
               cable.rotation.x = Math.atan2(pz - topZ, topY);
               shelterGroup.add(cable);
 
-              const turnbuckle = new THREE.Mesh(
+              const turnbuckle = tagObject(new THREE.Mesh(
                 new THREE.CylinderGeometry(0.04, 0.04, 0.30, 8),
                 new THREE.MeshStandardMaterial({ color: 0xd4d4d8, metalness: 0.9 })
-              );
+              ), 'siachen_quonset');
               turnbuckle.position.set(px, topY * 0.4, (topZ + pz) * 0.4);
               turnbuckle.rotation.x = Math.atan2(pz - topZ, topY);
               shelterGroup.add(turnbuckle);
 
-              const anchor = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.22, 0.16, 8), darkSteelMat);
+              const anchor = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.22, 0.16, 8), darkSteelMat), 'siachen_quonset');
               anchor.position.set(px, 0.08, pz);
               shelterGroup.add(anchor);
 
-              const groundAug = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.01, 0.6, 6), augerMat);
+              const groundAug = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.01, 0.6, 6), augerMat), 'siachen_quonset');
               groundAug.position.set(px, -0.22, pz);
               shelterGroup.add(groundAug);
             });
@@ -2303,87 +2550,87 @@
           for (let ix = 0; ix <= nPylonsX; ix++) {
             [-width / 2, width / 2].forEach(pz => {
               const px = -length / 2 + (ix * length) / nPylonsX;
-              const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.20, 0.24, pylonH, 8), steelMat);
+              const leg = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.20, 0.24, pylonH, 8), steelMat), 'siachen_arcticpod');
               leg.position.set(px, pylonH / 2, pz);
               leg.castShadow = true;
               shelterGroup.add(leg);
 
-              const hexFoot = new THREE.Mesh(new THREE.CylinderGeometry(0.65, 0.72, 0.18, 6), darkSteelMat);
+              const hexFoot = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.65, 0.72, 0.18, 6), darkSteelMat), 'siachen_arcticpod');
               hexFoot.position.set(px, 0.09, pz);
               shelterGroup.add(hexFoot);
 
-              const auger = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.01, 0.8, 6), new THREE.MeshStandardMaterial({ color: 0x84cc16 }));
+              const auger = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.01, 0.8, 6), new THREE.MeshStandardMaterial({ color: 0x84cc16 })), 'siachen_arcticpod');
               auger.position.set(px, -0.3, pz);
               shelterGroup.add(auger);
             });
           }
 
-          const cradleChassis = new THREE.Mesh(new THREE.BoxGeometry(length + 1.0, 0.35, width + 1.0), darkSteelMat);
+          const cradleChassis = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length + 1.0, 0.35, width + 1.0), darkSteelMat), 'siachen_arcticpod');
           cradleChassis.position.set(0, pylonH + 0.175, 0);
           cradleChassis.castShadow = true;
           shelterGroup.add(cradleChassis);
 
           // 40kWh Bio-PCM Latent Heat Batteries
           [-length * 0.22, length * 0.22].forEach(bx => {
-            const pcmBox = new THREE.Mesh(
+            const pcmBox = tagObject(new THREE.Mesh(
               new THREE.BoxGeometry(1.8, 0.45, width * 0.65),
               new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.5, metalness: 0.8 })
-            );
+            ), 'siachen_arcticpod');
             pcmBox.position.set(bx, pylonH - 0.25, 0);
             pcmBox.castShadow = true;
             shelterGroup.add(pcmBox);
 
-            const ledBar = new THREE.Mesh(
+            const ledBar = tagObject(new THREE.Mesh(
               new THREE.BoxGeometry(0.8, 0.08, 0.05),
               new THREE.MeshStandardMaterial({ color: 0x84cc16, emissive: 0x84cc16, emissiveIntensity: 0.9 })
-            );
+            ), 'siachen_arcticpod');
             ledBar.position.set(bx, pylonH - 0.25, width * 0.325 + 0.03);
             shelterGroup.add(ledBar);
           });
 
-          const podBody = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+          const podBody = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat), 'siachen_arcticpod');
           podBody.position.set(0, pylonH + 0.35 + height / 2, 0);
           podBody.castShadow = true;
           shelterGroup.add(podBody);
 
-          const podRoof = new THREE.Mesh(
+          const podRoof = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(length + 0.4, 0.25, width + 0.4),
             new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.6 })
-          );
+          ), 'siachen_arcticpod');
           podRoof.position.set(0, pylonH + 0.35 + height + 0.125, 0);
           podRoof.castShadow = true;
           shelterGroup.add(podRoof);
 
           // Portholes
           [-length * 0.25, 0, length * 0.25].forEach(wx => {
-            const pFrame = new THREE.Mesh(new THREE.TorusGeometry(0.35, 0.05, 8, 24), new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.9 }));
+            const pFrame = tagObject(new THREE.Mesh(new THREE.TorusGeometry(0.35, 0.05, 8, 24), new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.9 })), 'siachen_arcticpod');
             pFrame.position.set(wx, pylonH + 0.35 + height * 0.6, width / 2 + 0.02);
             shelterGroup.add(pFrame);
 
-            const pGlass = new THREE.Mesh(new THREE.CircleGeometry(0.32, 24), new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.8, roughness: 0.1 }));
+            const pGlass = tagObject(new THREE.Mesh(new THREE.CircleGeometry(0.32, 24), new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.8, roughness: 0.1 })), 'siachen_arcticpod');
             pGlass.position.set(wx, pylonH + 0.35 + height * 0.6, width / 2 + 0.03);
             shelterGroup.add(pGlass);
           });
 
           // Central Dual-Axis Solar Tracking Mast
           const mastH = 2.6;
-          const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.16, mastH, 8), aluMat);
+          const mast = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.16, mastH, 8), aluMat), 'siachen_arcticpod');
           mast.position.set(0, pylonH + 0.35 + height + mastH / 2, 0);
           mast.castShadow = true;
           shelterGroup.add(mast);
 
-          const gimbal = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.3, 0.4), darkSteelMat);
+          const gimbal = tagObject(new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.3, 0.4), darkSteelMat), 'siachen_arcticpod');
           gimbal.position.set(0, pylonH + 0.35 + height + mastH, 0);
           shelterGroup.add(gimbal);
 
           [-1.3, 1.3].forEach(px => {
-            const tPanel = createDetailedSolarModule(2.2, 1.4, solarMat, aluMat);
+            const tPanel = tagObject(createDetailedSolarModule(2.2, 1.4, solarMat, aluMat), 'siachen_arcticpod');
             tPanel.position.set(px, pylonH + 0.35 + height + mastH + 0.2, 0);
             tPanel.rotation.x = -Math.PI / 3.5;
             shelterGroup.add(tPanel);
           });
 
-          const airlock = new THREE.Mesh(new THREE.BoxGeometry(1.9, 2.4, 1.4), panelMat);
+          const airlock = tagObject(new THREE.Mesh(new THREE.BoxGeometry(1.9, 2.4, 1.4), panelMat), 'siachen_arcticpod');
           airlock.position.set(length * 0.36, pylonH + 0.35 + 1.2, width / 2 + 0.7);
           airlock.castShadow = true;
           shelterGroup.add(airlock);
@@ -2395,32 +2642,32 @@
           const landZC = width / 2 + 1.4 + landDC / 2;
           const landXC = length * 0.36;
 
-          const landingC = new THREE.Mesh(
+          const landingC = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(landWC, 0.14, landDC),
             new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.3 })
-          );
+          ), 'siachen_stairs');
           landingC.position.set(landXC, landYC - 0.07, landZC);
           landingC.castShadow = true;
           shelterGroup.add(landingC);
 
           // Support legs from landing down to ground (Y=0)
           [-landWC / 2 + 0.15, landWC / 2 - 0.15].forEach(lx => {
-            const cPost = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, landYC, 8), steelMat);
+            const cPost = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, landYC, 8), steelMat), 'siachen_stairs');
             cPost.position.set(landXC + lx, landYC / 2, landZC + landDC / 2 - 0.12);
             cPost.castShadow = true;
             shelterGroup.add(cPost);
 
-            const cShoe = new THREE.Mesh(new THREE.CylinderGeometry(0.20, 0.25, 0.08, 8), darkSteelMat);
+            const cShoe = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.20, 0.25, 0.08, 8), darkSteelMat), 'siachen_stairs');
             cShoe.position.set(landXC + lx, 0.04, landZC + landDC / 2 - 0.12);
             shelterGroup.add(cShoe);
           });
 
           // Grounded diagonal flight of stairs
-          const stairsC = createGroundedMilitaryStairs(
+          const stairsC = tagObject(createGroundedMilitaryStairs(
             landXC, landYC, landZC + landDC / 2,
             landXC, landZC + landDC / 2 + 3.0,
             1.2, 8, steelMat, steelMat
-          );
+          ), 'siachen_stairs');
           shelterGroup.add(stairsC);
         }
       }
@@ -2430,29 +2677,31 @@
       // -------------------------------------------------------------------
       else if (theatre === 'ladakh') {
         const bedHeight = 0.5;
-        const stoneBed = new THREE.Mesh(
-          new THREE.BoxGeometry(length + 1.0, bedHeight, width + 1.0),
-          new THREE.MeshStandardMaterial({ color: 0x271e16, roughness: 0.95 })
-        );
-        stoneBed.position.set(0, bedHeight / 2, 0);
-        stoneBed.castShadow = true;
-        stoneBed.receiveShadow = true;
-        shelterGroup.add(stoneBed);
 
         if (variant === 'alpha') {
           // Option A: Solaris-Trombe Mass
-          const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+          const stoneBed = tagObject(new THREE.Mesh(
+            new THREE.BoxGeometry(length + 1.2, bedHeight, width + 1.2),
+            new THREE.MeshStandardMaterial({ color: 0x271e16, roughness: 0.95 })
+          ), 'ladakh_basalt_bed');
+          stoneBed.position.set(0, bedHeight / 2, 0);
+          stoneBed.castShadow = true;
+          stoneBed.receiveShadow = true;
+          shelterGroup.add(stoneBed);
+
+          const walls = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat), 'ladakh_trombe');
           walls.position.set(0, bedHeight + height / 2, 0);
           walls.castShadow = true;
           shelterGroup.add(walls);
 
           const roofPeakH = 1.4;
           const roofGeom = createGableRoofGeometry(length + 0.4, width + 0.6, roofPeakH);
-          const roof = new THREE.Mesh(roofGeom, panelMat);
+          const roof = tagObject(new THREE.Mesh(roofGeom, panelMat), 'ladakh_trombe');
           roof.position.set(0, bedHeight + height + roofPeakH / 2, 0);
           roof.castShadow = true;
           shelterGroup.add(roof);
 
+          // 45° Rooftop PV Solar Rack
           const nPanels = Math.max(4, bays * 2);
           const rackGroup = new THREE.Group();
           const pW = (length * 0.85) / nPanels;
@@ -2463,55 +2712,112 @@
             rackGroup.add(p);
           }
           rackGroup.position.set(0, bedHeight + height + 0.3, width * 0.15);
+          tagObject(rackGroup, 'ladakh_trombe');
           shelterGroup.add(rackGroup);
 
-          // South Trombe Glazing
-          const winW = Math.min(length * 0.55, Math.sqrt(windowArea) * 1.3);
-          const winH = Math.min(height * 0.75, windowArea / Math.max(winW, 0.1));
+          // South Trombe Glazing Assembly with Thermosiphon Vents
+          const winW = Math.min(length * 0.58, 6.0);
+          const winH = height * 0.80;
+          const trombeGroup = new THREE.Group();
 
+          // 1. Black Basalt Stone Absorber Wall Layer (Behind glass)
           const tRock = new THREE.Mesh(
-            new THREE.BoxGeometry(winW * 0.96, winH * 0.96, 0.3),
+            new THREE.BoxGeometry(winW * 0.96, winH * 0.96, 0.32),
             new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.95 })
           );
-          tRock.position.set(-length * 0.12, bedHeight + height / 2, width / 2 - 0.16);
-          shelterGroup.add(tRock);
+          tRock.position.set(-length * 0.12, bedHeight + height / 2, width / 2 - 0.18);
+          trombeGroup.add(tRock);
 
+          // 2. High-Transmission Double Glazing Facade
           const win = new THREE.Mesh(
-            new THREE.PlaneGeometry(winW, winH),
-            new THREE.MeshStandardMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.75, roughness: 0.1, metalness: 0.95 })
+            new THREE.BoxGeometry(winW, winH, 0.03),
+            new THREE.MeshStandardMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.72, roughness: 0.08, metalness: 0.92 })
           );
-          win.position.set(-length * 0.12, bedHeight + height / 2, width / 2 + 0.02);
-          shelterGroup.add(win);
+          win.position.set(-length * 0.12, bedHeight + height / 2, width / 2 + 0.04);
+          trombeGroup.add(win);
 
-          const portalFrame = new THREE.Mesh(new THREE.BoxGeometry(1.4, 2.2, 0.2), trimMat);
+          // 3. Top Hot Air Thermosiphon Damper Vents
+          [-winW * 0.32, 0, winW * 0.32].forEach(vx => {
+            const vent = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.18, 0.08), steelMat);
+            vent.position.set(-length * 0.12 + vx, bedHeight + height * 0.86, width / 2 + 0.06);
+            trombeGroup.add(vent);
+          });
+
+          // 4. Bottom Cold Air Return Vents
+          [-winW * 0.32, 0, winW * 0.32].forEach(vx => {
+            const ventB = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.18, 0.08), steelMat);
+            ventB.position.set(-length * 0.12 + vx, bedHeight + height * 0.14, width / 2 + 0.06);
+            trombeGroup.add(ventB);
+          });
+          tagObject(trombeGroup, 'ladakh_trombe');
+          shelterGroup.add(trombeGroup);
+
+          // Mountain Recessed Portal & Door
+          const portalFrame = tagObject(new THREE.Mesh(new THREE.BoxGeometry(1.5, 2.2, 0.25), trimMat), 'ladakh_trombe');
           portalFrame.position.set(length * 0.32, bedHeight + 1.1, width / 2 + 0.05);
           shelterGroup.add(portalFrame);
 
-          const door = new THREE.Mesh(
+          const door = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(1.0, 1.95, 0.06),
             new THREE.MeshStandardMaterial({ color: 0x27382b, roughness: 0.7 })
-          );
+          ), 'ladakh_trombe');
           door.position.set(length * 0.32 - 0.15, bedHeight + 1.0, width / 2 - 0.15);
           door.rotation.y = THREE.MathUtils.degToRad(30);
           shelterGroup.add(door);
 
-        } else if (variant === 'beta') {
-          // Option B: Solarium Green-Buffer (Attached Greenhouse Sunspace)
-          const solariumDepth = 1.8;
-          const mainWidth = width - solariumDepth * 0.5;
+          // Grounded Basalt Dry-Stone Entrance Steps (0 to 0.5m)
+          const nStoneSteps = 3;
+          const sRise = bedHeight / nStoneSteps;
+          for (let s = 0; s < nStoneSteps; s++) {
+            const sY = (s + 0.5) * sRise;
+            const sZ = width / 2 + 0.15 + (nStoneSteps - s) * 0.34;
+            const stepMesh = tagObject(new THREE.Mesh(
+              new THREE.BoxGeometry(1.4, sRise, 0.34),
+              new THREE.MeshStandardMaterial({ color: 0x271e16, roughness: 0.95 })
+            ), 'ladakh_basalt_bed');
+            stepMesh.position.set(length * 0.32, sY, sZ);
+            stepMesh.castShadow = true;
+            stepMesh.receiveShadow = true;
+            shelterGroup.add(stepMesh);
+          }
 
-          const mainWalls = new THREE.Mesh(new THREE.BoxGeometry(length, height, mainWidth), panelMat);
-          mainWalls.position.set(0, bedHeight + height / 2, -solariumDepth * 0.25);
+        } else if (variant === 'beta') {
+          // Option B: Solarium Green-Buffer (Attached Greenhouse Sunspace + Grounded Basalt Foundation + Grounded Stone Steps)
+          const solariumDepth = 2.0;
+          const mainWidth = width - 0.4;
+          const solariumW = length * 0.72;
+          const solariumH = height * 0.95;
+          const mainZ = -solariumDepth * 0.35;
+          const solEndZ = mainZ + mainWidth / 2 + solariumDepth;
+
+          // 1. Extended Basalt Masonry Foundation Bed (completely under main barracks AND solarium sunspace)
+          const totalBedZ = mainWidth + solariumDepth + 1.0;
+          const bedCenterZ = (mainZ - mainWidth / 2 + solEndZ) / 2;
+          const stoneBed = tagObject(new THREE.Mesh(
+            new THREE.BoxGeometry(length + 1.2, bedHeight, totalBedZ),
+            new THREE.MeshStandardMaterial({ color: 0x271e16, roughness: 0.95 })
+          ), 'ladakh_basalt_bed');
+          stoneBed.position.set(0, bedHeight / 2, bedCenterZ);
+          stoneBed.castShadow = true;
+          stoneBed.receiveShadow = true;
+          shelterGroup.add(stoneBed);
+
+          // 2. Main Insulated Living Core Barracks
+          const mainWalls = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length, height, mainWidth), panelMat), 'ladakh_solarium');
+          mainWalls.position.set(0, bedHeight + height / 2, mainZ);
           mainWalls.castShadow = true;
+          mainWalls.receiveShadow = true;
           shelterGroup.add(mainWalls);
 
-          const roofPeakH = 1.2;
+          // Gabled Roof over Living Core
+          const roofPeakH = 1.3;
           const roofGeom = createGableRoofGeometry(length + 0.4, mainWidth + 0.4, roofPeakH);
-          const roof = new THREE.Mesh(roofGeom, panelMat);
-          roof.position.set(0, bedHeight + height + roofPeakH / 2, -solariumDepth * 0.25);
+          const roof = tagObject(new THREE.Mesh(roofGeom, panelMat), 'ladakh_solarium');
+          roof.position.set(0, bedHeight + height + roofPeakH / 2, mainZ);
           roof.castShadow = true;
           shelterGroup.add(roof);
 
+          // 45° Rooftop PV Solar Rack
           const nPanels = Math.max(4, bays * 2);
           const rackGroup = new THREE.Group();
           const pW = (length * 0.85) / nPanels;
@@ -2521,92 +2827,191 @@
             p.rotation.x = -Math.PI / 4;
             rackGroup.add(p);
           }
-          rackGroup.position.set(0, bedHeight + height + 0.25, 0);
+          rackGroup.position.set(0, bedHeight + height + 0.25, mainZ);
+          tagObject(rackGroup, 'ladakh_solarium');
           shelterGroup.add(rackGroup);
 
-          const solariumMat = new THREE.MeshStandardMaterial({
+          // 3. Realistic Structural Aluminum Solarium Greenhouse Spaceframe
+          const solariumGroup = new THREE.Group();
+
+          const glassMat = new THREE.MeshStandardMaterial({
             color: 0x93c5fd,
             transparent: true,
-            opacity: 0.62,
-            roughness: 0.12,
-            metalness: 0.8
+            opacity: 0.65,
+            roughness: 0.1,
+            metalness: 0.85
           });
+          const frameMat = new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.85, roughness: 0.3 });
 
-          const solariumFront = new THREE.Mesh(new THREE.PlaneGeometry(length * 0.75, height * 0.9), solariumMat);
-          solariumFront.position.set(-length * 0.08, bedHeight + height * 0.48, mainWidth / 2 + solariumDepth - 0.25);
-          shelterGroup.add(solariumFront);
+          const solX = -length * 0.08;
+          const solStartZ = mainZ + mainWidth / 2;
 
-          const sRoofGeom = new THREE.PlaneGeometry(length * 0.75, Math.hypot(solariumDepth, height * 0.45));
-          sRoofGeom.rotateX(Math.PI / 4);
-          const sRoof = new THREE.Mesh(sRoofGeom, solariumMat);
-          sRoof.position.set(-length * 0.08, bedHeight + height * 0.82, mainWidth / 2 + solariumDepth / 2 - 0.25);
-          shelterGroup.add(sRoof);
+          // Vertical Aluminum Mullion Posts at Front & Corners
+          const nCols = 6;
+          for (let c = 0; c <= nCols; c++) {
+            const cx = solX - solariumW / 2 + (c * solariumW) / nCols;
+            // Front vertical post
+            const fPost = new THREE.Mesh(new THREE.BoxGeometry(0.06, solariumH * 0.82, 0.06), frameMat);
+            fPost.position.set(cx, bedHeight + (solariumH * 0.82) / 2, solEndZ);
+            fPost.castShadow = true;
+            solariumGroup.add(fPost);
 
-          for (let pi = -1; pi <= 1; pi++) {
-            const planter = new THREE.Mesh(
-              new THREE.BoxGeometry(length * 0.2, 0.4, 0.55),
-              new THREE.MeshStandardMaterial({ color: 0x166534, roughness: 0.8 })
-            );
-            planter.position.set(pi * (length * 0.22) - length * 0.08, bedHeight + 0.2, mainWidth / 2 + solariumDepth * 0.45);
-            shelterGroup.add(planter);
+            // Sloped Rafter from main wall eave down to front post
+            const rafterLen = Math.hypot(solariumDepth, solariumH * 0.18);
+            const rafterPitch = Math.atan2(solariumH * 0.18, solariumDepth);
+            const rafter = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.06, rafterLen), frameMat);
+            rafter.position.set(cx, bedHeight + solariumH * 0.91, (solStartZ + solEndZ) / 2);
+            rafter.rotation.x = rafterPitch;
+            solariumGroup.add(rafter);
           }
 
-          const airlockDoor = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.1, 0.1), trimMat);
-          airlockDoor.position.set(length * 0.35, bedHeight + 1.05, mainWidth / 2 + solariumDepth - 0.25);
+          // Front Double-Glazed Wall Panels
+          const frontGlass = new THREE.Mesh(new THREE.BoxGeometry(solariumW, solariumH * 0.80, 0.03), glassMat);
+          frontGlass.position.set(solX, bedHeight + (solariumH * 0.80) / 2, solEndZ);
+          solariumGroup.add(frontGlass);
+
+          // Sloped Greenhouse Roof Glass
+          const roofGlassLen = Math.hypot(solariumDepth, solariumH * 0.18);
+          const roofGlassPitch = Math.atan2(solariumH * 0.18, solariumDepth);
+          const roofGlass = new THREE.Mesh(new THREE.BoxGeometry(solariumW, 0.03, roofGlassLen), glassMat);
+          roofGlass.position.set(solX, bedHeight + solariumH * 0.91, (solStartZ + solEndZ) / 2);
+          roofGlass.rotation.x = roofGlassPitch;
+          solariumGroup.add(roofGlass);
+
+          // Left & Right Side Glazed End Walls
+          [-solariumW / 2, solariumW / 2].forEach(sx => {
+            const sideShape = new THREE.Shape();
+            sideShape.moveTo(0, 0);
+            sideShape.lineTo(solariumDepth, 0);
+            sideShape.lineTo(solariumDepth, solariumH * 0.82);
+            sideShape.lineTo(0, solariumH);
+            sideShape.closePath();
+
+            const sideGeom = new THREE.ShapeGeometry(sideShape);
+            const sideMesh = new THREE.Mesh(sideGeom, glassMat);
+            sideMesh.position.set(solX + sx, bedHeight, solStartZ);
+            sideMesh.rotation.y = sx > 0 ? Math.PI / 2 : -Math.PI / 2;
+            solariumGroup.add(sideMesh);
+
+            const sideBottomBeam = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.06, solariumDepth), frameMat);
+            sideBottomBeam.position.set(solX + sx, bedHeight + 0.03, (solStartZ + solEndZ) / 2);
+            solariumGroup.add(sideBottomBeam);
+          });
+
+          // Interior Hydroponic / Soil-Bed Microgreen Trays (Troop Wellness)
+          for (let pi = -1; pi <= 1; pi++) {
+            const pW = (solariumW * 0.24);
+            const planter = new THREE.Mesh(
+              new THREE.BoxGeometry(pW, 0.45, 0.65),
+              new THREE.MeshStandardMaterial({ color: 0x271e16, roughness: 0.9 })
+            );
+            planter.position.set(solX + pi * (pW + 0.2), bedHeight + 0.225, (solStartZ + solEndZ) / 2);
+            solariumGroup.add(planter);
+
+            // Lush green microgreens foliage layer
+            const greens = new THREE.Mesh(
+              new THREE.BoxGeometry(pW - 0.04, 0.08, 0.58),
+              new THREE.MeshStandardMaterial({ color: 0x22c55e, roughness: 0.6 })
+            );
+            greens.position.set(solX + pi * (pW + 0.2), bedHeight + 0.48, (solStartZ + solEndZ) / 2);
+            solariumGroup.add(greens);
+          }
+          tagObject(solariumGroup, 'ladakh_solarium');
+          shelterGroup.add(solariumGroup);
+
+          // 4. Grounded Basalt Dry-Stone Entrance Steps (Leading to Solarium Door)
+          const doorX = length * 0.35;
+          const airlockDoor = tagObject(new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.1, 0.08), trimMat), 'ladakh_solarium');
+          airlockDoor.position.set(doorX, bedHeight + 1.05, solEndZ + 0.04);
           shelterGroup.add(airlockDoor);
+
+          // 3 Solid Grounded Stone Slab Steps (from ground Y=0 up to bed Y=0.5m)
+          const nStoneSteps = 3;
+          const sRise = bedHeight / nStoneSteps;
+          for (let s = 0; s < nStoneSteps; s++) {
+            const sY = (s + 0.5) * sRise;
+            const sZ = solEndZ + 0.15 + (nStoneSteps - s) * 0.34;
+            const stoneStep = tagObject(new THREE.Mesh(
+              new THREE.BoxGeometry(1.4, sRise, 0.34),
+              new THREE.MeshStandardMaterial({ color: 0x271e16, roughness: 0.95 })
+            ), 'ladakh_basalt_bed');
+            stoneStep.position.set(doorX, sY, sZ);
+            stoneStep.castShadow = true;
+            stoneStep.receiveShadow = true;
+            shelterGroup.add(stoneStep);
+          }
 
         } else if (variant === 'gamma') {
           // Option C: Rammed-Basalt SCEB Fortress (350mm Earth Blocks + Turf Roof)
           const fortressMat = new THREE.MeshStandardMaterial({ color: 0x3d352b, roughness: 0.95 });
 
-          const walls = new THREE.Mesh(new THREE.BoxGeometry(length + 0.4, height, width + 0.4), fortressMat);
+          const stoneBed = tagObject(new THREE.Mesh(
+            new THREE.BoxGeometry(length + 1.4, bedHeight, width + 1.4),
+            new THREE.MeshStandardMaterial({ color: 0x271e16, roughness: 0.95 })
+          ), 'ladakh_basalt_bed');
+          stoneBed.position.set(0, bedHeight / 2, 0);
+          shelterGroup.add(stoneBed);
+
+          const walls = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length + 0.4, height, width + 0.4), fortressMat), 'ladakh_fortress');
           walls.position.set(0, bedHeight + height / 2, 0);
           walls.castShadow = true;
           shelterGroup.add(walls);
 
+          // Corner Heavy Buttresses
           [-length / 2 - 0.2, length / 2 + 0.2].forEach(bx => {
             [-width / 2 - 0.2, width / 2 + 0.2].forEach(bz => {
-              const buttress = new THREE.Mesh(new THREE.BoxGeometry(0.6, height + 0.2, 0.6), fortressMat);
+              const buttress = tagObject(new THREE.Mesh(new THREE.BoxGeometry(0.7, height + 0.2, 0.7), fortressMat), 'ladakh_fortress');
               buttress.position.set(bx, bedHeight + height / 2, bz);
               buttress.castShadow = true;
               shelterGroup.add(buttress);
             });
           });
 
-          const earthRoof = new THREE.Mesh(
-            new THREE.BoxGeometry(length + 0.6, 0.4, width + 0.6),
+          // Earthen Turf Green Roof
+          const earthRoof = tagObject(new THREE.Mesh(
+            new THREE.BoxGeometry(length + 0.7, 0.45, width + 0.7),
             new THREE.MeshStandardMaterial({ color: 0x2e3820, roughness: 0.9 })
-          );
-          earthRoof.position.set(0, bedHeight + height + 0.2, 0);
+          ), 'ladakh_fortress');
+          earthRoof.position.set(0, bedHeight + height + 0.22, 0);
           earthRoof.castShadow = true;
           shelterGroup.add(earthRoof);
 
-          const parapet = new THREE.Mesh(
-            new THREE.BoxGeometry(length + 0.7, 0.45, 0.3),
-            trimMat
-          );
+          const parapet = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length + 0.8, 0.45, 0.3), trimMat), 'ladakh_fortress');
           parapet.position.set(0, bedHeight + height + 0.4, width / 2 + 0.2);
           shelterGroup.add(parapet);
 
+          // Ballistic Slit Windows with Armor Shutters
           [-length * 0.25, 0].forEach(sx => {
-            const slit = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.9, 0.08), new THREE.MeshStandardMaterial({ color: 0x0f172a }));
+            const slit = tagObject(new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.9, 0.08), new THREE.MeshStandardMaterial({ color: 0x0f172a })), 'ladakh_fortress');
             slit.position.set(sx, bedHeight + height * 0.6, width / 2 + 0.22);
             shelterGroup.add(slit);
 
-            const shutter = new THREE.Mesh(new THREE.BoxGeometry(0.44, 0.94, 0.05), steelMat);
+            const shutter = tagObject(new THREE.Mesh(new THREE.BoxGeometry(0.44, 0.94, 0.05), steelMat), 'ladakh_fortress');
             shutter.position.set(sx + 0.25, bedHeight + height * 0.6, width / 2 + 0.25);
             shutter.rotation.y = 0.5;
             shelterGroup.add(shutter);
           });
 
-          const flushPv = createDetailedSolarModule(length * 0.7, width * 0.6, solarMat, aluMat);
-          flushPv.position.set(0, bedHeight + height + 0.45, -width * 0.1);
+          const flushPv = tagObject(createDetailedSolarModule(length * 0.7, width * 0.6, solarMat, aluMat), 'ladakh_fortress');
+          flushPv.position.set(0, bedHeight + height + 0.50, -width * 0.1);
           flushPv.rotation.x = -0.15;
           shelterGroup.add(flushPv);
 
-          const blastPortal = new THREE.Mesh(new THREE.BoxGeometry(1.5, 2.2, 0.4), darkSteelMat);
-          blastPortal.position.set(length * 0.32, bedHeight + 1.1, width / 2 + 0.3);
+          const blastPortal = tagObject(new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.3, 0.4), darkSteelMat), 'ladakh_fortress');
+          blastPortal.position.set(length * 0.32, bedHeight + 1.15, width / 2 + 0.3);
           shelterGroup.add(blastPortal);
+
+          // Grounded Stone Steps to Portal
+          for (let s = 0; s < 3; s++) {
+            const sY = (s + 0.5) * (bedHeight / 3);
+            const sZ = width / 2 + 0.3 + (3 - s) * 0.35;
+            const stp = tagObject(new THREE.Mesh(
+              new THREE.BoxGeometry(1.6, bedHeight / 3, 0.35),
+              new THREE.MeshStandardMaterial({ color: 0x271e16, roughness: 0.95 })
+            ), 'ladakh_basalt_bed');
+            stp.position.set(length * 0.32, sY, sZ);
+            shelterGroup.add(stp);
+          }
         }
       }
 
@@ -2614,9 +3019,9 @@
       // 3. THAR DESERT (BSF)
       // -------------------------------------------------------------------
       else if (theatre === 'thar') {
-        const plinthH = 0.3;
+        const plinthH = 0.35;
         const plinth = new THREE.Mesh(
-          new THREE.BoxGeometry(length + 1.2, plinthH, width + 1.2),
+          new THREE.BoxGeometry(length + 1.4, plinthH, width + 1.4),
           new THREE.MeshStandardMaterial({ color: 0x8a6336, roughness: 0.95 })
         );
         plinth.position.set(0, plinthH / 2, 0);
@@ -2626,151 +3031,218 @@
 
         if (variant === 'alpha') {
           // Option A: Badgir Wind-Master
-          const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+          tagObject(plinth, 'thar_badgir');
+
+          const walls = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat), 'thar_badgir');
           walls.position.set(0, plinthH + height / 2, 0);
           walls.castShadow = true;
           shelterGroup.add(walls);
 
-          const roof = new THREE.Mesh(
+          const roof = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(length + 0.6, 0.25, width + 0.6),
             new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.25, metalness: 0.1 })
-          );
+          ), 'thar_badgir');
           roof.position.set(0, plinthH + height + 0.125, 0);
           roof.castShadow = true;
           shelterGroup.add(roof);
 
-          const tW = 1.3;
-          const tH = 2.0;
+          // Dual Badgir Passive Wind-Towers
+          const tW = 1.35;
+          const tH = 2.1;
           [-length * 0.28, length * 0.28].forEach(tx => {
-            const tower = new THREE.Mesh(new THREE.BoxGeometry(tW, tH, tW), panelMat);
+            const tower = tagObject(new THREE.Mesh(new THREE.BoxGeometry(tW, tH, tW), panelMat), 'thar_badgir');
             tower.position.set(tx, plinthH + height + tH / 2, 0);
             tower.castShadow = true;
             shelterGroup.add(tower);
 
-            const louver = new THREE.Mesh(new THREE.BoxGeometry(tW * 0.82, 0.5, 0.06), steelMat);
-            louver.position.set(tx, plinthH + height + tH * 0.78, tW / 2 + 0.03);
+            // Aerodynamic Wind Intake Scoop
+            const scoop = tagObject(new THREE.Mesh(new THREE.BoxGeometry(tW * 0.85, 0.65, 0.3), steelMat), 'thar_badgir');
+            scoop.position.set(tx, plinthH + height + tH * 0.80, tW / 2 + 0.12);
+            shelterGroup.add(scoop);
+
+            // Dust Filter Louvers
+            const louver = tagObject(new THREE.Mesh(new THREE.BoxGeometry(tW * 0.82, 0.5, 0.06), darkSteelMat), 'thar_badgir');
+            louver.position.set(tx, plinthH + height + tH * 0.80, tW / 2 + 0.28);
             shelterGroup.add(louver);
           });
 
-          const chhajja = new THREE.Mesh(
-            new THREE.BoxGeometry(length * 0.9, 0.08, 1.3),
+          // Deep 1.2m Cantilevered Chhajja Solar Shading Eaves
+          const chhajja = tagObject(new THREE.Mesh(
+            new THREE.BoxGeometry(length * 0.94, 0.08, 1.35),
             new THREE.MeshStandardMaterial({ color: 0x9a3412, roughness: 0.8 })
-          );
-          chhajja.position.set(0, plinthH + height * 0.88, width / 2 + 0.65);
+          ), 'thar_chhajja');
+          chhajja.position.set(0, plinthH + height * 0.88, width / 2 + 0.68);
           chhajja.rotation.x = 0.18;
           chhajja.castShadow = true;
           shelterGroup.add(chhajja);
 
-          const deorhiFrame = new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.2, 0.1), new THREE.MeshStandardMaterial({ color: 0x451a03 }));
-          deorhiFrame.position.set(length * 0.32, plinthH + 1.1, width / 2 + 0.04);
+          // Support corbels under Chhajja
+          [-length * 0.35, -length * 0.15, length * 0.15, length * 0.35].forEach(cx => {
+            const corbel = tagObject(new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.25, 0.6), trimMat), 'thar_chhajja');
+            corbel.position.set(cx, plinthH + height * 0.84, width / 2 + 0.3);
+            shelterGroup.add(corbel);
+          });
+
+          // Shaded Deorhi Veranda Porch & Entrance
+          const deorhiFrame = tagObject(new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.2, 0.12), new THREE.MeshStandardMaterial({ color: 0x451a03 })), 'thar_chhajja');
+          deorhiFrame.position.set(length * 0.32, plinthH + 1.1, width / 2 + 0.06);
           shelterGroup.add(deorhiFrame);
 
-          const dLeft = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.95, 0.05), new THREE.MeshStandardMaterial({ color: 0x3e1805 }));
+          const dLeft = tagObject(new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.95, 0.05), new THREE.MeshStandardMaterial({ color: 0x3e1805 })), 'thar_chhajja');
           dLeft.position.set(length * 0.32 - 0.3, plinthH + 1.0, width / 2 - 0.15);
           dLeft.rotation.y = THREE.MathUtils.degToRad(35);
           shelterGroup.add(dLeft);
 
-          const dRight = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.95, 0.05), new THREE.MeshStandardMaterial({ color: 0x3e1805 }));
+          const dRight = tagObject(new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.95, 0.05), new THREE.MeshStandardMaterial({ color: 0x3e1805 })), 'thar_chhajja');
           dRight.position.set(length * 0.32 + 0.3, plinthH + 1.0, width / 2 - 0.15);
           dRight.rotation.y = THREE.MathUtils.degToRad(-35);
           shelterGroup.add(dRight);
 
+          // Grounded Sand Plinth Steps
+          for (let s = 0; s < 2; s++) {
+            const stepY = (s + 0.5) * (plinthH / 2);
+            const stepZ = width / 2 + 0.15 + (2 - s) * 0.35;
+            const stp = tagObject(new THREE.Mesh(
+              new THREE.BoxGeometry(1.6, plinthH / 2, 0.35),
+              new THREE.MeshStandardMaterial({ color: 0x8a6336, roughness: 0.95 })
+            ), 'thar_badgir');
+            stp.position.set(length * 0.32, stepY, stepZ);
+            stp.castShadow = true;
+            stp.receiveShadow = true;
+            shelterGroup.add(stp);
+          }
+
         } else if (variant === 'beta') {
           // Option B: Earth-Air Geothermal Qanat
-          const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+          tagObject(plinth, 'thar_qanat');
+
+          const walls = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat), 'thar_qanat');
           walls.position.set(0, plinthH + height / 2, 0);
           walls.castShadow = true;
           shelterGroup.add(walls);
 
-          const berm = new THREE.Mesh(
-            new THREE.BoxGeometry(length + 2.0, plinthH + 0.8, width + 2.0),
+          // Stabilized Sand Berm with retaining curbs
+          const berm = tagObject(new THREE.Mesh(
+            new THREE.BoxGeometry(length + 2.2, plinthH + 0.6, width + 2.2),
             new THREE.MeshStandardMaterial({ color: 0x9b7643, roughness: 0.98 })
-          );
-          berm.position.set(0, (plinthH + 0.8) / 2, 0);
+          ), 'thar_qanat');
+          berm.position.set(0, (plinthH + 0.6) / 2, 0);
           berm.receiveShadow = true;
           shelterGroup.add(berm);
 
-          const roof = new THREE.Mesh(
+          const roof = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(length + 0.5, 0.25, width + 0.5),
             new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0.1 })
-          );
+          ), 'thar_qanat');
           roof.position.set(0, plinthH + height + 0.125, 0);
           roof.castShadow = true;
           shelterGroup.add(roof);
 
-          const chimney = new THREE.Mesh(
+          // Blackened Solar Thermal Extraction Chimney
+          const chimney = tagObject(new THREE.Mesh(
             new THREE.CylinderGeometry(0.45, 0.55, 3.2, 16),
             new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.95 })
-          );
+          ), 'thar_qanat');
           chimney.position.set(0, plinthH + height + 1.6, -width * 0.35);
           chimney.castShadow = true;
           shelterGroup.add(chimney);
 
-          const chimneyCap = new THREE.Mesh(new THREE.ConeGeometry(0.7, 0.35, 16), darkSteelMat);
+          const chimneyCap = tagObject(new THREE.Mesh(new THREE.ConeGeometry(0.7, 0.35, 16), darkSteelMat), 'thar_qanat');
           chimneyCap.position.set(0, plinthH + height + 3.35, -width * 0.35);
           shelterGroup.add(chimneyCap);
 
+          // Subterranean Geothermal Cooling Inflow Pipes
           [-length * 0.35, length * 0.35].forEach(px => {
-            const pipe = new THREE.Mesh(
-              new THREE.CylinderGeometry(0.22, 0.22, 1.1, 16),
+            const pipe = tagObject(new THREE.Mesh(
+              new THREE.CylinderGeometry(0.22, 0.22, 1.2, 16),
               new THREE.MeshStandardMaterial({ color: 0xd97706, metalness: 0.8 })
-            );
-            pipe.position.set(px, 0.55, width / 2 + 1.2);
+            ), 'thar_qanat');
+            pipe.position.set(px, 0.6, width / 2 + 1.3);
             pipe.castShadow = true;
             shelterGroup.add(pipe);
 
-            const cowl = new THREE.Mesh(new THREE.ConeGeometry(0.35, 0.2, 16), steelMat);
-            cowl.position.set(px, 1.2, width / 2 + 1.2);
+            const cowl = tagObject(new THREE.Mesh(new THREE.ConeGeometry(0.35, 0.2, 16), steelMat), 'thar_qanat');
+            cowl.position.set(px, 1.25, width / 2 + 1.3);
             shelterGroup.add(cowl);
           });
 
-          const door = new THREE.Mesh(new THREE.BoxGeometry(1.1, 2.0, 0.08), trimMat);
+          const door = tagObject(new THREE.Mesh(new THREE.BoxGeometry(1.1, 2.0, 0.08), trimMat), 'thar_qanat');
           door.position.set(length * 0.32, plinthH + 1.0, width / 2 + 0.05);
           shelterGroup.add(door);
 
+          // Grounded Steps through Berm
+          for (let s = 0; s < 2; s++) {
+            const stepY = (s + 0.5) * (plinthH / 2);
+            const stepZ = width / 2 + 0.15 + (2 - s) * 0.35;
+            const stp = tagObject(new THREE.Mesh(
+              new THREE.BoxGeometry(1.4, plinthH / 2, 0.35),
+              new THREE.MeshStandardMaterial({ color: 0x8a6336, roughness: 0.95 })
+            ), 'thar_qanat');
+            stp.position.set(length * 0.32, stepY, stepZ);
+            shelterGroup.add(stp);
+          }
+
         } else if (variant === 'gamma') {
           // Option C: Kinetic PV Canopy Shield
-          const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
+          tagObject(plinth, 'thar_pv_canopy');
+
+          const walls = tagObject(new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat), 'thar_pv_canopy');
           walls.position.set(0, plinthH + height / 2, 0);
           walls.castShadow = true;
           shelterGroup.add(walls);
 
-          const innerCeiling = new THREE.Mesh(
+          const innerCeiling = tagObject(new THREE.Mesh(
             new THREE.BoxGeometry(length + 0.2, 0.20, width + 0.2),
             new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 })
-          );
+          ), 'thar_pv_canopy');
           innerCeiling.position.set(0, plinthH + height + 0.1, 0);
           shelterGroup.add(innerCeiling);
 
-          const canopyGap = 0.7;
-          const canopyW = width + 1.6;
-          const canopyL = length + 1.4;
+          const canopyGap = 0.75;
+          const canopyW = width + 1.8;
+          const canopyL = length + 1.6;
 
+          // Structural Steel Tubular Colonnade Posts
           for (let tx = -length / 2; tx <= length / 2; tx += length / 2) {
-            [-width / 2, width / 2].forEach(tz => {
-              const truss = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, canopyGap, 6), steelMat);
-              truss.position.set(tx, plinthH + height + 0.2 + canopyGap / 2, tz);
+            [-width / 2 - 0.2, width / 2 + 0.2].forEach(tz => {
+              const truss = tagObject(new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, canopyGap + height + 0.2, 8), steelMat), 'thar_pv_canopy');
+              truss.position.set(tx, plinthH + (canopyGap + height + 0.2) / 2, tz);
+              truss.castShadow = true;
               shelterGroup.add(truss);
             });
           }
 
-          const canopyRoof = createDetailedSolarModule(canopyL, canopyW, solarMat, aluMat);
+          // Double-Skin Floating Solar Parasol Roof Umbrella
+          const canopyRoof = tagObject(createDetailedSolarModule(canopyL, canopyW, solarMat, aluMat), 'thar_pv_canopy');
           canopyRoof.position.set(0, plinthH + height + 0.2 + canopyGap, 0);
           canopyRoof.rotation.x = -0.06;
           shelterGroup.add(canopyRoof);
 
+          // Terracotta Sand Jali Screens
           for (let jx = -length * 0.3; jx <= length * 0.1; jx += length * 0.2) {
-            const jali = new THREE.Mesh(
+            const jali = tagObject(new THREE.Mesh(
               new THREE.BoxGeometry(length * 0.16, height * 0.75, 0.05),
               new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.85 })
-            );
+            ), 'thar_pv_canopy');
             jali.position.set(jx, plinthH + height * 0.45, width / 2 + 0.5);
             shelterGroup.add(jali);
           }
 
-          const vDoor = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.0, 0.08), trimMat);
+          const vDoor = tagObject(new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.0, 0.08), trimMat), 'thar_pv_canopy');
           vDoor.position.set(length * 0.35, plinthH + 1.0, width / 2 + 0.05);
           shelterGroup.add(vDoor);
+
+          // Grounded Steps
+          for (let s = 0; s < 2; s++) {
+            const stepY = (s + 0.5) * (plinthH / 2);
+            const stepZ = width / 2 + 0.15 + (2 - s) * 0.35;
+            const stp = tagObject(new THREE.Mesh(
+              new THREE.BoxGeometry(1.5, plinthH / 2, 0.35),
+              new THREE.MeshStandardMaterial({ color: 0x8a6336, roughness: 0.95 })
+            ), 'thar_pv_canopy');
+            stp.position.set(length * 0.35, stepY, stepZ);
+            shelterGroup.add(stp);
+          }
         }
       }
 
@@ -2872,11 +3344,324 @@
     }
 
     // =====================================================================
+    // DRDO REAL-LIFE PHOTO INSPECTOR & CLICKABLE 3D COMPONENT CATALOG
+    // =====================================================================
+    const COMPONENT_CATALOG = {
+      // SIACHEN GLACIER
+      siachen_aeroridge: {
+        title: '55° Dual-Slope Bifacial Solar Roof & Ventilator Ridge',
+        category: 'Passive Solar & Snow Shedding',
+        badge: 'DRDO COMPONENT SPEC // SPSD-SIA-ALPHA',
+        image: 'assets/siachen_aeroridge_real.jpg',
+        desc: 'Engineered steep dual-pitch roof with high-efficiency bifacial solar PV modules capturing both direct southern solar irradiance and diffuse ambient snow reflection (+35% albedo boost) on the north pitch. Incorporates a ridge gravity chimney cowl for continuous sub-zero ventilation without freeze-up.',
+        specs: [
+          { key: 'Peak Power Gain', val: '+3,820 W (Dual Pitch)' },
+          { key: 'Snow Shed Angle', val: '55° Self-Clearing Pitch' },
+          { key: 'Snow Albedo ρ', val: '0.85 Glacial Reflection' },
+          { key: 'Roof Insulation', val: 'R = 12.8 m²K/W (VIP)' },
+          { key: 'Structural Ribs', val: 'Marine Alu Alloy 6061-T6' }
+        ],
+        camPos: [0, 4.2, 5.5],
+        camTarget: [0, 2.5, 0]
+      },
+      siachen_pylons: {
+        title: 'Telescopic Steel Pylons & Glacier Ice Augers',
+        category: 'Foundation & Crevasse Isolation',
+        badge: 'DRDO COMPONENT SPEC // SPSD-SIA-ALPHA',
+        image: 'assets/siachen_aeroridge_real.jpg',
+        desc: 'Elevates the habitat structure 1.4 meters above glacier pack-ice to prevent drift burial. Anchored by heavy-duty 1.8m screwed ice augers into permafrost, eliminating concrete curing requirements at sub-zero temperatures. Features cryogenic thermal breaks to isolate metal cold bridging.',
+        specs: [
+          { key: 'Elevation Height', val: '1.4 m Snowdrift Clearance' },
+          { key: 'Anchor System', val: 'Perimeter Screwed Ice Augers' },
+          { key: 'Thermal Break', val: 'HDPE Cryogenic Isolators' },
+          { key: 'Wind Stability', val: '198 km/h Gale Resistance' },
+          { key: 'Concrete Needed', val: '0.0 kg (Zero-Wet Footing)' }
+        ],
+        camPos: [-3.5, 1.2, 4.0],
+        camTarget: [-1.5, 0.6, 0]
+      },
+      siachen_stairs: {
+        title: 'Grounded Anti-Slip Military Access Stairs & Platform',
+        category: 'Personnel Safety & Ingress',
+        badge: 'DRDO COMPONENT SPEC // 100% GROUNDED ACCESS',
+        image: 'assets/siachen_aeroridge_real.jpg',
+        desc: 'All-steel elevated access platform and grounded diagonal flight of stairs. Features open-grating serrated galvanized treads that allow snow and slush to drop through, preventing ice glaze formation. Vertical support stanchions transfer all live loads directly to the glacier surface (Y=0).',
+        specs: [
+          { key: 'Tread Construction', val: 'Galvanized Open Serrated Grating' },
+          { key: 'Ground Interface', val: 'Continuous Steel Footer on Ice (Y=0)' },
+          { key: 'Handrail Height', val: '1.05 m Ergonomic Double Rail' },
+          { key: 'Load Rating', val: '5.0 kN/m² Live Combat Load' },
+          { key: 'Safety Feature', val: 'Zero Snow/Ice Accumulation' }
+        ],
+        camPos: [2.5, 2.0, 4.5],
+        camTarget: [1.8, 1.0, 3.0]
+      },
+      siachen_vestibule: {
+        title: 'Inward-Opening Arctic Airlock Vestibule',
+        category: 'Thermal Envelope & Entombment Prevention',
+        badge: 'DRDO COMPONENT SPEC // WEATHER AIRLOCK',
+        image: 'assets/siachen_aeroridge_real.jpg',
+        desc: 'Thermal airlock entry module featuring a sloped snow-shedding canopy and an inward-opening insulated cold-store personnel door. In high-altitude blizzards where external snowdrifts pile meters deep, inward opening ensures troops can never be trapped inside the shelter.',
+        specs: [
+          { key: 'Door Swing', val: 'Inward-Opening (Anti-Trap)' },
+          { key: 'Gasket System', val: 'Twin Cryogenic Silicone Seals' },
+          { key: 'Core Insulation', val: '100mm Vacuum Insulated Panel' },
+          { key: 'Infiltration Loss', val: 'Reduced by 85% vs Standard' },
+          { key: 'Observation Port', val: 'Heated Triple Glazing' }
+        ],
+        camPos: [2.8, 2.2, 3.8],
+        camTarget: [1.8, 1.4, 2.2]
+      },
+      siachen_quonset: {
+        title: 'Monolithic Parabolic Blizzard Vault Shell & Arch Ribs',
+        category: 'Super-Streamlined Aerodynamics',
+        badge: 'DRDO COMPONENT SPEC // SPSD-SIA-BETA',
+        image: 'assets/siachen_aeroridge_real.jpg',
+        desc: 'Continuous aerodynamic parabolic Quonset arch designed to shed catastrophic katabatic glacier winds up to 225 km/h. Monolithic curved insulated composite eliminates roof-to-wall joints where cold air normally leaks. Curved thin-film solar PV contours seamlessly along both slopes.',
+        specs: [
+          { key: 'Aerodynamic Drag', val: 'Cd = 0.38 (Super-Streamlined)' },
+          { key: 'Wind Rating', val: '225 km/h (Category-5 Blizzard)' },
+          { key: 'Snow Build-up', val: 'Zero Snow Retention on Apex' },
+          { key: 'Structural Ribs', val: 'Extruded Titanium Hoop Rings' },
+          { key: 'Guy Anchors', val: 'High-Tension Steel Turnbuckles' }
+        ],
+        camPos: [-3.0, 2.8, 4.0],
+        camTarget: [0, 1.5, 0]
+      },
+      siachen_arcticpod: {
+        title: 'Elevated Arctic Hex-Pod on 2m Cradle & Dual Solar Mast',
+        category: 'Rapid Heliborne Deployment',
+        badge: 'DRDO COMPONENT SPEC // SPSD-SIA-GAMMA',
+        image: 'assets/siachen_arcticpod_real.jpg',
+        desc: 'Monocoque aerospace composite shelter delivered as a single Mi-17V5 helicopter sling load directly to forward crests. Raised 2.0 meters on a heavy steel cradle so drifting blizzard snow flows freely underneath without touching the living module. Integrated 40kWh PCM thermal battery guarantees 72-hour zero-fuel survival.',
+        specs: [
+          { key: 'Erection Speed', val: '2.5 Hours Complete Setup' },
+          { key: 'Ground Clearance', val: '2.0 m Free Air Flow' },
+          { key: 'Solar Tracking', val: 'Dual-Axis Motorized Mast (+4.6 kW)' },
+          { key: 'Thermal Battery', val: '40 kWh Bio-PCM Latent Heat' },
+          { key: 'Helicopter Transport', val: '1 Single Mi-17V5 Sling Sortie' }
+        ],
+        camPos: [0, 3.4, 5.2],
+        camTarget: [0, 1.8, 0]
+      },
+
+      // LADAKH HIGH-ALTITUDE MOUNTAIN
+      ladakh_trombe: {
+        title: 'Basalt Thermal Mass Trombe Wall & Solar Air Dampers',
+        category: 'Passive Convective Solar Heating',
+        badge: 'DRDO COMPONENT SPEC // SPSD-LAD-ALPHA',
+        image: 'assets/ladakh_trombe_real.jpg',
+        desc: 'High-inertia Trombe wall assembly positioned on the south facade. A 300mm dense dark basalt rock absorber collects solar radiation through double-glazing during sunny sub-zero days. Heated air rises by thermosiphon convection into the barrack through upper damper vents, while lower return vents draw chilled floor air back for reheating.',
+        specs: [
+          { key: 'Thermal Absorber', val: '300 mm High-Density Dark Basalt' },
+          { key: 'Glazing System', val: 'Double Low-E Glazing (100mm gap)' },
+          { key: 'Convective Boost', val: '+18°C Inflow Air Temp Delta' },
+          { key: 'Night Heat Release', val: '12-Hour Thermal Lag (20:00 - 08:00)' },
+          { key: 'Damper Type', val: 'One-Way Gravity Backdraft Shutters' }
+        ],
+        camPos: [-0.6, 2.2, 4.4],
+        camTarget: [-0.6, 1.4, 2.0]
+      },
+      ladakh_solarium: {
+        title: 'Attached South Solarium Greenhouse & Hydroponic Microgreen Buffer',
+        category: 'Passive Solar & Fresh Life-Support',
+        badge: 'DRDO COMPONENT SPEC // SPSD-LAD-BETA',
+        image: 'assets/ladakh_solarium_real.jpg',
+        desc: 'Attached walk-in solar greenhouse buffer built on an extended basalt bedrock plinth. Features a thermally-broken extruded aluminum spaceframe with 16mm triple-wall UV-stabilized polycarbonate glazing. Captures extreme high-altitude Himalayan sun to create a +14°C to +20°C warm air cushion and houses multi-tier hydroponic trays providing fresh greens for troops in sub-zero winter.',
+        specs: [
+          { key: 'Glazing Material', val: '16mm Triple-Wall UV Polycarbonate' },
+          { key: 'Structural Frame', val: 'Thermally-Broken Marine Aluminum' },
+          { key: 'Thermal Buffer', val: '+16.5°C Solar Pre-Heat Chamber' },
+          { key: 'Troop Fresh Rations', val: 'Dual-Tier Microgreens (Spinach, Radish)' },
+          { key: 'Ventilation Damper', val: 'Filtered High-Altitude Intake Louvers' }
+        ],
+        camPos: [0, 2.2, 4.6],
+        camTarget: [0, 1.2, 2.2]
+      },
+      ladakh_basalt_bed: {
+        title: 'Dry-Stone Basalt Foundation Bed & Grounded Steps',
+        category: 'Zero-Cement Mountain Foundation',
+        badge: 'DRDO COMPONENT SPEC // GROUNDED PLINTH',
+        image: 'assets/ladakh_solarium_real.jpg',
+        desc: 'Solid 0.5-meter dry-stone foundation bed utilizing hand-dressed local basalt rocks and mountain moraine ballast. Creates a stable thermal flywheel beneath the living quarters while eliminating frost-heave differential settlement. Includes solid grounded stone slab steps leading directly down to ground level (Y=0).',
+        specs: [
+          { key: 'Plinth Height', val: '0.50 m Solid Bedding' },
+          { key: 'Aggregates Used', val: '100% Local Himalayan Basalt Rock' },
+          { key: 'Access Steps', val: '3 Grounded Basalt Slabs to Y=0' },
+          { key: 'Frost Protection', val: 'Subterranean Moraine Capillary Break' },
+          { key: 'Cement Required', val: 'Zero Wet Cement (Interlocking Dry Stone)' }
+        ],
+        camPos: [1.8, 1.4, 4.2],
+        camTarget: [1.2, 0.4, 2.6]
+      },
+      ladakh_fortress: {
+        title: 'Rammed-Basalt Stabilized Compressed Earth (SCEB) Fortress',
+        category: 'Thermal Flywheel & Ballistic Defense',
+        badge: 'DRDO COMPONENT SPEC // SPSD-LAD-GAMMA',
+        image: 'assets/ladakh_fortress_real.jpg',
+        desc: 'Permanent forward border defense habitat built with 350mm stabilized compressed earth blocks (SCEB) stabilized with local basalt fines. Heavy structural corner buttresses and an earthen living turf roof provide massive thermal inertia (zero temperature swing inside) along with STANAG Level-II ballistic shrapnel protection.',
+        specs: [
+          { key: 'Wall Composition', val: '350 mm SCEB Mud-Basalt Blocks' },
+          { key: 'Roof Assembly', val: '450 mm Turf Living Green Earthen Layer' },
+          { key: 'Ballistic Protection', val: 'STANAG Level II Splinter Resistant' },
+          { key: 'Thermal Damping', val: '40°C Outdoor Swing -> 2°C Indoor' },
+          { key: 'Window Apertures', val: 'Armored Ballistic Steel Slits' }
+        ],
+        camPos: [-3.2, 2.5, 4.2],
+        camTarget: [0, 1.5, 0]
+      },
+
+      // THAR DESERT (BSF BORDER)
+      thar_badgir: {
+        title: 'Dual Badgir Passive Wind-Catchers & Dust Louvers',
+        category: '100% Zero-Power Passive Desert Cooling',
+        badge: 'DRDO COMPONENT SPEC // SPSD-THA-ALPHA',
+        image: 'assets/thar_badgir_real.jpg',
+        desc: 'Twin traditional Badgir wind-towers adapted for military border outposts. The 2.1-meter elevated scoops capture fast high-altitude cooler desert breezes above sandstorm drift level. Air passes across porous evaporative baffles and down into living spaces, maintaining a continuous 0.8 m/s gentle cooling breeze without electricity.',
+        specs: [
+          { key: 'Tower Height', val: '2.1 m High-Pressure Scoop' },
+          { key: 'Air Exchange', val: '8.5 Air Changes / Hour (Zero Watt)' },
+          { key: 'Pre-Cooling Drop', val: '-8.5°C Evaporative Wind Chill' },
+          { key: 'Sand Filtration', val: 'Gravity Dust Baffles & Mesh' },
+          { key: 'Operation Mode', val: '100% Passive (Continuous 24/7)' }
+        ],
+        camPos: [-2.2, 3.8, 3.8],
+        camTarget: [-1.4, 2.8, 0]
+      },
+      thar_chhajja: {
+        title: '1.2m Cantilevered Solar Shading Chhajja Eaves & Deorhi',
+        category: 'Solar Radiation Interception',
+        badge: 'DRDO COMPONENT SPEC // SOLAR INTERCEPTION',
+        image: 'assets/thar_badgir_real.jpg',
+        desc: 'Deep 1.2m cantilevered overhang eaves anchored by reinforced corbel brackets. Blocks 92% of direct solar heat from striking exterior walls during extreme 48°C desert summers. Includes a shaded Deorhi double-door vestibule that acts as a sandstorm dust buffer.',
+        specs: [
+          { key: 'Overhang Cantilever', val: '1.20 m Shading Depth' },
+          { key: 'Solar Heat Cutoff', val: '92% Direct High-Noon Radiation' },
+          { key: 'Wall Temp Reduction', val: '-18°C Cooler Wall Exterior' },
+          { key: 'Entrance Buffer', val: 'Deorhi Sand Air-Lock Veranda' },
+          { key: 'Structural Corbels', val: 'Reinforced Steel Brackets' }
+        ],
+        camPos: [0, 2.0, 4.0],
+        camTarget: [0, 1.5, 1.8]
+      },
+      thar_qanat: {
+        title: 'Subterranean Earth-Air Geothermal Qanat & Solar Chimney',
+        category: 'Geothermal Heat-Sink Cooling',
+        badge: 'DRDO COMPONENT SPEC // SPSD-THA-BETA',
+        image: 'assets/thar_qanat_real.jpg',
+        desc: 'Exploits the stable 24°C subterranean sand temperature at 3 meters depth. External ambient air (+48°C) is drawn into underground geothermal cooling pipes, losing 16°C of sensible heat to the earth before entering the barracks. A 3.2m blackened solar chimney at the rear creates a powerful natural thermal updraft driving this loop continuously.',
+        specs: [
+          { key: 'Earth Heat-Sink', val: '3.0 m Depth (Constant 24°C)' },
+          { key: 'Cooling Delta', val: '-16°C Inflow Air Drop (+48°C -> +32°C)' },
+          { key: 'Solar Chimney', val: '3.2 m Blackened Thermal Draft Flue' },
+          { key: 'Cooling Power', val: '4.8 kW Natural Geo Heat Exchange' },
+          { key: 'Stabilized Berm', val: '0.8 m Sand Thermal Insulating Ring' }
+        ],
+        camPos: [0, 3.2, 4.5],
+        camTarget: [0, 1.8, 0]
+      },
+      thar_pv_canopy: {
+        title: 'Double-Skin Floating Solar Parasol Roof & Jali Screens',
+        category: 'Radiant Decoupling & Solar Energy',
+        badge: 'DRDO COMPONENT SPEC // SPSD-THA-GAMMA',
+        image: 'assets/thar_canopy_real.jpg',
+        desc: 'A secondary elevated parasol roof floating 0.75m above the barracks structure on tubular steel colonnade posts. Wind naturally flushes through the air gap, carrying away solar heat before it can penetrate into the ceiling. Perforated terracotta sand Jali screens diffuse harsh sunlight while generating high-velocity Venturi air jets.',
+        specs: [
+          { key: 'Canopy Air Gap', val: '0.75 m Free Convection Chimney' },
+          { key: 'Ceiling Temp Drop', val: '-24°C Reduction on Roof Slab' },
+          { key: 'Solar Generation', val: '6.8 kWp Bifacial Canopy PV' },
+          { key: 'Jali Diffusers', val: 'Terracotta Venturi Porous Screens' },
+          { key: 'Shading Factor', val: '100% Shadow Coverage of Building Core' }
+        ],
+        camPos: [0, 3.4, 5.0],
+        camTarget: [0, 2.0, 0]
+      }
+    };
+
+    const VARIANT_COMPONENTS = {
+      siachen: {
+        alpha: ['siachen_aeroridge', 'siachen_pylons', 'siachen_stairs', 'siachen_vestibule'],
+        beta:  ['siachen_quonset', 'siachen_stairs', 'siachen_vestibule'],
+        gamma: ['siachen_arcticpod', 'siachen_stairs']
+      },
+      ladakh: {
+        alpha: ['ladakh_trombe', 'ladakh_basalt_bed'],
+        beta:  ['ladakh_solarium', 'ladakh_basalt_bed'],
+        gamma: ['ladakh_fortress', 'ladakh_basalt_bed']
+      },
+      thar: {
+        alpha: ['thar_badgir', 'thar_chhajja'],
+        beta:  ['thar_qanat'],
+        gamma: ['thar_pv_canopy']
+      }
+    };
+
+    let activeComponentId = null;
+
+    function renderInspectorChips(theatreKey, variantKey) {
+      const container = document.getElementById('inspector-chips-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const compKeys = (VARIANT_COMPONENTS[theatreKey] && VARIANT_COMPONENTS[theatreKey][variantKey]) || [];
+      compKeys.forEach((k, idx) => {
+        const item = COMPONENT_CATALOG[k];
+        if (!item) return;
+        const btn = document.createElement('button');
+        btn.className = `insp-chip-btn ${idx === 0 ? 'active' : ''}`;
+        btn.id = `chip-${k}`;
+        btn.innerHTML = `🔍 ${item.title.split(' ')[0]} ${item.title.split(' ')[1] || ''}`;
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openComponentInspector(k);
+        });
+        container.appendChild(btn);
+      });
+    }
+
+    function openComponentInspector(compKey) {
+      const comp = COMPONENT_CATALOG[compKey];
+      if (!comp) return;
+      activeComponentId = compKey;
+
+      const drawer = document.getElementById('cad-inspector-drawer');
+      const badge = document.getElementById('insp-badge');
+      const title = document.getElementById('insp-title');
+      const img = document.getElementById('insp-img');
+      const desc = document.getElementById('insp-desc');
+      const tbody = document.getElementById('insp-specs-tbody');
+
+      if (badge) badge.textContent = comp.badge || comp.category.toUpperCase();
+      if (title) title.textContent = comp.title;
+      if (img) img.src = comp.image;
+      if (desc) desc.textContent = comp.desc;
+
+      if (tbody) {
+        tbody.innerHTML = '';
+        comp.specs.forEach(s => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="insp-spec-key">${s.key}</td>
+            <td class="insp-spec-val">${s.val}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      document.querySelectorAll('.insp-chip-btn').forEach(c => c.classList.remove('active'));
+      const activeChip = document.getElementById(`chip-${compKey}`);
+      if (activeChip) activeChip.classList.add('active');
+
+      if (drawer) drawer.classList.remove('hidden');
+    }
+
+    // =====================================================================
     // RENDER SHELTER DESIGN VARIANT SELECTORS (HUD + SIDEBAR + MODAL)
     // =====================================================================
     function selectVariant(vKey) {
       state.variant = vKey;
       renderVariantSelectors();
+      renderInspectorChips(state.theatre, vKey);
       buildRealisticCAD();
       if (modal.classList.contains('active')) {
         renderVariantCardsModal();
@@ -3081,6 +3866,7 @@
       renderCameraPresets(key);
       renderMaterialTable(key);
       renderVariantSelectors();
+      renderInspectorChips(key, state.variant);
       buildRealisticCAD();
     }
 
@@ -3097,7 +3883,100 @@
     renderMaterialTable('siachen');
     renderCameraPresets('siachen');
     renderVariantSelectors();
+    renderInspectorChips('siachen', 'alpha');
     buildRealisticCAD();
+
+    // =====================================================================
+    // 3D CLICK & HOVER RAYCASTER (INTERACTIVE COMPONENT INSPECTION)
+    // =====================================================================
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const hoverLabel = document.getElementById('cad-hover-label');
+
+    renderer.domElement.addEventListener('pointermove', (e) => {
+      const rect = renderer.domElement.getBoundingClientRect();
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(shelterGroup.children, true);
+
+      let hitComponent = null;
+      for (let i = 0; i < intersects.length; i++) {
+        let cur = intersects[i].object;
+        while (cur && cur !== shelterGroup) {
+          if (cur.userData && cur.userData.componentId) {
+            hitComponent = cur.userData.componentId;
+            break;
+          }
+          cur = cur.parent;
+        }
+        if (hitComponent) break;
+      }
+
+      if (hitComponent && COMPONENT_CATALOG[hitComponent]) {
+        renderer.domElement.style.cursor = 'pointer';
+        const c = COMPONENT_CATALOG[hitComponent];
+        if (hoverLabel) {
+          hoverLabel.style.display = 'block';
+          hoverLabel.style.left = `${e.clientX - rect.left}px`;
+          hoverLabel.style.top = `${e.clientY - rect.top}px`;
+          hoverLabel.innerHTML = `🔍 <strong>${c.title.split(' ')[0]} ${c.title.split(' ')[1] || ''}</strong> &bull; CLICK TO INSPECT REAL-LIFE PHOTO`;
+        }
+      } else {
+        renderer.domElement.style.cursor = 'default';
+        if (hoverLabel) hoverLabel.style.display = 'none';
+      }
+    });
+
+    renderer.domElement.addEventListener('pointerdown', (e) => {
+      const rect = renderer.domElement.getBoundingClientRect();
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(shelterGroup.children, true);
+
+      let hitComponent = null;
+      for (let i = 0; i < intersects.length; i++) {
+        let cur = intersects[i].object;
+        while (cur && cur !== shelterGroup) {
+          if (cur.userData && cur.userData.componentId) {
+            hitComponent = cur.userData.componentId;
+            break;
+          }
+          cur = cur.parent;
+        }
+        if (hitComponent) break;
+      }
+
+      if (hitComponent && COMPONENT_CATALOG[hitComponent]) {
+        openComponentInspector(hitComponent);
+      }
+    });
+
+    const btnZoom = document.getElementById('btn-zoom-component');
+    if (btnZoom) {
+      btnZoom.addEventListener('click', () => {
+        if (!activeComponentId) return;
+        const comp = COMPONENT_CATALOG[activeComponentId];
+        if (!comp || !comp.camPos) return;
+
+        const [px, py, pz] = comp.camPos;
+        const [tx, ty, tz] = comp.camTarget;
+
+        camera.position.set(px, py, pz);
+        controls.target.set(tx, ty, tz);
+      });
+    }
+
+    const btnCloseInsp = document.getElementById('btn-close-inspector');
+    if (btnCloseInsp) {
+      btnCloseInsp.addEventListener('click', () => {
+        const drawer = document.getElementById('cad-inspector-drawer');
+        if (drawer) drawer.classList.add('hidden');
+      });
+    }
 
     function animate() {
       requestAnimationFrame(animate);

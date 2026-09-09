@@ -575,18 +575,21 @@ export default function Shelter3DViewer({
     // =====================================================================
     else if (theatre === 'ladakh') {
       const bedH = 0.5;
-      const bed = new THREE.Mesh(new THREE.BoxGeometry(length + 1.0, bedH, width + 1.0), new THREE.MeshStandardMaterial({ color: 0x271e16 }));
-      bed.position.set(0, bedH / 2, 0);
-      shelterGroup.add(bed);
 
       if (variant === 'alpha') {
+        const bed = new THREE.Mesh(new THREE.BoxGeometry(length + 1.2, bedH, width + 1.2), new THREE.MeshStandardMaterial({ color: 0x271e16, roughness: 0.95 }));
+        bed.position.set(0, bedH / 2, 0);
+        shelterGroup.add(bed);
+
         const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
         walls.position.set(0, bedH + height / 2, 0);
+        walls.castShadow = true;
         shelterGroup.add(walls);
 
         const roofGeom = createGableRoofGeometry(length + 0.4, width + 0.6, 1.4);
         const roof = new THREE.Mesh(roofGeom, panelMat);
         roof.position.set(0, bedH + height + 0.7, 0);
+        roof.castShadow = true;
         shelterGroup.add(roof);
 
         const rack = createDetailedSolarModule(length * 0.8, 1.6);
@@ -594,41 +597,140 @@ export default function Shelter3DViewer({
         rack.rotation.x = -Math.PI / 4;
         shelterGroup.add(rack);
 
-        const win = new THREE.Mesh(new THREE.PlaneGeometry(Math.min(length * 0.5, 5), height * 0.7), new THREE.MeshStandardMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.75 }));
-        win.position.set(-length * 0.12, bedH + height / 2, width / 2 + 0.02);
+        // Trombe Wall Glazing Assembly
+        const win = new THREE.Mesh(new THREE.BoxGeometry(Math.min(length * 0.58, 6), height * 0.8, 0.03), new THREE.MeshStandardMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.72 }));
+        win.position.set(-length * 0.12, bedH + height / 2, width / 2 + 0.04);
         shelterGroup.add(win);
 
         const portal = new THREE.Mesh(new THREE.BoxGeometry(1.4, 2.2, 0.15), trimMat);
         portal.position.set(length * 0.32, bedH + 1.1, width / 2 + 0.05);
         shelterGroup.add(portal);
 
+        // Grounded stone steps down to ground (Y=0)
+        for (let s = 0; s < 3; s++) {
+          const sY = (s + 0.5) * (bedH / 3);
+          const sZ = width / 2 + 0.15 + (3 - s) * 0.34;
+          const stp = new THREE.Mesh(new THREE.BoxGeometry(1.4, bedH / 3, 0.34), new THREE.MeshStandardMaterial({ color: 0x271e16, roughness: 0.95 }));
+          stp.position.set(length * 0.32, sY, sZ);
+          shelterGroup.add(stp);
+        }
+
       } else if (variant === 'beta') {
-        const mainW = width - 1.2;
-        const mainWalls = new THREE.Mesh(new THREE.BoxGeometry(length, height, mainW), panelMat);
-        mainWalls.position.set(0, bedH + height / 2, -0.6);
+        // Option B: Solarium Green-Buffer
+        const solariumDepth = 2.0;
+        const mainWidth = width - 0.4;
+        const solariumW = length * 0.72;
+        const solariumH = height * 0.95;
+        const mainZ = -solariumDepth * 0.35;
+        const solEndZ = mainZ + mainWidth / 2 + solariumDepth;
+
+        // 1. Extended Basalt Masonry Foundation Bed (Zero Floating)
+        const totalBedZ = mainWidth + solariumDepth + 1.0;
+        const bedCenterZ = (mainZ - mainWidth / 2 + solEndZ) / 2;
+        const stoneBed = new THREE.Mesh(
+          new THREE.BoxGeometry(length + 1.2, bedH, totalBedZ),
+          new THREE.MeshStandardMaterial({ color: 0x271e16, roughness: 0.95 })
+        );
+        stoneBed.position.set(0, bedH / 2, bedCenterZ);
+        stoneBed.receiveShadow = true;
+        shelterGroup.add(stoneBed);
+
+        // 2. Main Living Core Barracks
+        const mainWalls = new THREE.Mesh(new THREE.BoxGeometry(length, height, mainWidth), panelMat);
+        mainWalls.position.set(0, bedH + height / 2, mainZ);
+        mainWalls.castShadow = true;
         shelterGroup.add(mainWalls);
 
-        const solarium = new THREE.Mesh(new THREE.PlaneGeometry(length * 0.7, height * 0.85), new THREE.MeshStandardMaterial({ color: 0x93c5fd, transparent: true, opacity: 0.6 }));
-        solarium.position.set(-length * 0.08, bedH + height * 0.45, width / 2);
-        shelterGroup.add(solarium);
+        const roofGeom = createGableRoofGeometry(length + 0.4, mainWidth + 0.4, 1.3);
+        const roof = new THREE.Mesh(roofGeom, panelMat);
+        roof.position.set(0, bedH + height + 0.65, mainZ);
+        roof.castShadow = true;
+        shelterGroup.add(roof);
 
         const rack = createDetailedSolarModule(length * 0.8, 1.4);
-        rack.position.set(0, bedH + height + 0.5, -0.6);
+        rack.position.set(0, bedH + height + 0.75, mainZ);
         rack.rotation.x = -Math.PI / 4;
         shelterGroup.add(rack);
 
+        // 3. Structural Aluminum Solarium Greenhouse Spaceframe
+        const solX = -length * 0.08;
+        const solStartZ = mainZ + mainWidth / 2;
+        const glassMat = new THREE.MeshStandardMaterial({ color: 0x93c5fd, transparent: true, opacity: 0.65, metalness: 0.85 });
+        const frameMat = new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.85 });
+
+        // Mullion posts & rafters
+        for (let c = 0; c <= 6; c++) {
+          const cx = solX - solariumW / 2 + (c * solariumW) / 6;
+          const fPost = new THREE.Mesh(new THREE.BoxGeometry(0.06, solariumH * 0.82, 0.06), frameMat);
+          fPost.position.set(cx, bedH + (solariumH * 0.82) / 2, solEndZ);
+          shelterGroup.add(fPost);
+
+          const rafterLen = Math.hypot(solariumDepth, solariumH * 0.18);
+          const rafter = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.06, rafterLen), frameMat);
+          rafter.position.set(cx, bedH + solariumH * 0.91, (solStartZ + solEndZ) / 2);
+          rafter.rotation.x = Math.atan2(solariumH * 0.18, solariumDepth);
+          shelterGroup.add(rafter);
+        }
+
+        const frontGlass = new THREE.Mesh(new THREE.BoxGeometry(solariumW, solariumH * 0.80, 0.03), glassMat);
+        frontGlass.position.set(solX, bedH + (solariumH * 0.80) / 2, solEndZ);
+        shelterGroup.add(frontGlass);
+
+        const roofGlass = new THREE.Mesh(new THREE.BoxGeometry(solariumW, 0.03, Math.hypot(solariumDepth, solariumH * 0.18)), glassMat);
+        roofGlass.position.set(solX, bedH + solariumH * 0.91, (solStartZ + solEndZ) / 2);
+        roofGlass.rotation.x = Math.atan2(solariumH * 0.18, solariumDepth);
+        shelterGroup.add(roofGlass);
+
+        // Hydroponic planter trays with microgreens
+        for (let pi = -1; pi <= 1; pi++) {
+          const pW = solariumW * 0.24;
+          const planter = new THREE.Mesh(new THREE.BoxGeometry(pW, 0.45, 0.65), new THREE.MeshStandardMaterial({ color: 0x271e16 }));
+          planter.position.set(solX + pi * (pW + 0.2), bedH + 0.225, (solStartZ + solEndZ) / 2);
+          shelterGroup.add(planter);
+
+          const greens = new THREE.Mesh(new THREE.BoxGeometry(pW - 0.04, 0.08, 0.58), new THREE.MeshStandardMaterial({ color: 0x22c55e, roughness: 0.6 }));
+          greens.position.set(solX + pi * (pW + 0.2), bedH + 0.48, (solStartZ + solEndZ) / 2);
+          shelterGroup.add(greens);
+        }
+
+        // Entrance door & grounded stone steps
+        const doorX = length * 0.35;
+        const airlockDoor = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.1, 0.08), trimMat);
+        airlockDoor.position.set(doorX, bedH + 1.05, solEndZ + 0.04);
+        shelterGroup.add(airlockDoor);
+
+        for (let s = 0; s < 3; s++) {
+          const sY = (s + 0.5) * (bedH / 3);
+          const sZ = solEndZ + 0.15 + (3 - s) * 0.34;
+          const stp = new THREE.Mesh(new THREE.BoxGeometry(1.4, bedH / 3, 0.34), new THREE.MeshStandardMaterial({ color: 0x271e16, roughness: 0.95 }));
+          stp.position.set(doorX, sY, sZ);
+          shelterGroup.add(stp);
+        }
+
       } else if (variant === 'gamma') {
-        const walls = new THREE.Mesh(new THREE.BoxGeometry(length + 0.4, height, width + 0.4), panelMat);
+        const walls = new THREE.Mesh(new THREE.BoxGeometry(length + 0.4, height, width + 0.4), new THREE.MeshStandardMaterial({ color: 0x3d352b }));
         walls.position.set(0, bedH + height / 2, 0);
         shelterGroup.add(walls);
 
-        const earthRoof = new THREE.Mesh(new THREE.BoxGeometry(length + 0.6, 0.4, width + 0.6), new THREE.MeshStandardMaterial({ color: 0x2e3820 }));
-        earthRoof.position.set(0, bedH + height + 0.2, 0);
+        const earthRoof = new THREE.Mesh(new THREE.BoxGeometry(length + 0.7, 0.45, width + 0.7), new THREE.MeshStandardMaterial({ color: 0x2e3820 }));
+        earthRoof.position.set(0, bedH + height + 0.22, 0);
         shelterGroup.add(earthRoof);
 
-        const parapet = new THREE.Mesh(new THREE.BoxGeometry(length + 0.7, 0.4, 0.3), trimMat);
+        const parapet = new THREE.Mesh(new THREE.BoxGeometry(length + 0.8, 0.45, 0.3), trimMat);
         parapet.position.set(0, bedH + height + 0.4, width / 2 + 0.2);
         shelterGroup.add(parapet);
+
+        const portal = new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.3, 0.4), darkSteelMat);
+        portal.position.set(length * 0.32, bedH + 1.15, width / 2 + 0.3);
+        shelterGroup.add(portal);
+
+        for (let s = 0; s < 3; s++) {
+          const sY = (s + 0.5) * (bedH / 3);
+          const sZ = width / 2 + 0.3 + (3 - s) * 0.35;
+          const stp = new THREE.Mesh(new THREE.BoxGeometry(1.6, bedH / 3, 0.35), new THREE.MeshStandardMaterial({ color: 0x271e16 }));
+          stp.position.set(length * 0.32, sY, sZ);
+          shelterGroup.add(stp);
+        }
       }
     }
 
@@ -636,8 +738,8 @@ export default function Shelter3DViewer({
     // 3. THAR DESERT (BSF)
     // =====================================================================
     else if (theatre === 'thar') {
-      const plinthH = 0.3;
-      const plinth = new THREE.Mesh(new THREE.BoxGeometry(length + 1.2, plinthH, width + 1.2), new THREE.MeshStandardMaterial({ color: 0x8a6336 }));
+      const plinthH = 0.35;
+      const plinth = new THREE.Mesh(new THREE.BoxGeometry(length + 1.4, plinthH, width + 1.4), new THREE.MeshStandardMaterial({ color: 0x8a6336 }));
       plinth.position.set(0, plinthH / 2, 0);
       shelterGroup.add(plinth);
 
@@ -650,41 +752,85 @@ export default function Shelter3DViewer({
         roof.position.set(0, plinthH + height + 0.125, 0);
         shelterGroup.add(roof);
 
+        // Dual Badgir Wind Towers
         [-length * 0.28, length * 0.28].forEach(tx => {
-          const tower = new THREE.Mesh(new THREE.BoxGeometry(1.3, 2.0, 1.3), panelMat);
-          tower.position.set(tx, plinthH + height + 1.0, 0);
+          const tower = new THREE.Mesh(new THREE.BoxGeometry(1.35, 2.1, 1.35), panelMat);
+          tower.position.set(tx, plinthH + height + 1.05, 0);
           shelterGroup.add(tower);
+
+          const scoop = new THREE.Mesh(new THREE.BoxGeometry(1.15, 0.65, 0.3), steelMat);
+          scoop.position.set(tx, plinthH + height + 1.65, 0.78);
+          shelterGroup.add(scoop);
         });
 
-        const chhajja = new THREE.Mesh(new THREE.BoxGeometry(length * 0.9, 0.08, 1.3), new THREE.MeshStandardMaterial({ color: 0x9a3412 }));
-        chhajja.position.set(0, plinthH + height * 0.88, width / 2 + 0.65);
+        const chhajja = new THREE.Mesh(new THREE.BoxGeometry(length * 0.94, 0.08, 1.35), new THREE.MeshStandardMaterial({ color: 0x9a3412 }));
+        chhajja.position.set(0, plinthH + height * 0.88, width / 2 + 0.68);
         chhajja.rotation.x = 0.18;
         shelterGroup.add(chhajja);
 
+        for (let s = 0; s < 2; s++) {
+          const stepY = (s + 0.5) * (plinthH / 2);
+          const stepZ = width / 2 + 0.15 + (2 - s) * 0.35;
+          const stp = new THREE.Mesh(new THREE.BoxGeometry(1.6, plinthH / 2, 0.35), new THREE.MeshStandardMaterial({ color: 0x8a6336 }));
+          stp.position.set(length * 0.32, stepY, stepZ);
+          shelterGroup.add(stp);
+        }
+
       } else if (variant === 'beta') {
+        // Option B: Earth-Air Qanat Loop
+        const berm = new THREE.Mesh(new THREE.BoxGeometry(length + 2.2, plinthH + 0.6, width + 2.2), new THREE.MeshStandardMaterial({ color: 0x9b7643 }));
+        berm.position.set(0, (plinthH + 0.6) / 2, 0);
+        shelterGroup.add(berm);
+
         const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
         walls.position.set(0, plinthH + height / 2, 0);
         shelterGroup.add(walls);
 
-        const chimney = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.5, 3.2, 16), new THREE.MeshStandardMaterial({ color: 0x18181b }));
+        const chimney = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.55, 3.2, 16), new THREE.MeshStandardMaterial({ color: 0x18181b }));
         chimney.position.set(0, plinthH + height + 1.6, -width * 0.35);
         shelterGroup.add(chimney);
 
-        [-length * 0.3, length * 0.3].forEach(px => {
-          const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 1.0, 12), new THREE.MeshStandardMaterial({ color: 0xd97706 }));
-          pipe.position.set(px, 0.5, width / 2 + 1.1);
+        [-length * 0.35, length * 0.35].forEach(px => {
+          const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 1.2, 16), new THREE.MeshStandardMaterial({ color: 0xd97706 }));
+          pipe.position.set(px, 0.6, width / 2 + 1.3);
           shelterGroup.add(pipe);
         });
 
+        for (let s = 0; s < 2; s++) {
+          const stepY = (s + 0.5) * (plinthH / 2);
+          const stepZ = width / 2 + 0.15 + (2 - s) * 0.35;
+          const stp = new THREE.Mesh(new THREE.BoxGeometry(1.4, plinthH / 2, 0.35), new THREE.MeshStandardMaterial({ color: 0x8a6336 }));
+          stp.position.set(length * 0.32, stepY, stepZ);
+          shelterGroup.add(stp);
+        }
+
       } else if (variant === 'gamma') {
+        // Option C: Kinetic PV Canopy
         const walls = new THREE.Mesh(new THREE.BoxGeometry(length, height, width), panelMat);
         walls.position.set(0, plinthH + height / 2, 0);
         shelterGroup.add(walls);
 
-        const canopyRoof = createDetailedSolarModule(length + 1.2, width + 1.4);
-        canopyRoof.position.set(0, plinthH + height + 0.8, 0);
+        const canopyGap = 0.75;
+        for (let tx = -length / 2; tx <= length / 2; tx += length / 2) {
+          [-width / 2 - 0.2, width / 2 + 0.2].forEach(tz => {
+            const truss = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, canopyGap + height + 0.2, 8), steelMat);
+            truss.position.set(tx, plinthH + (canopyGap + height + 0.2) / 2, tz);
+            shelterGroup.add(truss);
+          });
+        }
+
+        const canopyRoof = createDetailedSolarModule(length + 1.6, width + 1.8);
+        canopyRoof.position.set(0, plinthH + height + 0.2 + canopyGap, 0);
         canopyRoof.rotation.x = -0.06;
         shelterGroup.add(canopyRoof);
+
+        for (let s = 0; s < 2; s++) {
+          const stepY = (s + 0.5) * (plinthH / 2);
+          const stepZ = width / 2 + 0.15 + (2 - s) * 0.35;
+          const stp = new THREE.Mesh(new THREE.BoxGeometry(1.5, plinthH / 2, 0.35), new THREE.MeshStandardMaterial({ color: 0x8a6336 }));
+          stp.position.set(length * 0.35, stepY, stepZ);
+          shelterGroup.add(stp);
+        }
       }
     }
 
