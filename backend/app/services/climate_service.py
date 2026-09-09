@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import json
+import time
 from urllib.error import URLError
 from urllib.parse import urlencode
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 import numpy as np
 
@@ -23,11 +24,19 @@ def fetch_forecast(latitude: float, longitude: float, hours: int = 24) -> Climat
     query = urlencode({"latitude": latitude, "longitude": longitude, "hourly": HOURLY_FIELDS,
                        "forecast_days": max(1, min(7, (hours + 23) // 24)), "timezone": "GMT"})
     url = f"https://api.open-meteo.com/v1/forecast?{query}"
-    try:
-        with urlopen(url, timeout=12) as response:
-            payload = json.load(response)
-    except (URLError, TimeoutError, json.JSONDecodeError) as exc:
-        raise RuntimeError("Open-Meteo climate data could not be retrieved") from exc
+    req = Request(url, headers={"User-Agent": "DRDO-SPSD-Thermal-Engine/1.0"})
+    last_exc = None
+    payload = None
+    for attempt in range(3):
+        try:
+            with urlopen(req, timeout=15) as response:
+                payload = json.load(response)
+                break
+        except (URLError, TimeoutError, json.JSONDecodeError) as exc:
+            last_exc = exc
+            time.sleep(0.8)
+    if payload is None:
+        raise RuntimeError("Open-Meteo climate data could not be retrieved") from last_exc
 
     hourly = payload.get("hourly", {})
     def values(field: str) -> np.ndarray:
