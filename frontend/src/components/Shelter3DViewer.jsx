@@ -13,9 +13,13 @@ export default function Shelter3DViewer({
   height = 3,
   orientation = 180,
   windowArea = 5,
-  theatre = 'siachen', // 'siachen' | 'ladakh' | 'thar'
+  theatre = 'siachen', // 'siachen' | 'ladakh' | 'thar' | 'temperate'
   variant = 'alpha',   // 'alpha' | 'beta' | 'gamma'
-  occupants = 8
+  occupants = 8,
+  sunHour = 12,
+  heatmapMode = false,
+  cutawayMode = false,
+  archetypeTitle = '',
 }) {
   const mountRef = useRef(null);
 
@@ -58,26 +62,35 @@ export default function Shelter3DViewer({
     controls.maxDistance = 80;
     controls.target.set(0, 1.4, 0);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    scene.add(new THREE.AmbientLight(0xffffff, 0.45));
     const sun = new THREE.DirectionalLight(0xfffaed, 2.0);
-    sun.position.set(25, 40, 25);
+
+    // Dynamic solar positioning across 24 hours
+    const isDay = sunHour >= 5 && sunHour <= 19;
+    const hourAngle = ((sunHour - 6) / 12) * Math.PI;
+    const sunElevation = Math.max(0.08, Math.sin(hourAngle));
+    const sunAzimuth = Math.cos(hourAngle);
+    sun.position.set(sunAzimuth * 45, Math.max(4, sunElevation * 45), 25);
+    sun.intensity = isDay ? (1.5 + Math.sin(hourAngle) * 1.5) : 0.2;
+    sun.color.setHex(isDay ? (sunHour <= 7 || sunHour >= 17 ? 0xffb774 : 0xfffaed) : 0x38bdf8);
     sun.castShadow = true;
     sun.shadow.mapSize.width = 1024;
     sun.shadow.mapSize.height = 1024;
     sun.shadow.bias = -0.0004;
     scene.add(sun);
 
-    const hemi = new THREE.HemisphereLight(0x7dd3fc, 0xe2e8f0, 0.45);
+    const hemi = new THREE.HemisphereLight(0x7dd3fc, 0xe2e8f0, isDay ? 0.45 : 0.15);
     hemi.position.set(0, 50, 0);
     scene.add(hemi);
 
     const groundColors = {
       siachen: 0xe5eef5,
       ladakh: 0x3d352b,
-      thar: 0xb5925e
+      thar: 0xb5925e,
+      temperate: 0x273822
     };
     const groundMat = new THREE.MeshStandardMaterial({
-      color: groundColors[theatre] || 0xe5eef5,
+      color: groundColors[theatre] || 0x273822,
       roughness: 0.95,
       metalness: 0.05
     });
@@ -94,14 +107,24 @@ export default function Shelter3DViewer({
     const camoColors = {
       siachen: 0xdde6ed,
       ladakh: 0x303f26,
-      thar: 0xd2b588
+      thar: 0xd2b588,
+      temperate: 0x3f4f3e
     };
-    const panelMat = new THREE.MeshStandardMaterial({ color: camoColors[theatre] || 0xdde6ed, roughness: 0.65, metalness: 0.2 });
-    const steelMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.85, roughness: 0.35 });
-    const darkSteelMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.8, roughness: 0.4 });
+
+    let panelMat;
+    if (heatmapMode) {
+      panelMat = new THREE.MeshStandardMaterial({ color: 0xf97316, roughness: 0.35, metalness: 0.1 });
+    } else if (cutawayMode) {
+      panelMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.38, wireframe: false });
+    } else {
+      panelMat = new THREE.MeshStandardMaterial({ color: camoColors[theatre] || 0x3f4f3e, roughness: 0.65, metalness: 0.2 });
+    }
+
+    const steelMat = new THREE.MeshStandardMaterial({ color: heatmapMode ? 0x0284c7 : 0x1e293b, metalness: 0.85, roughness: 0.35 });
+    const darkSteelMat = new THREE.MeshStandardMaterial({ color: heatmapMode ? 0x0369a1 : 0x0f172a, metalness: 0.8, roughness: 0.4 });
     const aluMat = new THREE.MeshStandardMaterial({ color: 0xd4d4d8, metalness: 0.9, roughness: 0.25 });
-    const solarMat = new THREE.MeshStandardMaterial({ color: 0x102a43, roughness: 0.12, metalness: 0.9 });
-    const trimMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.85 });
+    const solarMat = new THREE.MeshStandardMaterial({ color: heatmapMode ? 0xd97706 : 0x102a43, roughness: 0.12, metalness: 0.9 });
+    const trimMat = new THREE.MeshStandardMaterial({ color: heatmapMode ? 0xef4444 : 0x0f172a, roughness: 0.85 });
 
     function createGableRoofGeometry(rLen, rWidth, rHeight) {
       const shape = new THREE.Shape();
@@ -861,27 +884,32 @@ export default function Shelter3DViewer({
       }
       if (currentMount && renderer.domElement) currentMount.removeChild(renderer.domElement);
     };
-  }, [length, width, height, orientation, windowArea, theatre, variant, occupants]);
+  }, [length, width, height, orientation, windowArea, theatre, variant, occupants, sunHour, heatmapMode, cutawayMode]);
 
   const variantLabels = {
     siachen: {
-      alpha: 'Option A: Aero-Ridge Dual-Solar (55° Bifacial Solar Roof & VIP Flat-Pack)',
-      beta: 'Option B: Blizzard-Vault Quonset Arch (Cd=0.38 & 225 km/h Hurricane Rating)',
-      gamma: 'Option C: Arctic-Pod Autonomous Bunker (72h Zero-Fuel & 40kWh Bio-PCM)'
+      alpha: 'Aero-Ridge Dual-Solar (55° Bifacial Solar Roof & VIP Pod)',
+      beta: 'Blizzard-Vault Quonset Arch (225 km/h Wind Rating)',
+      gamma: 'Arctic-Pod Autonomous Bunker (72h Zero-Fuel Bio-PCM)'
     },
     ladakh: {
-      alpha: 'Option A: Solaris-Trombe Mass (Direct-Gain Trombe Wall & Basalt Bed)',
-      beta: 'Option B: Solarium Green-Buffer (Attached Greenhouse & Fresh-Air Preheating)',
-      gamma: 'Option C: Rammed-Basalt SCEB Fortress (350mm Ballistic Earth Walls & Turf Roof)'
+      alpha: 'Solaris-Trombe Mass Wall (Direct-Gain & Basalt Bed)',
+      beta: 'Solarium Green-Buffer (Attached Sunspace Preheating)',
+      gamma: 'Rammed-Basalt SCEB Fortress (350mm Ballistic Earth Walls)'
     },
     thar: {
-      alpha: 'Option A: Badgir Wind-Master (Dual Natural Wind-Towers & 1.2m Deep Chhajja)',
-      beta: 'Option B: Earth-Air Geothermal Qanat (24°C Subterranean Loop & Solar Chimney)',
-      gamma: 'Option C: Kinetic PV Canopy Shield (Double-Skin Parasol Roof & 6.5kW Solar)'
+      alpha: 'Badgir Wind-Master (Dual Natural Wind-Towers & Chhajja)',
+      beta: 'Earth-Air Geothermal Qanat (24°C Subterranean Loop)',
+      gamma: 'Kinetic PV Canopy Shield (Double-Skin Parasol Roof)'
+    },
+    temperate: {
+      alpha: 'Solaris-Trombe Mass (Direct-Gain Trombe Wall)',
+      beta: 'Solarium Green-Buffer (Attached Sunspace Preheating)',
+      gamma: 'Multi-Season Hybrid Passive Shelter'
     }
   };
 
-  const activeLabel = (variantLabels[theatre] && variantLabels[theatre][variant]) || variant.toUpperCase();
+  const activeLabel = archetypeTitle || (variantLabels[theatre] && variantLabels[theatre][variant]) || variant.toUpperCase();
 
   return (
     <div style={{ width: '100%', height: '520px', display: 'flex', flexDirection: 'column', borderRadius: '4px', overflow: 'hidden', border: '1px solid #1c2b20', background: '#060a0f' }}>
@@ -901,11 +929,15 @@ export default function Shelter3DViewer({
         zIndex: 10
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ background: '#84cc16', color: '#000', fontWeight: 800, padding: '2px 6px', borderRadius: '2px', fontSize: '10px' }}>TEAM HYDRA</span>
-          <strong style={{ color: '#84cc16' }}>DRDO CAD &bull; {theatre.toUpperCase()} &bull; {activeLabel}</strong>
+          <span style={{ background: '#84cc16', color: '#000', fontWeight: 800, padding: '2px 6px', borderRadius: '2px', fontSize: '10px' }}>3D DIGITAL TWIN</span>
+          <strong style={{ color: '#84cc16' }}>{activeLabel}</strong>
+          {heatmapMode && <span style={{ background: 'rgba(239,68,68,0.2)', border: '1px solid #ef4444', color: '#f87171', padding: '1px 5px', borderRadius: '2px', fontSize: '9px' }}>HEATMAP ON</span>}
+          {cutawayMode && <span style={{ background: 'rgba(56,189,248,0.2)', border: '1px solid #38bdf8', color: '#38bdf8', padding: '1px 5px', borderRadius: '2px', fontSize: '9px' }}>LAYER X-RAY</span>}
         </div>
-        <div style={{ color: '#64748b', fontSize: '10px' }}>
-          Logistics: <span style={{ color: '#38bdf8' }}>{theatre === 'siachen' ? (occupants <= 4 ? '2.1T • 2 Sorties' : (occupants <= 8 ? '4.4T • 3-4 Sorties' : '7.2T • 5-6 Sorties')) : (theatre === 'ladakh' ? (occupants <= 8 ? '18.8T • 4 ALS Trucks' : '32.5T • 7 Trucks') : (occupants <= 8 ? '9.8T • 2 Tatra Trucks' : '16.4T • 3 Trucks'))}</span>
+        <div style={{ color: '#64748b', fontSize: '10px', display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <span>SUN: <strong style={{ color: '#facc15' }}>{String(sunHour).padStart(2, '0')}:00 HRS</strong></span>
+          <span>|</span>
+          <span>Logistics: <span style={{ color: '#38bdf8' }}>{theatre === 'siachen' ? (occupants <= 4 ? '2.1T • 2 Sorties' : (occupants <= 8 ? '4.4T • 3-4 Sorties' : '7.2T • 5-6 Sorties')) : (theatre === 'ladakh' ? (occupants <= 8 ? '18.8T • 4 ALS Trucks' : '32.5T • 7 Trucks') : (occupants <= 8 ? '9.8T • 2 Tatra Trucks' : '16.4T • 3 Trucks'))}</span></span>
         </div>
       </div>
 

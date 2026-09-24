@@ -1,0 +1,46 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run backend API",
+			"type": "shell",
+			"command": "C:/Python314/python.exe -m uvicorn backend.app.main:app --reload --port 8000",
+			"isBackground": true,
+			"problemMatcher": [
+				"$python"
+			]
+		},
+		{
+			"label": "Install frontend deps",
+			"type": "shell",
+			"command": "cd frontend && npm install",
+			"isBackground": false
+		},
+		{
+			"label": "Run frontend",
+			"type": "shell",
+			"command": "npm run dev",
+			"options": {
+				"cwd": "${workspaceFolder}/frontend"
+			},
+			"isBackground": true
+		},
+		{
+			"label": "Start backend (uvicorn)",
+			"type": "shell",
+			"command": "C:/Python314/python.exe -m uvicorn backend.app.main:app --reload --port 8000",
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	],
+	"compounds": [
+		{
+			"label": "Run Full App",
+			"dependsOn": [
+				"Run backend API",
+				"Run frontend"
+			],
+			"dependsOrder": "parallel"
+		}
+	]
+}
