@@ -182,12 +182,12 @@ SIH_2026/
 
 |      Name     |    Role     |
 |:---|:---|
-|  Ayush Kohli  | Team Leader |
-| Kartikey Negi |  Database   |
-| — | — |
-| — | — |
-| — | — |
-| — | — |
+|  Ayush Kohli  | Team Leader + Thermal Simulation |
+| Kartikey Negi |  Optimization + 3D + Integration   |
+| Daksh Dhingra | Presentator |
+| Dhruv Prjapat | Backend + Climate + Database |
+| Ojas Pandya | Frontend |
+| Khushi | PPT Maker |
 
 </div>
 
