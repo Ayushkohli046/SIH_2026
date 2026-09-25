@@ -178,7 +178,6 @@ SIH_2026/
 
 <div align="center">
 
-*Add your team name and members here*
 
 |      Name     |    Role     |
 |:---|:---|
@@ -193,13 +192,6 @@ SIH_2026/
 
 <br>
 
-## 🤝 Contributing
-
-Issues and PRs are welcome. Please open an issue to discuss any major change before submitting a pull request.
-
-## 📜 License
-
-MIT — see `LICENSE` for details.
 
 <br>
 
