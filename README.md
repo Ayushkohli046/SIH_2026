@@ -180,8 +180,12 @@ SIH_2026/
 
 *Add your team name and members here*
 
-| Name | Role |
+|      Name     |    Role     |
 |:---|:---|
+|  Ayush Kohli  | Team Leader |
+| Kartikey Negi |  Database   |
+| — | — |
+| — | — |
 | — | — |
 | — | — |
 
