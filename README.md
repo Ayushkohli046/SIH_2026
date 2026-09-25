@@ -20,12 +20,33 @@
 
 <br>
 
-## 🎯 Problem Statement
+## 🧩 Problem Statement
 
-Personnel stationed at India's most hostile frontiers — the **sub-zero glaciers of Siachen**, the **high-altitude cold desert of Ladakh**, and the **scorching Thar Desert** — depend heavily on power-intensive active heating and cooling to survive. Fuel and power logistics to these forward posts are costly, risky, and often unreliable.
+| | |
+|---|---|
+| **Problem Statement ID** | 26051 |
+| **Title** | Software-Based Model Development for Design of Area-Specific Shelter for Thermal Comfort Maintenance |
+| **Theme** | Miscellaneous |
+| **PS Category** | Software |
+| **Team Name** | Hydra |
 
-**Smart Passive Shelter** is a decision-support platform that designs and validates **passive thermal shelters** — structures that use architecture and material science, not machinery, to stay livable in extreme climates. It models proven passive strategies (Trombe walls, arctic pods, badgir wind-catchers, qanat cooling) and runs a physics-based thermal simulation to predict real-world performance before a single structure is built.
+Personnel stationed in extreme and remote environments — cold deserts, high-altitude terrain, and hot arid zones — rely heavily on active heating and cooling systems to stay thermally comfortable. This dependence increases energy consumption, logistical burden, and operational cost, while offering no way to compare or validate shelter designs *before* they are built for a specific location's climate.
 
+There is currently no accessible, physics-based tool that lets designers input a location and environmental conditions and receive a data-backed, optimized shelter design in return.
+
+<br>
+
+## 💡 Proposed Solution — Hydra: Smart Passive Shelter Designer
+
+**Hydra** is a physics-based software model that designs and evaluates **area-specific shelters** by simulating thermal behaviour under real local environmental conditions — replacing guesswork with simulation-driven design.
+
+- 🌍 **Climate-specific design** — uses the selected location's environmental conditions directly as design inputs
+- 🔬 **Physics-based thermal model** — calculates solar heat gain, heat loss, and indoor temperature variation using established heat-transfer equations
+- ⚖️ **Design comparison** — evaluates different materials, insulation levels, shapes, orientations, and openings against each other
+- 🎯 **Optimization** — automatically identifies the configuration that minimizes external heating/cooling requirements
+- 📊 **Visual output** — presents the recommended shelter configuration along with its predicted thermal performance
+
+By replacing active, energy-hungry climate control with **passive, physics-validated design**, Hydra reduces energy dependence, cuts operational cost, and enables better-informed shelter decisions before a single structure is built.
 <br>
 
 ## ✨ Key Features
